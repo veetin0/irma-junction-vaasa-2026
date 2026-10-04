@@ -14,6 +14,7 @@ import json
 import os
 import random
 import re
+import shutil
 import threading
 import time
 from contextlib import asynccontextmanager
@@ -37,7 +38,27 @@ from agents.web import DEFAULT_SCOUT_SETTINGS, DEFAULT_WEB_SETTINGS, THEMES, ext
 BASE = Path(__file__).resolve().parent
 DATA = BASE / "data"
 FRONTEND = BASE.parent / "frontend"
-SETTINGS_PATH = DATA / "settings.json"
+# Serverless hosts such as Vercel mount the code read-only; only /tmp is writable there.
+# IRMA_RUNTIME_DIR overrides the location; on Vercel (VERCEL=1) it defaults to /tmp/irma.
+RUNTIME_DIR = Path(os.environ["IRMA_RUNTIME_DIR"]) if os.environ.get("IRMA_RUNTIME_DIR") else (Path("/tmp/irma") if os.environ.get("VERCEL") else None)
+if RUNTIME_DIR:
+    RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
+SETTINGS_PATH = (RUNTIME_DIR or DATA) / "settings.json"
+# The hourly scheduler and the startup scout need a long-running process. On Vercel they are off
+# unless IRMA_BACKGROUND=1; "Run update now" and "Search now" still work on request.
+BACKGROUND = os.environ.get("IRMA_BACKGROUND", "0" if os.environ.get("VERCEL") else "1") == "1"
+
+
+def _additions_path() -> Path:
+    shipped = DATA / "worlds" / "1" / "additions.json"
+    if os.environ.get("IRMA_ADDITIONS"):
+        return Path(os.environ["IRMA_ADDITIONS"])
+    if RUNTIME_DIR:
+        target = RUNTIME_DIR / "additions.json"
+        if not target.exists() and shipped.exists():
+            shutil.copyfile(shipped, target)
+        return target
+    return shipped
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "run_interval_minutes": 60,
@@ -96,7 +117,7 @@ class Store:
         self.llm.blocked_domains = set((self.settings.get("web_search") or {}).get("blocked_domains") or [])
         self.lock = threading.RLock()
         self.scout_state: dict[str, Any] = {"running": False, "runs": [], "started_at": None}
-        self.additions_path = Path(os.environ.get("IRMA_ADDITIONS", str(DATA / "worlds" / "1" / "additions.json")))
+        self.additions_path = _additions_path()
         self.additions: dict[str, dict[str, Any]] = {"signals": {}, "evidence": {}}
         self.seen: dict[str, Any] = {}
         self.reset()
@@ -621,12 +642,14 @@ async def scheduler_loop() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    task = asyncio.create_task(scheduler_loop())
-    STORE.start_scout("startup")
+    task = asyncio.create_task(scheduler_loop()) if BACKGROUND else None
+    if BACKGROUND:
+        STORE.start_scout("startup")
     try:
         yield
     finally:
-        task.cancel()
+        if task:
+            task.cancel()
 
 
 app = FastAPI(title="Irma API", version="0.3.0", lifespan=lifespan)

@@ -16,3 +16,6 @@ dist/
 
 # macOS
 .DS_Store
+
+# Vercel CLI
+.vercel/

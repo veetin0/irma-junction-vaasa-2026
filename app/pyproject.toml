@@ -1,0 +1,15 @@
+# Used by Vercel when the project's Root Directory is set to "app".
+# With the Root Directory left at the repository root, the root pyproject.toml is used instead.
+[project]
+name = "irma"
+version = "0.3.0"
+description = "Irma: weak-signal scenario monitor for ABB Distribution Solutions (Junction Vaasa 2026)"
+requires-python = "==3.13.*"
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic>=2.0",
+    "anthropic>=0.122",
+]
+
+[tool.vercel]
+entrypoint = "backend.main:app"

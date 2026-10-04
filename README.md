@@ -43,7 +43,7 @@ Optional environment variables:
 
 ## Deploy to Vercel
 
-The repository root holds what Vercel needs: `index.py` loads the app, and `pyproject.toml` lists the dependencies and Python 3.13.
+Vercel finds the app with the project's Root Directory set either to the repository root (`index.py` and `pyproject.toml` there) or to `app` (`app/pyproject.toml` points to `backend/main.py`). Both list the dependencies and Python 3.13.
 
 1. Import the GitHub repository at https://vercel.com/new. Keep the root directory and the detected settings, and deploy.
 2. Optional environment variable under Settings › Environment Variables: `DEMO_TODAY=2026-10-03` freezes the clock to match the demo.

@@ -15,6 +15,7 @@ import os
 import random
 import re
 import shutil
+import sys
 import threading
 import time
 from contextlib import asynccontextmanager
@@ -26,6 +27,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+
+# Let the sibling packages (agents, engine) import whether this file runs as `main` (local, tests)
+# or as `backend.main` (Vercel with the project root set to app/).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from agents.llm import LLMClient, load_replay, recommendation_filter
 from agents.pipeline import Context, Pipeline, _next_analysis_step, _t, build_brief, next_id

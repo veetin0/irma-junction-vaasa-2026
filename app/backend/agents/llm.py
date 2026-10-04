@@ -73,6 +73,10 @@ class LLMClient:
     def __init__(self) -> None:
         requested = os.environ.get("AGENT_MODE", "auto")
         has_key = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+        if os.environ.get("VERCEL"):
+            # The public Vercel deployment never uses an API key: agents always run on replayed output,
+            # even if a key is set in the project's environment variables.
+            requested, has_key = "replay", False
         self.mode = "live" if (requested != "replay" and (has_key or requested == "live")) else "replay"
         self._client = None
         self.last_error: str | None = None

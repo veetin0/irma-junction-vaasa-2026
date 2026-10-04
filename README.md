@@ -46,9 +46,11 @@ Optional environment variables:
 The repository root holds what Vercel needs: `index.py` loads the app, and `pyproject.toml` lists the dependencies and Python 3.13.
 
 1. Import the GitHub repository at https://vercel.com/new. Keep the root directory and the detected settings, and deploy.
-2. Optional environment variables under Settings › Environment Variables: `DEMO_TODAY=2026-10-03` freezes the clock to match the demo; `ANTHROPIC_API_KEY` turns on the live agents.
+2. Optional environment variable under Settings › Environment Variables: `DEMO_TODAY=2026-10-03` freezes the clock to match the demo.
 
-On Vercel the code is read-only, so settings and new scout signals are saved under `/tmp/irma` and reset when the instance restarts. The hourly scheduler and the startup scout are off there (`IRMA_BACKGROUND=0`); use "Run update now" and "Search now" instead. A public deployment with an API key lets anyone run paid agent calls, so set a spending limit in the Anthropic Console or deploy without a key.
+The Vercel deployment never uses an API key. Agents always run on replayed output there, even if `ANTHROPIC_API_KEY` is set, so a public link cannot run paid calls. Live agents run only locally (`./app/run.sh` with the key in your terminal).
+
+On Vercel the code is read-only, so settings are saved under `/tmp/irma` and reset when the instance restarts. The hourly scheduler and the startup scout are off there (`IRMA_BACKGROUND=0`); "Run update now" in Settings recomputes on request.
 
 ## Test
 

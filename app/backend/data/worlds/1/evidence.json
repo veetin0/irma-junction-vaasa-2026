@@ -1,0 +1,405 @@
+[
+  {
+    "id": "CE-001",
+    "against": "SIG-002",
+    "claim": "Connection inquiries are speculative options. The Finnish government is preparing rules that would drop large data centres down the queue, and Fingrid itself notes that connection capacity, not demand, is the constraint. A 24 GW queue cannot convert at anything like face value.",
+    "source": {
+      "name": "DCD, Finland to abandon first-come first-served grid connections",
+      "url": "https://www.datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue/",
+      "date": "2026-08-27"
+    },
+    "reliability": "B",
+    "strength": 0.7,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-002",
+    "against": "SIG-004",
+    "claim": "Guidance is not delivery. Secondary reporting indicates 30-50% of US projects planned for 2026 are delayed or cancelled, capacity under construction fell 5.7% in 2025, and new announcements halved in Q4 2025. Power, transformers and switchgear, not capital, are the binding constraint.",
+    "source": {
+      "name": "Archdesk / tech-insider industry summaries",
+      "url": "https://archdesk.com/blog/global-ai-data-center-construction-2026",
+      "date": "2026-06-15"
+    },
+    "reliability": "C",
+    "strength": 0.6,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-003",
+    "against": "SIG-007",
+    "claim": "The rate of increase is collapsing: +93-98% in 1Q26, +58-63% in 2Q26, +13-18% in 3Q26. Long-term agreements now cap increases. Decelerating increments with buyers building inventory for an anticipated 2027 shortage is the pattern that preceded the 2022 memory correction.",
+    "source": {
+      "name": "TrendForce press release 2026-07-09",
+      "url": "https://www.trendforce.com/presscenter/news/20260709-13140.html",
+      "date": "2026-07-09"
+    },
+    "reliability": "A",
+    "strength": 0.6,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-004",
+    "against": "SIG-010",
+    "claim": "Goldman Sachs forecasts copper prices to decline somewhat from record highs during 2026; the September 2026 all-time high failed to hold within days. Speculative positioning from China is cited as a driver, which is cyclical, not demand-based.",
+    "source": {
+      "name": "Goldman Sachs Insights; Benchmark Mineral Intelligence",
+      "url": "https://www.goldmansachs.com/insights/articles/copper-prices-forecast-to-decline-from-record-highs-in-2026",
+      "date": "2026-09-12"
+    },
+    "reliability": "B",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-005",
+    "against": "SIG-001",
+    "claim": "Signed agreements are not energised load. Fingrid states that full implementation would raise Finnish consumption by nearly 40% versus 2025, which is physically implausible on the proposed timelines; the historical conversion rate from signed agreement to energised load is unknown. [ASSUMPTION: conversion well below 100%; ask Fingrid or ABB for a reference rate.]",
+    "source": {
+      "name": "Fingrid half-year report 2026 (same source as the signal)",
+      "url": "https://www.globenewswire.com/news-release/2026/07/23/3331934/0/en/Fingrid-group-s-half-year-report-1-1-30-6-2026.html",
+      "date": "2026-07-23"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-006",
+    "against": "SIG-009",
+    "claim": "Record distributor sentiment is a late-cycle marker. In the previous cycle, global semiconductor sales peaked in 2022 (USD 573.5 bn) and turned negative month on month by December 2022 (-4.4%), with memory among the first segments to correct. Analogy, not forecast.",
+    "source": {
+      "name": "SIA / WSTS data as summarised by Nomad Semi, State of the Semiconductor Cycle",
+      "url": "https://www.nomadsemi.com/p/state-of-the-semiconductor-cycle",
+      "date": "2025-11-01"
+    },
+    "reliability": "B",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-007",
+    "against": "SIG-003",
+    "claim": "The EUR 13 bn is scheduled for 2027-2028 and includes energy infrastructure, not only data halls. Relay demand follows substation design and procurement, which lags site announcement by 12-24 months, and the share of spend reaching MV protection equipment is small. [ASSUMPTION: timing lag; verify with ABB how far ahead of energisation relays are ordered.]",
+    "source": {
+      "name": "Google / Fortum announcement coverage",
+      "url": "https://theglobaleconomics.com/2026/09/11/europes-data-centre/",
+      "date": "2026-09-11"
+    },
+    "reliability": "B",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-008",
+    "against": "SIG-008",
+    "claim": "Tightness is product-specific. 8-bit MCUs have normalised to 2-10 weeks and DRAM lead times in some trackers are 8-12 weeks and improving. A 52-week figure for one STMicro family does not describe the whole bill of materials.",
+    "source": {
+      "name": "Welllink / Lytica state of the components market",
+      "url": "https://www.welllinkchips.com/blog/electronic-component-lead-times.html",
+      "date": "2026-06-01"
+    },
+    "reliability": "C",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-009",
+    "against": "SIG-012",
+    "claim": "Core markets are reopening under conditions: Ireland lifted its de facto moratorium with a framework requiring on-site dispatchable generation and 80% additional Irish renewables. If FLAP-D capacity returns, the regional shift to the Nordics weakens.",
+    "source": {
+      "name": "EUDCA / EnkiAI power availability review",
+      "url": "https://enkiai.com/data-center/power-availability-operators-europe/",
+      "date": "2026-05-15"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-010",
+    "against": "SIG-006",
+    "claim": "The IEA base case is bracketed by alternative cases (Lift-Off, High Efficiency, Headwinds). Efficiency gains in AI hardware and software could materially lower the 2030 figure; the report itself flags this uncertainty.",
+    "source": {
+      "name": "IEA, Energy and AI (full report PDF)",
+      "url": "https://iea.blob.core.windows.net/assets/86ed1178-4d77-45ac-ab38-28e849f3b93f/EnergyandAI.pdf",
+      "date": "2025-04-10"
+    },
+    "reliability": "A",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-011",
+    "against": "SIG-001",
+    "claim": "Fingrid has already restricted new energy-storage connections in Southern Finland until 2029 for lack of connection capacity; data-centre agreements in the south compete for the same capacity and may slip.",
+    "source": {
+      "name": "Castren & Snellman: Fingrid extends restrictions on new energy storage facility connections",
+      "url": "https://www.castren.fi/fingrid-extends-restrictions-on-new-energy-storage-facility-connections-in-southern-finland-until-2029/",
+      "date": "2026-04-20"
+    },
+    "reliability": "B",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-012",
+    "against": "SIG-005",
+    "claim": "Delays caused by transformer and switchgear shortages are evidence of demand exceeding electrical supply, not of demand weakness. Switchgear reported sold out through 2028 is a bullish signal for protection equipment, even as project dates slip.",
+    "source": {
+      "name": "Same secondary reporting (Archdesk) read in reverse",
+      "url": "https://archdesk.com/blog/global-ai-data-center-construction-2026",
+      "date": "2026-06-15"
+    },
+    "reliability": "C",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-013",
+    "against": "SIG-011",
+    "claim": "Fingrid's own study shows the Finnish constraint is grid connectability, not price: 70% of generation sits in the west and north, over 50% of consumption in the south. Cheap power that cannot be connected does not attract load.",
+    "source": {
+      "name": "Fingrid news: locating industrial facilities close to generation increases connectability",
+      "url": "https://www.fingrid.fi/en/news/news/2026/fingrids-study-locating-industrial-facilities-close-to-electricity-generation-increases-overall-connectability-of-the-transmission-grid",
+      "date": "2026-03-10"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-014",
+    "against": "SIG-016",
+    "claim": "Land purchases are options. Hyperscalers hold land banks in many countries that remain undeveloped for years; the purchase does not imply a connection agreement or a build date.",
+    "source": {
+      "name": "[ASSUMPTION: general industry practice; no single source]",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "strength": 0.4,
+    "data_label": "ASSUMPTION"
+  },
+  {
+    "id": "CE-015",
+    "against": "SIG-010",
+    "claim": "Copper headed for a weekly loss as high energy costs limit demand and China's industrial data weakened; Golden Week thinned trading, and part of the level reflects supply risk (Escondida strike vote) rather than demand.",
+    "source": {
+      "name": "Bloomberg, Copper heads for weekly loss as high energy costs limit demand; Reuters via MINING.COM",
+      "url": "https://bloomberg.com/news/articles/2026-10-02/copper-heads-for-weekly-loss-as-high-energy-costs-limit-demand",
+      "date": "2026-10-02"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-016",
+    "against": "SIG-001",
+    "claim": "Fingrid states that the additional connection capacity created by ongoing transmission investments is already almost fully reserved in many areas and that region-specific waiting times for new connections will continue; signed agreements may wait for capacity.",
+    "source": {
+      "name": "Fingrid news, Electricity consumption is set to increase sharply",
+      "url": "https://www.fingrid.fi/en/news/news/2026/electricity-consumption-is-set-to-increase-sharply--more-balancing-power-will-also-be-needed/",
+      "date": "2026-09-15"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-017",
+    "against": "SIG-018",
+    "claim": "TrendForce's 4Q26 outlook sees consumer-side pressure persisting while AI servers sustain prices; a supplier's multi-year shortage statement is also a pricing position and does not bind industrial allocation.",
+    "source": {
+      "name": "TrendForce press release 2026-09-30",
+      "url": "https://www.trendforce.com/presscenter/news/20260930-13258.html",
+      "date": "2026-09-30"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-018",
+    "against": "SIG-020",
+    "claim": "Group-level order intake includes long-cycle project orders and advance ordering by customers facing switchgear lead times; triple-digit data-centre growth comes from a small base. [ASSUMPTION: verify the share of data-centre orders in the relay unit's own intake.]",
+    "source": {
+      "name": "[ASSUMPTION] analytical judgement",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "strength": 0.4,
+    "data_label": "ASSUMPTION"
+  },
+  {
+    "id": "CE-019",
+    "against": "SIG-023",
+    "claim": "The USD 30.2 bn headline overlaps with the Google programme [SIG-003] and the Microsoft land purchase [SIG-016] and includes energy spend; MW and energisation dates are not disclosed, so the card partly double-counts.",
+    "source": {
+      "name": "Fortune (same source as the signal)",
+      "url": "https://fortune.com/2026/09/10/europe-data-center-capital-google-microsoft-tiktok-30-2-billion/",
+      "date": "2026-09-10"
+    },
+    "reliability": "B",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-020",
+    "against": "SIG-021",
+    "claim": "The municipal government board rejected the planning initiative in a 5–2 vote; the developer's approval claim is contested and the 2028 construction start is not secured.",
+    "source": {
+      "name": "DCD (same article as the signal)",
+      "url": "https://www.datacenterdynamics.com/en/news/enetron-park-announces-zoning-approval-for-250mw-data-center-in-pyh%C3%A4joki-finland-despite-local-government-denial/",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "strength": 0.6,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-021",
+    "against": "SIG-025",
+    "claim": "Hyperscalers are spending about 102% of cloud revenue on capex, increasingly financed by vendor lending and junior debt; the pace is financially fragile and 2027 guidance has not yet been given.",
+    "source": {
+      "name": "Yahoo Finance, Hyperscalers are spending 102% of cloud revenue on capex",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-absurd-spending-boom-hyperscalers-162709082.html",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-022",
+    "against": "SIG-024",
+    "claim": "Colocation capacity fills with tenant demand over several years, and the Norway campus is a land acquisition with a first phase only. [ASSUMPTION]",
+    "source": {
+      "name": "[ASSUMPTION] analytical judgement",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "strength": 0.3,
+    "data_label": "ASSUMPTION"
+  },
+  {
+    "id": "CE-023",
+    "against": "SIG-019",
+    "claim": "A rating scheme and minimum energy performance standards add compliance cost and reporting duties that can delay marginal projects even as the headline target supports growth. [ASSUMPTION]",
+    "source": {
+      "name": "White & Case, Data centres and energy consumption: evolving EU regulatory landscape",
+      "url": "https://www.whitecase.com/insight-alert/data-centres-and-energy-consumption-evolving-eu-regulatory-landscape-and-outlook-2026",
+      "date": "2026-09-01"
+    },
+    "reliability": "B",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-024",
+    "against": "SIG-026",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-025",
+    "against": "SIG-027",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-026",
+    "against": "SIG-029",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-027",
+    "against": "SIG-030",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-028",
+    "against": "SIG-031",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-029",
+    "against": "SIG-032",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-030",
+    "against": "SIG-028",
+    "claim": "A perception survey of operators measures reported concern, not load; respondents facing constraints are more likely to answer, and rising density reflects AI hardware rather than site count. [ASSUMPTION]",
+    "source": {
+      "name": "[ASSUMPTION] survey-method caution",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "strength": 0.3,
+    "data_label": "ASSUMPTION"
+  },
+  {
+    "id": "CE-031",
+    "against": "SIG-032",
+    "claim": "LUT University (May 2026) finds continuous data-centre supply from new renewables technically and economically feasible in Finland at about EUR 103–121/MWh, and more than 7.2 GW of permitted wind and solar is ready to build; the price impact of new load can be mitigated if data centres bring their own generation.",
+    "source": {
+      "name": "LUT University, Researchers find answer to data centres' massive electricity demand (May 2026)",
+      "url": "https://www.lut.fi/en/news/researchers-find-answer-data-centres-massive-electricity-demand",
+      "date": "2026-05-20"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  }
+]

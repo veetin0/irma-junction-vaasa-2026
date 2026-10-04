@@ -1,0 +1,1986 @@
+[
+  {
+    "id": "SIG-001",
+    "name": "Fingrid: signed data-centre connection agreements",
+    "short": "FI signed DC connection agreements",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 30,
+    "lead_months_rationale": "[ASSUMPTION: a signed transmission connection agreement precedes substation energisation by roughly 2-4 years; protection relays are specified in the substation design phase, roughly 12-18 months before energisation. Verify with ABB.]",
+    "update_frequency": "quarterly",
+    "source": {
+      "name": "Fingrid group half-year report 1.1.-30.6.2026",
+      "url": "https://www.globenewswire.com/news-release/2026/07/23/3331934/0/en/Fingrid-group-s-half-year-report-1-1-30-6-2026.html",
+      "access": "Public press release / PDF, free",
+      "date": "2026-07-23"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.8,
+    "observed_at": "2026-07-23",
+    "classification": "structural",
+    "classification_rationale": "Signed agreements carry financial commitment and are backed by multi-year hyperscaler programmes; they do not reverse with a quarterly capex cycle. Conversion to energised load is uncertain in timing, not in direction.",
+    "value": {
+      "number": 3.0,
+      "unit": "GW",
+      "label": "planned capacity of DC projects with signed connection agreements, end of June 2026 (>3 GW)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "The planned total capacity of data centre projects that have signed connection agreements by the end of June 2026 was over three gigawatts. If all projects were implemented in full, they would increase Finland's electricity consumption by nearly 40 per cent compared with the 2025 level.",
+    "history": [
+      {
+        "date": "2025-06-30",
+        "value": 1.4
+      },
+      {
+        "date": "2025-09-30",
+        "value": 1.7
+      },
+      {
+        "date": "2025-12-31",
+        "value": 2.1
+      },
+      {
+        "date": "2026-03-31",
+        "value": 2.6
+      },
+      {
+        "date": "2026-06-30",
+        "value": 3.0
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "Only the June 2026 point (>3 GW) is from the source. Earlier points are illustrative demo data for the sparkline.",
+    "usage_restrictions": "Public; cite Fingrid. Project-level details not disclosed.",
+    "counter_evidence": [
+      "CE-005",
+      "CE-011",
+      "CE-016"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "contract",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.8,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.8,
+      "bullwhip": 0.0
+    },
+    "short_fi": "FI: allekirjoitetut datakeskusten liittymäsopimukset"
+  },
+  {
+    "id": "SIG-002",
+    "name": "Fingrid: data-centre connection inquiries in the queue",
+    "short": "FI DC connection inquiries",
+    "category": "demand",
+    "measures": "intermediary",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 36,
+    "lead_months_rationale": "[ASSUMPTION: inquiries precede agreements by 6-18 months and energisation by 3-5 years; most inquiries never convert.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Borenius legal alert: Government prepares new grid connection priority rules; DCD report",
+      "url": "https://www.borenius.com/legal-alerts/2026/08/26/government-prepares-new-grid-connection-priority-rules-in-response-to-data-centre-boom/",
+      "access": "Public web article",
+      "date": "2026-08-26"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-08-26",
+    "classification": "cyclical",
+    "classification_rationale": "Inquiries are cheap options, not commitments. A queue of ~24 GW against a country peak load of roughly 15 GW is speculative by construction and behaves like double-ordering: the same developer files in several places.",
+    "value": {
+      "number": 24,
+      "unit": "GW",
+      "label": "connection applications for new IT load (approx. 24,000 MW)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Grid planners at Fingrid face connection applications totaling approximately 24,000 MW of new IT load.",
+    "history": [
+      {
+        "date": "2025-09-30",
+        "value": 9
+      },
+      {
+        "date": "2025-12-31",
+        "value": 13
+      },
+      {
+        "date": "2026-03-31",
+        "value": 18
+      },
+      {
+        "date": "2026-06-30",
+        "value": 22
+      },
+      {
+        "date": "2026-08-26",
+        "value": 24
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "Only the August 2026 point (~24 GW) is from the source.",
+    "usage_restrictions": "Secondary reporting of Fingrid figures; confirm against Fingrid primary data before use in internal planning.",
+    "counter_evidence": [
+      "CE-001"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.4,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.5,
+      "bullwhip": 0.4
+    },
+    "short_fi": "FI: datakeskusten liittymäkyselyt"
+  },
+  {
+    "id": "SIG-003",
+    "name": "Google: EUR 13 bn Finland data-centre and energy programme 2027-2028",
+    "short": "Google FI investment EUR 13 bn",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 20,
+    "lead_months_rationale": "[ASSUMPTION: spend is scheduled for 2027-2028; substation protection equipment is ordered in the design/procurement phase roughly 12-18 months before energisation.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Google announcement, reported by The Global Economics / Computer Weekly",
+      "url": "https://theglobaleconomics.com/2026/09/11/europes-data-centre/",
+      "access": "Public press coverage of company announcement",
+      "date": "2026-09-09"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.9,
+    "observed_at": "2026-09-09",
+    "classification": "structural",
+    "classification_rationale": "Backed by a 22-year nuclear power agreement with Fortum (Loviisa). Long-dated energy contracts are the clearest marker of structural rather than cyclical demand.",
+    "value": {
+      "number": 13,
+      "unit": "EUR bn",
+      "label": "committed investment in Finnish data centres and energy infrastructure, 2027-2028; sites: Hamina expansion, Kajaani, Muhos, Vaala"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Google announced its largest single investment in Europe, committing at least EUR 13 billion to Finnish data centers and energy infrastructure in 2027 and 2028 ... including an agreement with Fortum to secure up to 50% of the output of the Loviisa nuclear power plant for 22 years.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal; no time series.",
+    "usage_restrictions": "Public announcement. Site-level MW not disclosed.",
+    "counter_evidence": [
+      "CE-007"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "contract",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.9,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.9,
+      "bullwhip": 0.0
+    },
+    "short_fi": "Googlen 13 mrd € investointi Suomeen"
+  },
+  {
+    "id": "SIG-004",
+    "name": "Hyperscaler 2026 capex guidance (Amazon, Alphabet, Microsoft, Meta)",
+    "short": "Hyperscaler capex guidance 2026",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 15,
+    "lead_months_rationale": "[ASSUMPTION: capex guidance precedes construction spend by 1-3 quarters and electrical fit-out by 12-18 months.]",
+    "update_frequency": "quarterly",
+    "source": {
+      "name": "Company earnings guidance, compiled by Axios",
+      "url": "https://www.axios.com/2026/02/11/hyperscaler-spending-meta-microsoft-amazon-google",
+      "access": "Public; primary data in SEC filings and earnings calls",
+      "date": "2026-02-11"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.9,
+    "observed_at": "2026-02-11",
+    "classification": "mixed",
+    "classification_rationale": "AI compute demand is structural; the capex pace is cyclical and depends on cash flow and investor tolerance. Guidance is revised every quarter, so this is the fastest-moving large signal in the portfolio.",
+    "value": {
+      "number": 732,
+      "unit": "USD bn",
+      "label": "combined 2026 capex guidance midpoint (range USD 720-745 bn), up roughly 78% from about USD 410 bn in 2025"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Amazon approximately $220 billion; Alphabet $195-205 billion; Microsoft approximately $175 billion; Meta $130-145 billion. Q3 results and 2027 capex guidance are expected in the second half of October 2026.",
+    "history": [
+      {
+        "date": "2023-12-31",
+        "value": 150
+      },
+      {
+        "date": "2024-12-31",
+        "value": 230
+      },
+      {
+        "date": "2025-12-31",
+        "value": 410
+      },
+      {
+        "date": "2026-02-11",
+        "value": 732
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "2025 (~410) and 2026 (~732) values are from the source; 2023-2024 points are illustrative.",
+    "usage_restrictions": "Public. US-weighted; European share of spend is not broken out.",
+    "counter_evidence": [
+      "CE-002"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.9,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "Pilviyhtiöiden investointiohjaus 2026"
+  },
+  {
+    "id": "SIG-005",
+    "name": "US data-centre projects planned for 2026: share delayed or cancelled",
+    "short": "US DC delays/cancellations",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "US",
+    "segment": "datacenter",
+    "type": "coincident",
+    "lead_months": 6,
+    "lead_months_rationale": "[ASSUMPTION: a project cancelled at construction start removes electrical equipment orders within 1-2 quarters.]",
+    "update_frequency": "quarterly",
+    "source": {
+      "name": "Secondary industry reporting (Archdesk; tech-insider), citing US primary-market construction statistics",
+      "url": "https://archdesk.com/blog/global-ai-data-center-construction-2026",
+      "access": "Public blogs; underlying brokerage data is paywalled",
+      "date": "2026-06-15"
+    },
+    "reliability": "C",
+    "direction": -1,
+    "strength": 0.6,
+    "observed_at": "2026-06-15",
+    "classification": "cyclical",
+    "classification_rationale": "Delays driven by permitting, power procurement and transformer/switchgear lead times are timing shifts, not demand destruction. They move demand to later quarters and to other regions.",
+    "value": {
+      "number": 40,
+      "unit": "%",
+      "label": "approximate share (30-50%) of US projects planned for 2026 reported delayed or cancelled; capacity under construction at end-2025 down 5.7% vs end-2024"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Of roughly 16 gigawatts of planned additional US data center capacity expected to come online in 2026, only about 5 GW has actually entered the construction phase ... Transformer delivery times now stretch 3 to 5 years, and switchgear is sold out through 2028.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Reliability C: numbers come from secondary blogs; the primary brokerage report must be obtained before internal use.",
+    "usage_restrictions": "Secondary source; do not quote the figure externally without the primary report.",
+    "counter_evidence": [
+      "CE-012"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.5,
+      "supply": 0.3,
+      "policy": -0.3,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.3
+    },
+    "short_fi": "USA: datakeskusten viivästykset ja peruutukset"
+  },
+  {
+    "id": "SIG-006",
+    "name": "IEA: global data-centre electricity consumption 2024 -> 2030 (base case)",
+    "short": "IEA DC electricity outlook",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 48,
+    "lead_months_rationale": "Scenario anchor rather than a trading signal: it bounds the structural trend, it does not time it.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "IEA, Energy and AI (World Energy Outlook Special Report)",
+      "url": "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
+      "access": "Public report, CC BY 4.0",
+      "date": "2025-04-10"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2025-04-10",
+    "classification": "structural",
+    "classification_rationale": "A doubling of consumption over six years at ~15% CAGR is a structural trend; the IEA publishes alternative cases around it, so the slope is uncertain, the sign is not.",
+    "value": {
+      "number": 945,
+      "unit": "TWh",
+      "label": "global data-centre electricity consumption in 2030, base case (from ~415 TWh in 2024); US +240 TWh, China +175 TWh"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Global electricity consumption for data centres is projected to double to around 945 TWh by 2030, just under 3% of total global electricity consumption.",
+    "history": [
+      {
+        "date": "2024-12-31",
+        "value": 415
+      },
+      {
+        "date": "2030-12-31",
+        "value": 945
+      }
+    ],
+    "history_label": "SOURCE",
+    "history_note": "Two anchor points from the report; intermediate years are not published at this granularity.",
+    "usage_restrictions": "CC BY 4.0, attribution required.",
+    "counter_evidence": [
+      "CE-010"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.6,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "IEA: datakeskusten sähkönkulutusnäkymä"
+  },
+  {
+    "id": "SIG-007",
+    "name": "TrendForce: DRAM contract price change, quarter on quarter",
+    "short": "DRAM contract prices (QoQ)",
+    "category": "supply",
+    "measures": "supply_tightness",
+    "region": "GLOBAL",
+    "segment": "components",
+    "type": "coincident",
+    "lead_months": 4,
+    "lead_months_rationale": "[ASSUMPTION: contract price moves precede allocation and lead-time changes at ABB's EMS partners by one to two quarters.]",
+    "update_frequency": "quarterly",
+    "source": {
+      "name": "TrendForce press release, AI server demand sustains memory contract price increases in 4Q26",
+      "url": "https://www.trendforce.com/presscenter/news/20260930-13258.html",
+      "access": "Public press release; full price data is a paid subscription",
+      "date": "2026-09-30"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.85,
+    "observed_at": "2026-09-30",
+    "classification": "cyclical",
+    "classification_rationale": "Memory is the most cyclical commodity in electronics. Price increments of +93-98% (1Q26), +58-63% (2Q26) and +13-18% (3Q26) are still positive but decelerating sharply: the classic shape before a memory price peak.",
+    "value": {
+      "number": 12.5,
+      "unit": "% QoQ",
+      "label": "conventional DRAM contract prices forecast +10–15% QoQ in 4Q26 (midpoint 12.5); server DRAM remains undersupplied; NAND Flash +15–20%"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Conventional DRAM contract prices are projected to grow 10–15% QoQ in 4Q26. Improving server CPU availability has prompted CSPs and server OEMs to increase bit procurement; however, server DRAM is expected to remain undersupplied in 4Q26.",
+    "history": [
+      {
+        "date": "2025-12-31",
+        "value": 25
+      },
+      {
+        "date": "2026-03-31",
+        "value": 95.5
+      },
+      {
+        "date": "2026-06-30",
+        "value": 60.5
+      },
+      {
+        "date": "2026-09-30",
+        "value": 15.5
+      },
+      {
+        "date": "2026-09-30",
+        "value": 12.5
+      }
+    ],
+    "history_label": "SOURCE",
+    "history_note": "1Q26–4Q26 are midpoints of TrendForce quarterly ranges (4Q26 is the 30 Sep 2026 forecast); the 4Q25 point (+25) is a [DEMODATA] placeholder.",
+    "usage_restrictions": "Press-release figures may be quoted with attribution; detailed series require a TrendForce licence.",
+    "counter_evidence": [
+      "CE-003"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.0,
+      "supply": 0.9,
+      "policy": 0.0,
+      "price": 0.6,
+      "nordic": 0.0,
+      "bullwhip": 0.2
+    },
+    "short_fi": "DRAM-muistin sopimushinnat (neljännes)"
+  },
+  {
+    "id": "SIG-008",
+    "name": "Industrial 32-bit MCU lead times (STM32 G0/G4/L4 class)",
+    "short": "Industrial MCU lead times",
+    "category": "supply",
+    "measures": "supply_tightness",
+    "region": "GLOBAL",
+    "segment": "components",
+    "type": "coincident",
+    "lead_months": 3,
+    "lead_months_rationale": "Lead time is itself the constraint; it tells ABB's EMS partner when parts arrive, not where demand is going.",
+    "update_frequency": "monthly",
+    "source": {
+      "name": "Distributor market intelligence (J2 Sourcing; Welllink), citing Fusion Worldwide / Baird data",
+      "url": "https://j2sourcing.com/blog/semiconductor-shortages-50-memory-price-spikes-55-week-lead-times-2026/",
+      "access": "Public blogs; primary data behind distributor paywalls",
+      "date": "2026-06-01"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2026-06-01",
+    "classification": "cyclical",
+    "classification_rationale": "Lead-time extensions are a capacity-allocation phenomenon. In 2021 they peaked at 20-25+ weeks and normalised within 18 months once double orders were cancelled.",
+    "value": {
+      "number": 52,
+      "unit": "weeks",
+      "label": "lead time for industrial 32-bit MCUs (STMicro families reported at 52-55 weeks); 8-bit MCUs at 2-10 weeks"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "MCUs are still at 52 weeks, with STMicro MCU lead times hitting 55 weeks ... 8-bit microcontrollers have stabilized to 2-10 week lead times.",
+    "history": [
+      {
+        "date": "2025-10-01",
+        "value": 26
+      },
+      {
+        "date": "2025-12-01",
+        "value": 32
+      },
+      {
+        "date": "2026-02-01",
+        "value": 40
+      },
+      {
+        "date": "2026-04-01",
+        "value": 48
+      },
+      {
+        "date": "2026-06-01",
+        "value": 52
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "Only the June 2026 point (52 weeks) is from the source.",
+    "usage_restrictions": "Secondary; verify with ABB's own supplier confirmations.",
+    "counter_evidence": [
+      "CE-008"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.0,
+      "supply": 0.8,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.3
+    },
+    "short_fi": "Teollisuuden mikro-ohjainten toimitusajat"
+  },
+  {
+    "id": "SIG-009",
+    "name": "ECIA memory IC sales sentiment index (distributors)",
+    "short": "ECIA memory sentiment index",
+    "category": "bullwhip",
+    "measures": "intermediary",
+    "region": "GLOBAL",
+    "segment": "components",
+    "type": "leading",
+    "lead_months": 6,
+    "lead_months_rationale": "[ASSUMPTION: distributor sentiment leads component order-book corrections by roughly two quarters, based on the 2022 cycle.]",
+    "update_frequency": "monthly",
+    "source": {
+      "name": "ECIA Electronic Component Sales Trend survey, via Electronics360",
+      "url": "https://electronics360.globalspec.com/article/23407/ecia-strongest-sales-sentiment-for-electronic-components-in-4-5-years",
+      "access": "Public summary; full survey for ECIA members",
+      "date": "2026-02-20"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-02-20",
+    "classification": "cyclical",
+    "classification_rationale": "A record sentiment reading measures intermediaries' order books, not end use. Record readings historically mark the hoarding phase of a cycle, not its midpoint.",
+    "value": {
+      "number": 180,
+      "unit": "index",
+      "label": "memory IC sales sentiment, record reading (100 = neutral)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Memory ICs delivered a record breaking 180 for January and will sustain the score in February. More than half of the participants found increasing lead times for semiconductors.",
+    "history": [
+      {
+        "date": "2025-08-01",
+        "value": 112
+      },
+      {
+        "date": "2025-10-01",
+        "value": 128
+      },
+      {
+        "date": "2025-12-01",
+        "value": 150
+      },
+      {
+        "date": "2026-01-01",
+        "value": 180
+      },
+      {
+        "date": "2026-02-01",
+        "value": 180
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "January/February 2026 (180) are from the source; earlier points are illustrative.",
+    "usage_restrictions": "Survey index; not a volume measure.",
+    "counter_evidence": [
+      "CE-006"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.2,
+      "supply": 0.3,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.8
+    },
+    "short_fi": "ECIA: muistien myyntiluottamus"
+  },
+  {
+    "id": "SIG-010",
+    "name": "LME copper, 3-month price",
+    "short": "LME copper price",
+    "category": "price",
+    "measures": "price",
+    "region": "GLOBAL",
+    "segment": "materials",
+    "type": "coincident",
+    "lead_months": 3,
+    "lead_months_rationale": "Copper prices in the electrification demand of the whole world at once; they coincide with, rather than lead, investment commitment. Their value here is as a fast cross-check and as a cost-side risk.",
+    "update_frequency": "daily",
+    "source": {
+      "name": "Reuters via MINING.COM (2 Oct 2026); Bloomberg, Copper heads for weekly loss as high energy costs limit demand",
+      "url": "https://mining.com/web/copper-price-crawls-higher-on-softer-dollar-after-weak-us-jobs-data-tight-supply",
+      "access": "Public news; LME real-time data is licensed",
+      "date": "2026-10-02"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2026-10-02",
+    "classification": "mixed",
+    "classification_rationale": "The level reflects structural electrification demand plus speculative positioning; the September 2026 spike and partial retrace shows the cyclical component.",
+    "value": {
+      "number": 14319,
+      "unit": "USD/t",
+      "label": "LME three-month close on 2026-10-02: USD 14,319/t, down 2% on the week, up about 30% year on year; all-time high USD 14,858/t on 2026-09-09"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Benchmark three-month copper on the London Metal Exchange rose 0.5% to $14,319 a metric ton, though that marked a decline of 2% since the end of last week.",
+    "history": [
+      {
+        "date": "2025-10-01",
+        "value": 10400
+      },
+      {
+        "date": "2025-12-01",
+        "value": 11800
+      },
+      {
+        "date": "2026-01-29",
+        "value": 14527
+      },
+      {
+        "date": "2026-04-01",
+        "value": 13200
+      },
+      {
+        "date": "2026-07-01",
+        "value": 13900
+      },
+      {
+        "date": "2026-09-09",
+        "value": 14858
+      },
+      {
+        "date": "2026-10-02",
+        "value": 14319
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "2026-01-29, 2026-09-09 and 2026-10-02 are sourced; the other points are illustrative.",
+    "usage_restrictions": "LME real-time data requires a licence; delayed data may be displayed with attribution.",
+    "counter_evidence": [
+      "CE-004",
+      "CE-015"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.4,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.8,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "LME: kuparin hinta"
+  },
+  {
+    "id": "SIG-011",
+    "name": "Nordic electricity price advantage (Finland vs Germany, annual average)",
+    "short": "FI vs DE power price gap",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "NORDICS",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 24,
+    "lead_months_rationale": "[ASSUMPTION: site-selection decisions react to multi-year price differentials; a persistent gap shifts the pipeline toward the Nordics over 1-3 years.]",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Nord Pool day-ahead averages 2025, as reported in Fortum operating environment",
+      "url": "https://www.fortum.com/investors/why-invest-fortum/operating-environment",
+      "access": "Public; Nord Pool data via FTP/API for members, annual averages free",
+      "date": "2026-01-31"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-01-31",
+    "classification": "structural",
+    "classification_rationale": "The gap is driven by Finnish wind and nuclear build-out versus German gas-marginal pricing; both are multi-year structures.",
+    "value": {
+      "number": 48.8,
+      "unit": "EUR/MWh",
+      "label": "Finland 2025 average area price 40.5 EUR/MWh vs Germany 89.3 EUR/MWh"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Finland's average area price in 2025 was 40.5 EUR/MWh, while Germany's average spot price in 2025 was 89.3 EUR/MWh.",
+    "history": [
+      {
+        "date": "2023-12-31",
+        "value": 39
+      },
+      {
+        "date": "2024-12-31",
+        "value": 33
+      },
+      {
+        "date": "2025-12-31",
+        "value": 48.8
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "2025 gap is from the source; 2023-2024 gaps are illustrative.",
+    "usage_restrictions": "Nord Pool data licence for granular series.",
+    "counter_evidence": [
+      "CE-013"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.2,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.7,
+      "bullwhip": 0.0
+    },
+    "short_fi": "Sähkön hintaero Suomi–Saksa"
+  },
+  {
+    "id": "SIG-012",
+    "name": "European core-market grid moratoria and connection queues (FLAP-D, Denmark)",
+    "short": "EU core-market grid moratoria",
+    "category": "policy",
+    "measures": "policy",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 18,
+    "lead_months_rationale": "[ASSUMPTION: a moratorium redirects site selection within 1-2 years; the redirected project then follows the normal 2-4 year build cycle.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "EUDCA / EnkiAI power availability review; DCD; TNW (63% of new capacity outside FLAP-D)",
+      "url": "https://enkiai.com/data-center/power-availability-operators-europe/",
+      "access": "Public web; TSO decisions (TenneT, Energinet, EirGrid) are primary",
+      "date": "2026-05-15"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2026-05-15",
+    "classification": "structural",
+    "classification_rationale": "Amsterdam's moratorium runs to at least 2030, Energinet paused new connections in March 2026 with a queue above 60 GW, and Ireland reopened only with on-site generation conditions. These are multi-year regulatory structures that shift where demand lands, not whether it exists.",
+    "value": {
+      "number": 63,
+      "unit": "%",
+      "label": "share of Europe's new data-centre capacity going outside the big five markets (FLAP-D); Denmark queue >60 GW vs 2024 peak demand about 7 GW"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Amsterdam imposed a new moratorium in April 2025 prohibiting new data centers until at least 2030 ... Denmark's transmission operator, Energinet, paused new grid connections in March 2026 after queued consumption passed 60 GW.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-009"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.1,
+      "supply": 0.0,
+      "policy": -0.5,
+      "price": 0.0,
+      "nordic": 0.6,
+      "bullwhip": 0.0
+    },
+    "short_fi": "EU: ydinmarkkinoiden verkkoliitäntäkiellot"
+  },
+  {
+    "id": "SIG-013",
+    "name": "EU electricity grid investment need this decade (Commission estimate)",
+    "short": "EU grid investment need",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "EU",
+    "segment": "utility",
+    "type": "lagging",
+    "lead_months": 36,
+    "lead_months_rationale": "Policy anchor for the non-data-centre demand that competes for the same relay capacity; it bounds utility demand over the decade.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "European Commission, An EU Action Plan for Grids, COM(2023) 757",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52023DC0757",
+      "access": "Public, EUR-Lex",
+      "date": "2023-11-28"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2023-11-28",
+    "classification": "structural",
+    "classification_rationale": "EUR 584 bn of grid investment this decade (industry estimate EUR 375-425 bn for distribution alone) is regulated, multi-year utility capex. It is the floor under ABB's relay demand independent of data centres.",
+    "value": {
+      "number": 584,
+      "unit": "EUR bn",
+      "label": "grid investment needed in the EU this decade; distribution grids EUR 375-425 bn by 2030"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "The Commission estimates that EUR 584 billion in investments are necessary for the electricity grids this decade.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Policy anchor.",
+    "usage_restrictions": "Public.",
+    "counter_evidence": [],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.4,
+      "supply": 0.0,
+      "policy": 0.5,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "EU: verkkoinvestointitarve"
+  },
+  {
+    "id": "SIG-014",
+    "name": "Finland: proposed end of first-come-first-served grid connections (data centres down the queue)",
+    "short": "FI connection priority rule change",
+    "category": "policy",
+    "measures": "policy",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: a rule change in late 2026 would re-sequence energisation dates from 2027 onward.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "DCD: Finland to abandon first-come, first-served grid connections",
+      "url": "https://www.datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue/",
+      "access": "Public web; primary source is the Ministry of Economic Affairs and Employment consultation",
+      "date": "2026-08-27"
+    },
+    "reliability": "B",
+    "direction": -1,
+    "strength": 0.5,
+    "observed_at": "2026-08-27",
+    "classification": "cyclical",
+    "classification_rationale": "A sequencing rule shifts timing of Finnish data-centre energisation; it does not change the total. Treated as a timing (cyclical) factor.",
+    "value": {
+      "number": 1,
+      "unit": "event",
+      "label": "government preparing new connection priority rules that would rank small-scale connections ahead of large data centres"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Finland could abandon its first-come, first-served electricity grid connection system and replace it with new groupings that prioritize small-scale connections, dropping larger data centers down the priority queue.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal; outcome of the consultation is pending.",
+    "usage_restrictions": "Public.",
+    "counter_evidence": [],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.2,
+      "supply": 0.0,
+      "policy": -0.7,
+      "price": 0.0,
+      "nordic": -0.4,
+      "bullwhip": 0.0
+    },
+    "short_fi": "FI: liittymien etusijasäännön muutos"
+  },
+  {
+    "id": "SIG-015",
+    "name": "DRAM spot-to-contract price spread",
+    "short": "DRAM spot/contract spread",
+    "category": "bullwhip",
+    "measures": "intermediary",
+    "region": "GLOBAL",
+    "segment": "components",
+    "type": "leading",
+    "lead_months": 3,
+    "lead_months_rationale": "[ASSUMPTION: when the spot premium over contract collapses while lead times are still long, hoarding is ending; this preceded the 2022 memory correction by about one quarter.]",
+    "update_frequency": "weekly",
+    "source": {
+      "name": "[DEMODATA] placeholder for DRAMeXchange / TrendForce spot vs contract series",
+      "url": "https://www.trendforce.com/research/category/Semiconductors/DRAM",
+      "access": "Paid subscription (TrendForce / DRAMeXchange)",
+      "date": "2026-09-26"
+    },
+    "reliability": "C",
+    "direction": -1,
+    "strength": 0.4,
+    "observed_at": "2026-09-26",
+    "classification": "cyclical",
+    "classification_rationale": "Pure cycle indicator: the spread measures urgency of intermediaries, nothing about end demand.",
+    "value": {
+      "number": 6,
+      "unit": "% premium",
+      "label": "[DEMODATA] spot premium over contract, down from an illustrative 28% peak in 1Q26"
+    },
+    "data_label": "DEMODATA",
+    "excerpt": "[DEMODATA] Illustrative series to demonstrate the bullwhip metric. Replace with licensed DRAMeXchange data.",
+    "history": [
+      {
+        "date": "2025-12-15",
+        "value": 12
+      },
+      {
+        "date": "2026-02-15",
+        "value": 28
+      },
+      {
+        "date": "2026-04-15",
+        "value": 22
+      },
+      {
+        "date": "2026-06-15",
+        "value": 14
+      },
+      {
+        "date": "2026-08-15",
+        "value": 9
+      },
+      {
+        "date": "2026-09-26",
+        "value": 6
+      }
+    ],
+    "history_label": "DEMODATA",
+    "history_note": "Entire series is demo data.",
+    "usage_restrictions": "Licensed data required for production.",
+    "counter_evidence": [],
+    "ce_searched": false,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.0,
+      "supply": -0.3,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": -0.6
+    },
+    "short_fi": "DRAM: spot- ja sopimushinnan ero"
+  },
+  {
+    "id": "SIG-016",
+    "name": "Microsoft: 470-acre land purchase next to Vaasa / Mustasaari",
+    "short": "Microsoft Vaasa land purchase",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 36,
+    "lead_months_rationale": "[ASSUMPTION: land acquisition precedes connection agreement by 1-2 years and energisation by 3-5 years.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Computer Weekly: Nordic datacentre investments surge amid tightening licence rules",
+      "url": "https://www.computerweekly.com/news/366645164/Nordic-datacentre-investments-surge-amid-tightening-licence-rules",
+      "access": "Public web article",
+      "date": "2026-06-07"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.5,
+    "observed_at": "2026-06-07",
+    "classification": "structural",
+    "classification_rationale": "Land banking by a hyperscaler is a low-cost option; it is structural in intent but weak as a timing signal, hence moderate strength.",
+    "value": {
+      "number": 470,
+      "unit": "acres",
+      "label": "land acquired for a potential datacentre development adjacent to Vaasa and Mustasaari"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Microsoft finalised a land purchase deal on June 7, to acquire 470 acres of land for a potential datacentre development located adjacent to the west coast city of Vaasa and the neighbouring municipality of Mustasaari.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-014"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "contract",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.5,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.6,
+      "bullwhip": 0.0
+    },
+    "short_fi": "Microsoftin maakauppa Vaasassa"
+  },
+  {
+    "id": "SIG-017",
+    "name": "ABB internal: frame purchase order coverage (placeholder)",
+    "short": "ABB frame PO coverage (internal)",
+    "category": "demand",
+    "measures": "intermediary",
+    "region": "NORDICS",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 12,
+    "lead_months_rationale": "Frame purchase orders from switchgear factories indicate customer intent 1-3 years ahead; they are an indication, not a commitment, and carry price risk (stated by ABB).",
+    "update_frequency": "monthly",
+    "source": {
+      "name": "ABB SAP ERP: frame PO / scheduling agreement coverage by customer segment (not connected in the prototype)",
+      "url": "",
+      "access": "Internal ERP (SAP tables EKKO/EKPO and VBAK/VBAP or equivalent); S&OP export",
+      "date": ""
+    },
+    "reliability": "C",
+    "direction": 0,
+    "strength": 0.0,
+    "observed_at": "",
+    "classification": "mixed",
+    "classification_rationale": "Not populated. This card shows where internal data plugs in; weight is zero until data is connected.",
+    "value": {
+      "number": 0,
+      "unit": "months of coverage",
+      "label": "[PLACEHOLDER] not connected"
+    },
+    "data_label": "ASSUMPTION",
+    "excerpt": "[PLACEHOLDER] When connected: months of forward demand covered by customer frame orders, split by segment and region, compared with the public end-demand signals above. A widening gap between frame orders and end-demand signals is a bullwhip warning.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Not connected.",
+    "usage_restrictions": "Internal, confidential.",
+    "counter_evidence": [],
+    "ce_searched": false,
+    "annotations": [],
+    "source_class": "contract",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": 0.0,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "ABB: puitetilausten kattavuus (sisäinen)"
+  },
+  {
+    "id": "SIG-018",
+    "name": "Micron: memory demand expected to exceed supply through 2027 and 2028",
+    "short": "Micron: memory shortage through 2028",
+    "short_fi": "Micron: muistipula jatkuu vuoteen 2028",
+    "category": "supply",
+    "measures": "supply_tightness",
+    "region": "GLOBAL",
+    "segment": "components",
+    "type": "leading",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: a supplier's two-year balance statement guides allocation decisions for the next 12 months.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "WinBuzzer, Memory maker Micron sees shortages worsening through 2028 (reporting Micron's results call)",
+      "url": "https://winbuzzer.com/2026/10/01/memory-maker-micron-sees-shortages-worsening-through-2028-xcxwbn",
+      "access": "Public news; primary source is Micron's earnings call",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.8,
+    "observed_at": "2026-10-01",
+    "classification": "mixed",
+    "classification_rationale": "A multi-year supply statement from the third-largest DRAM maker is structural in intent; memory pricing remains cyclical and the statement also serves the supplier's pricing position.",
+    "value": {
+      "number": 2028,
+      "unit": "year",
+      "label": "memory demand expected to exceed supply in both 2027 and 2028; entire 2026 HBM4 capacity sold out"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Chief Executive Sanjay Mehrotra expects demand to exceed supply in both 2027 and 2028, with no clear date for a return to balance. Micron reports its entire 2026 HBM4 capacity sold out.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.0,
+      "supply": 0.9,
+      "policy": 0.0,
+      "price": 0.4,
+      "nordic": 0.0,
+      "bullwhip": 0.2
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-017"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "price",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-019",
+    "name": "European Commission proposes a data-centre rating scheme; EU aims to triple data-centre capacity",
+    "short": "EU: data-centre rating scheme, capacity to triple",
+    "short_fi": "EU: datakeskusten luokitus, kapasiteetti kolminkertaiseksi",
+    "category": "policy",
+    "measures": "policy",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 24,
+    "lead_months_rationale": "[ASSUMPTION: EU-level policy support changes national permitting and grid priorities over 1–3 years.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "European Commission press release IP/26/1667, Data Centre Energy Efficiency Package",
+      "url": "https://ec.europa.eu/commission/presscorner/api/files/document/print/en/ip_26_1667/IP_26_1667_EN.pdf",
+      "access": "Public",
+      "date": "2026-09-21"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.5,
+    "observed_at": "2026-09-21",
+    "classification": "structural",
+    "classification_rationale": "A Commission package with a stated capacity target and a consultation on minimum performance standards is multi-year policy, not a market cycle.",
+    "value": {
+      "number": 3,
+      "unit": "x",
+      "label": "EU aims to triple data-centre capacity over the next five to seven years; consultation on minimum energy performance standards closes 14 December 2026"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "The European Commission proposed on 21 September 2026 a common rating scheme for data centres aimed at increasing transparency on their energy use and supporting their sustainable integration into Europe's energy system. The EU wants to triple its data centre capacity over the next five to seven years.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.4,
+      "supply": 0.0,
+      "policy": 0.6,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-023"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-020",
+    "name": "ABB Q2 2026: record order intake, data-centre orders at triple-digit growth, 2026 outlook raised",
+    "short": "ABB Q2 2026 record orders",
+    "short_fi": "ABB: ennätystilaukset Q2/2026",
+    "category": "demand",
+    "measures": "intermediary",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "coincident",
+    "lead_months": 6,
+    "lead_months_rationale": "[ASSUMPTION: group-level order intake runs 1–2 quarters ahead of component call-offs in the relay unit.]",
+    "update_frequency": "quarterly",
+    "source": {
+      "name": "ABB Q2 2026 results as reported by Finimize (article undated; figures refer to Q2 2026)",
+      "url": "https://finimize.com/content/abb-lifted-its-2026-sales-growth-target-on-ai-data-center-demand",
+      "access": "Public; primary source is ABB's Q2 2026 report",
+      "date": "2026-06-30"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.8,
+    "observed_at": "2026-06-30",
+    "classification": "mixed",
+    "classification_rationale": "Record orders reflect structural data-centre demand, but order intake at group level can include advance ordering by customers facing long switchgear lead times.",
+    "value": {
+      "number": 11.29,
+      "unit": "USD bn",
+      "label": "ABB group Q2 2026 order intake, up 32% year on year, with triple-digit growth in data-centre orders; 2026 revenue growth outlook raised to high single-digit to low double-digit percent"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Order intake jumped 32% to a record $11.29 billion. ABB now expects faster 2026 revenue growth – a high single-digit to low double-digit percentage increase, up from its earlier 6% to 9% view.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.7,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.3
+    },
+    "usage_restrictions": "Public company results. Observation dated at the quarter end; the article carries no date.",
+    "counter_evidence": [
+      "CE-018"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-021",
+    "name": "Enetron Park 250 MW data centre, Pyhäjoki: zoning approval claimed, municipal board voted against",
+    "short": "Enetron Park 250 MW Pyhäjoki",
+    "short_fi": "Enetron Park 250 MW Pyhäjoki",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 36,
+    "lead_months_rationale": "[ASSUMPTION: construction planned from early 2028; relays would be specified 12–18 months before energisation.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "DCD, Enetron Park announces zoning approval for 250MW data center in Pyhäjoki despite local government denial",
+      "url": "https://www.datacenterdynamics.com/en/news/enetron-park-announces-zoning-approval-for-250mw-data-center-in-pyh%C3%A4joki-finland-despite-local-government-denial/",
+      "access": "Public web",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.3,
+    "observed_at": "2026-10-01",
+    "classification": "cyclical",
+    "classification_rationale": "A contested planning decision is a timing signal; the project's substance depends on the municipal process. [ASSUMPTION: observation dated 1 October; DCD reports 'early October 2026'.]",
+    "value": {
+      "number": 250,
+      "unit": "MW",
+      "label": "planned capacity; construction set to begin in early 2028 per the developer; municipal board rejected planning 5–2"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Enetron Park announced approval of its zoning initiative for a 250MW data center project in Pyhäjoki, with construction work set to begin in early 2028. However, according to minutes from the municipality's local government board meeting, planning for the project was rejected in a 5-2 vote.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.3,
+      "supply": 0.0,
+      "policy": -0.4,
+      "price": 0.0,
+      "nordic": 0.3,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-020"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-022",
+    "name": "Fingrid KJV2026 grid code for demand connections to be submitted in October–November 2026",
+    "short": "Fingrid KJV2026 grid code timeline",
+    "short_fi": "Fingrid: KJV2026-liityntävaatimusten aikataulu",
+    "category": "policy",
+    "measures": "policy",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: new technical requirements for large consumption connections affect substation design of projects energised from 2027.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Fingrid, draft for comments: KJV2026 grid code specifications for demand connections",
+      "url": "https://www.fingrid.fi/en/grid/grid-connection-agreement-phases/grid-code-specifications/draft-for-comments-kjv2026-grid-code-specifications-for-demand-connections/",
+      "access": "Public",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "direction": 0,
+    "strength": 0.3,
+    "observed_at": "2026-10-01",
+    "classification": "cyclical",
+    "classification_rationale": "A technical rule change affects how, not whether, data centres connect. [ASSUMPTION: observation dated 1 October; the timeline is stated as October–November 2026.]",
+    "value": {
+      "number": 1,
+      "unit": "event",
+      "label": "final KJV2026 specifications to the Energy Authority in October–November 2026, confirmation targeted for early 2027"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Fingrid plans to submit its final grid code specifications (KJV2026) to the Energy Authority in October–November 2026, with confirmation targeted for early 2027.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.0,
+      "supply": 0.0,
+      "policy": -0.2,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-023",
+    "name": "Big-tech commitments to Finland exceed USD 30 bn (Google, Microsoft, TikTok)",
+    "short": "Big-tech commitments to Finland > USD 30 bn",
+    "short_fi": "Suuryhtiöiden sitoumukset Suomeen yli 30 mrd $",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 24,
+    "lead_months_rationale": "[ASSUMPTION: multi-year programmes; construction phases 2027–2028.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Fortune, Meet the data center capital of Europe",
+      "url": "https://fortune.com/2026/09/10/europe-data-center-capital-google-microsoft-tiktok-30-2-billion/",
+      "access": "Public news (aggregates company announcements)",
+      "date": "2026-09-10"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2026-09-10",
+    "classification": "structural",
+    "classification_rationale": "Committed multi-year programmes by three operators; overlaps with the Google and Microsoft cards and is weighted accordingly by its counter-evidence.",
+    "value": {
+      "number": 30.2,
+      "unit": "USD bn",
+      "label": "combined announced investments by Google, Microsoft and TikTok in Finland"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Together, Google, Microsoft and TikTok are investing over $30.2 billion in Finland, making it a major European data center hub.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.7,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.9,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-019"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-024",
+    "name": "atNorth: 30 MW SWE02 in Stockholm (live Q4 2027) and up to 350 MW NOR01 in Norway",
+    "short": "atNorth: 30 MW Stockholm, 350 MW Norway",
+    "short_fi": "atNorth: 30 MW Tukholma, 350 MW Norja",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "NORDICS",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 18,
+    "lead_months_rationale": "[ASSUMPTION: SWE02 go-live Q4 2027 implies substation procurement during 2026–2027.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "DCD, atNorth plans 30MW data center in Stockholm (September 2026); DCD, atNorth plans 350MW campus in Norway (June 2026)",
+      "url": "https://www.datacenterdynamics.com/en/news/northc-plans-30mw-data-center-in-stockholm-sweden/",
+      "access": "Public web",
+      "date": "2026-09-15"
+    },
+    "reliability": "B",
+    "direction": 1,
+    "strength": 0.5,
+    "observed_at": "2026-09-15",
+    "classification": "structural",
+    "classification_rationale": "Colocation expansion with a dated go-live; the Norway campus is a land acquisition with a first phase of 120 MW. [ASSUMPTION: observation dated 15 September; DCD gives the month only.]",
+    "value": {
+      "number": 30,
+      "unit": "MW",
+      "label": "SWE02 Stockholm, go-live Q4 2027; NOR01 Haugaland first phase 120 MW ramping to 350 MW, about NOK 11 bn first phase"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "atNorth announced plans to build an additional data center in Stockholm, known as SWE02, with the site scheduled to go live in Q4 2027.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.5,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.7,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-022"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-025",
+    "name": "Hyperscaler 2026 capex projected at about USD 780 bn including Oracle; 2027 guidance due late October",
+    "short": "Hyperscaler capex projection ~USD 780 bn",
+    "short_fi": "Pilviyhtiöiden investointiarvio ~780 mrd $",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 15,
+    "lead_months_rationale": "[ASSUMPTION: capex guidance precedes electrical fit-out by 12–18 months.]",
+    "update_frequency": "weekly",
+    "source": {
+      "name": "AI Infrastructure Weekly Intelligence, week ending 3 October 2026 (secondary); BigGo Finance",
+      "url": "https://mystockresearch.substack.com/p/ai-infrastructure-weekly-intelligence-4c2",
+      "access": "Public newsletter; primary data in company filings",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-10-03",
+    "classification": "mixed",
+    "classification_rationale": "Projection by a secondary source ahead of Q3 results; the structural driver is AI compute, the pace is cyclical and financing-dependent.",
+    "value": {
+      "number": 780,
+      "unit": "USD bn",
+      "label": "projected 2026 capex of Alphabet, Amazon, Meta, Microsoft and Oracle, up from about USD 416 bn in 2025; 2027 guidance expected in the second half of October"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Hyperscaler spending from Alphabet, Amazon, Meta, Microsoft, and Oracle is projected at roughly $780 billion in 2026, nearly doubling from $416 billion in 2025.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal.",
+    "axes": {
+      "demand": 0.7,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Secondary source; do not quote the figure externally without the filings.",
+    "counter_evidence": [
+      "CE-021"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-026",
+    "name": "Ember: European data-centre electricity demand to grow from 96 TWh (2024) to 168 TWh by 2030; Nordic demand to triple",
+    "short": "Ember: EU DC demand 96 → 168 TWh by 2030",
+    "short_fi": "Ember: EU:n datakeskusten sähkö 96 → 168 TWh 2030",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 36,
+    "lead_months_rationale": "Research anchor: bounds the structural trend over the decade; it does not time orders.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Ember, Grids for data centres: ambitious grid planning can win Europe's AI race (June 2025)",
+      "url": "https://ember-energy.org/latest-insights/grids-for-data-centres-ambitious-grid-planning-can-win-europes-ai-race/",
+      "access": "Public report",
+      "date": "2025-06-15"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2025-06-15",
+    "classification": "structural",
+    "classification_rationale": "Independent energy think-tank projection with regional split; the Nordic figure (+110% by 2030 versus +55% in the big five markets) is the structural basis of the regional shift. [ASSUMPTION: observation dated 15 June 2025; the report gives the month.]",
+    "value": {
+      "number": 168,
+      "unit": "TWh",
+      "label": "European data-centre electricity demand in 2030 (96 TWh in 2024; 236 TWh by 2035); Sweden, Denmark and Norway set to triple by 2030"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Electricity demand of data centres in Europe is projected to grow from 96 TWh in 2024 to 168 TWh by 2030. In markets such as Sweden, Denmark and Norway, demand is set to triple by 2030, while the Nordics and Southern Europe are expected to see data centre demand grow (+110%) at nearly double the rate of Frankfurt, London, Amsterdam, Paris and Dublin (+55%).",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.6,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.7,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-024"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-027",
+    "name": "Lawrence Berkeley National Laboratory (for the US DOE): US data-centre electricity 176 TWh in 2023, 325–580 TWh by 2028",
+    "short": "LBNL/DOE: US DC electricity 325–580 TWh by 2028",
+    "short_fi": "LBNL/DOE: USA:n datakeskusten sähkö 325–580 TWh 2028",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "US",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 36,
+    "lead_months_rationale": "Research anchor for the US comparison; bounds the trend.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Lawrence Berkeley National Laboratory, 2024 United States Data Center Energy Usage Report (December 2024)",
+      "url": "https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report_1.pdf",
+      "access": "Public report, US DOE",
+      "date": "2024-12-15"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2024-12-15",
+    "classification": "structural",
+    "classification_rationale": "National-laboratory estimate mandated by the Energy Act of 2020, with a scenario range rather than a point forecast. [ASSUMPTION: observation dated 15 December 2024; the report gives the month.]",
+    "value": {
+      "number": 176,
+      "unit": "TWh",
+      "label": "US data-centre electricity use in 2023 (4.4% of US consumption), projected 325–580 TWh by 2028 (6.7–12%)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "U.S. data centers reached 176 TWh in 2023, representing 4.4% of total U.S. electricity consumption. Total data center electricity usage is estimated to increase between 325 to 580 TWh by 2028.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.5,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-025"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-028",
+    "name": "Uptime Institute 2026 Global Data Center Survey: power availability a concern for 64% of operators; power behind 56% of worst outages",
+    "short": "Uptime Institute 2026 survey: power is the constraint",
+    "short_fi": "Uptime Institute 2026: sähkö on rajoite",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "coincident",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: operator-reported constraints shape site selection and on-site generation within a year.]",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Uptime Institute, 16th Annual Global Data Center Survey 2026",
+      "url": "https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2026",
+      "access": "Public summary; full report for members",
+      "date": "2026-09-15"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-09-15",
+    "classification": "mixed",
+    "classification_rationale": "The largest independent operator survey; it measures perceived constraints (grid power, supply chain, staffing) rather than demand itself. [ASSUMPTION: observation dated 15 September 2026; publication month inferred from the press cycle.]",
+    "value": {
+      "number": 64,
+      "unit": "%",
+      "label": "share of operators at least somewhat concerned about power availability; 56% of operators with an outage name power as its cause (45% in 2025); rack densities of 30 kW or more rising"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Power availability concerns affect 64% of respondents at least somewhat. Power is the leading identified cause of respondents' most recent impactful data center outage, with 56% saying power was the primary cause, up from 45% in 2025.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.3,
+      "supply": 0.2,
+      "policy": -0.3,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-030"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-029",
+    "name": "Goldman Sachs Research: global data-centre power demand to rise 165% by 2030; about 55 GW today, 92 GW by 2027",
+    "short": "Goldman Sachs Research: DC power +165% by 2030",
+    "short_fi": "Goldman Sachs Research: datakeskusten sähkö +165 % 2030",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 36,
+    "lead_months_rationale": "Research anchor; the 2027 waypoint (92 GW) is within the component ordering horizon.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Goldman Sachs Research, How AI is transforming data centers and ramping up power demand (February 2025); 2026 update reported at about +170%",
+      "url": "https://www.goldmansachs.com/insights/articles/how-ai-is-transforming-data-centers-and-ramping-up-power-demand",
+      "access": "Public research summary",
+      "date": "2025-02-04"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2025-02-04",
+    "classification": "structural",
+    "classification_rationale": "Investment-bank research with explicit capacity waypoints (55 GW today, 92 GW by 2027) and a revision history; the 2026 revision to about +170% is secondary reporting.",
+    "value": {
+      "number": 165,
+      "unit": "%",
+      "label": "increase in global data-centre power demand by 2030 versus 2023; capacity about 55 GW today, 92 GW by 2027 (17% CAGR 2025–2028)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Goldman Sachs Research estimates the power usage by the global data center market to be around 55 gigawatts, and forecasts data center demand to grow by about 50% to 92 GW by 2027, with a compound annual growth rate of 17% between 2025 and 2028.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.6,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-026"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-030",
+    "name": "McKinsey: European data-centre power demand from 62 TWh to more than 150 TWh by 2030; IT load 10 GW to about 35 GW",
+    "short": "McKinsey: EU DC power 62 → 150+ TWh by 2030",
+    "short_fi": "McKinsey: EU:n datakeskusten sähkö 62 → 150+ TWh 2030",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 36,
+    "lead_months_rationale": "Research anchor; bounds the European trend.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "McKinsey & Company, The role of power in unlocking the European AI revolution (October 2024)",
+      "url": "https://www.mckinsey.com/featured-insights/week-in-charts/europes-power-in-play",
+      "access": "Public report",
+      "date": "2024-10-24"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2024-10-24",
+    "classification": "structural",
+    "classification_rationale": "Consulting research covering the EU, Norway, Switzerland and Britain; its 15–25% share of all new European demand is the structural case for grid-led relay demand. [ASSUMPTION: observation dated 24 October 2024.]",
+    "value": {
+      "number": 150,
+      "unit": "TWh",
+      "label": "European data-centre power demand by 2030 (62 TWh today); IT load about 35 GW by 2030 from 10 GW; data centres 15–25% of new European demand; USD 250–300 bn of infrastructure investment required"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "McKinsey projects power demands will rise from the current 62 terawatt-hours (TWh) to more than 150 TWh by 2030. The total IT load demand for data centres is expected to grow to around 35 gigawatts (GW) by 2030 from 10 GW today.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.6,
+      "supply": 0.0,
+      "policy": 0.2,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-027"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-031",
+    "name": "IEA Electricity Mid-Year Update 2026: data-centre electricity demand grew 17% in 2025, AI-focused data centres 50%; data centres about half of US demand growth to 2030",
+    "short": "IEA mid-year 2026: DC demand +17% in 2025",
+    "short_fi": "IEA 2026 puolivuotiskatsaus: datakeskusten kysyntä +17 % 2025",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "GLOBAL",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 24,
+    "lead_months_rationale": "Research anchor with an observed 2025 growth rate rather than a projection.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "IEA, Electricity Mid-Year Update 2026",
+      "url": "https://www.iea.org/reports/electricity-mid-year-update-2026",
+      "access": "Public report, CC BY 4.0",
+      "date": "2026-07-24"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.7,
+    "observed_at": "2026-07-24",
+    "classification": "structural",
+    "classification_rationale": "An observed growth rate from the IEA's half-year review; AI-focused facilities growing 50% a year is the strongest measured (not projected) demand datum in the portfolio. [ASSUMPTION: observation dated 24 July 2026; publication month inferred.]",
+    "value": {
+      "number": 17,
+      "unit": "% (2025)",
+      "label": "growth in data-centre electricity demand in 2025; AI-focused data centres +50%; global electricity demand +3%; data centres about 50% of US demand growth to 2030"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Electricity demand from data centres increased by 17% in 2025, while AI-focused data centres soared by 50% – both well outpacing growth in global electricity demand of 3%. The rapid expansion of data centres is expected to make up about 50% of demand growth out to 2030 in the United States.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.7,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-028"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  },
+  {
+    "id": "SIG-032",
+    "name": "Finnish Government estimate: committed data centres add 8–10 TWh a year, about a tenth of Finnish consumption; AFRY: ~2,500 MW by 2030 would lift prices about 10%",
+    "short": "Finnish Government: committed DCs add 8–10 TWh",
+    "short_fi": "Valtioneuvosto: sitoutuneet datakeskukset +8–10 TWh",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "FI",
+    "segment": "datacenter",
+    "type": "lagging",
+    "lead_months": 30,
+    "lead_months_rationale": "Research anchor for Finland; committed projects only, not applications.",
+    "update_frequency": "annual",
+    "source": {
+      "name": "Finnish Government column, Data centres are an integral part of a developing energy system (May 2026); AFRY study reported by Yle (February 2026)",
+      "url": "https://valtioneuvosto.fi/en/-/1410877/column-data-centres-are-an-integral-part-of-a-developing-energy-system-and-economy",
+      "access": "Public",
+      "date": "2026-05-15"
+    },
+    "reliability": "A",
+    "direction": 1,
+    "strength": 0.6,
+    "observed_at": "2026-05-15",
+    "classification": "structural",
+    "classification_rationale": "Government estimate restricted to existing, under-construction or committed data centres, which is the conversion the Fingrid pipeline card lacks; the AFRY price study is the structural counterweight on the Nordic price advantage. [ASSUMPTION: observation dated 15 May 2026; the column gives the month.]",
+    "value": {
+      "number": 9,
+      "unit": "TWh",
+      "label": "8–10 TWh of additional annual consumption from existing, under-construction or committed data centres, about one tenth of Finnish consumption; AFRY: about 2,500 MW of data-centre load by 2030 would raise electricity prices roughly 10% a year on average"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Based on existing, under-construction, or committed data centres, annual electricity consumption in Finland could increase by 8–10 terawatt hours, accounting for about one tenth of Finland's electricity consumption.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Research anchor; no time series on the card.",
+    "axes": {
+      "demand": 0.6,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.2,
+      "nordic": 0.6,
+      "bullwhip": 0.0
+    },
+    "usage_restrictions": "Public.",
+    "counter_evidence": [
+      "CE-029",
+      "CE-031"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "research",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    }
+  }
+]

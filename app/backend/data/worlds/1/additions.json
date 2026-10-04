@@ -1,0 +1,370 @@
+{
+  "note": "Signals and counter-evidence added by the automatic web search (scout). Delete this file to remove them.",
+  "signals": [
+    {
+      "id": "SIG-033",
+      "name": "Valorem plans 30–50 MW data centre in Savonlinna, Finland, growing to over 100 MW by 2032",
+      "short": "Valorem plans 30–50 MW data centre in Sa",
+      "category": "demand",
+      "measures": "end_demand",
+      "region": "FI",
+      "segment": "datacenter",
+      "type": "leading",
+      "lead_months": 18,
+      "lead_months_rationale": "Zoning agreement and plan amendment stage with first phase targeted for 2028; protection-relay orders for substations and MV distribution typically land 12-24 months before energisation, so roughly 18 months ahead of the 2028 start.",
+      "update_frequency": "event",
+      "source": {
+        "name": "Yle Uutiset – \"Savonlinnan Nätkin teollisuusalueelle suunnitellaan datakeskusta, jonka hukkalämpö voisi lämmittää kaupunkia\"",
+        "url": "https://yle.fi/a/74-20245833?origin=rss",
+        "access": "manual entry",
+        "date": "2026-09-14"
+      },
+      "reliability": "B",
+      "direction": 1,
+      "strength": 0.4,
+      "observed_at": "2026-09-21",
+      "classification": "structural",
+      "classification_rationale": "Multi-year phased data centre build-out (2028 to 2032) tied to a municipal zoning agreement and city plan amendment. It is still at the planning stage and has not reached a final investment decision.",
+      "value": {
+        "number": 100.0,
+        "unit": "MW",
+        "label": "Planned capacity by 2032 (first phase 30-50 MW from 2028)"
+      },
+      "data_label": "SOURCE",
+      "excerpt": "The first phase could offer 30–50 MW from 2028, growing to more than 100 MW by 2032, and the city plan amendment goes to the city council at the end of September.",
+      "history": [
+        {
+          "date": "2026-09-21",
+          "value": 100.0
+        }
+      ],
+      "history_label": "SOURCE",
+      "history_note": "Single observation.",
+      "axes": {
+        "demand": 0.4,
+        "supply": 0.0,
+        "policy": 0.2,
+        "price": 0.0,
+        "nordic": 0.5,
+        "bullwhip": 0.0
+      },
+      "usage_restrictions": "",
+      "counter_evidence": [
+        "CE-032"
+      ],
+      "ce_searched": true,
+      "annotations": [],
+      "needs_review": false,
+      "source_class": "contract",
+      "locked": false,
+      "tracking": {
+        "checks": 0,
+        "last_checked": null
+      },
+      "verification": {
+        "ran": true,
+        "corroborated": true,
+        "primary": {
+          "url": "https://yle.fi/a/74-20245833?origin=rss",
+          "name": "Yle Uutiset – \"Savonlinnan Nätkin teollisuusalueelle suunnitellaan datakeskusta, jonka hukkalämpö voisi lämmittää kaupunkia\"",
+          "date": "2026-09-14",
+          "grade": "B"
+        },
+        "quote": "Sähköteho voisi kasvaa yli 100 megawattiin vuoteen 2032 mennessä.",
+        "notes": "I couldn't find a City of Savonlinna or Valorem document, so this rests on Yle's 14 Sep 2026 report: it matches DCD's 21 Sep article on 30–50 MW from 2028, over 100 MW by 2032, 32 ha in Nätkin and the Eurajoki and Kankaanpää projects, but says the zoning agreement goes to the city board (kaupunginha",
+        "queries": [
+          {
+            "tool": "web_fetch",
+            "url": "https://www.datacenterdynamics.com/en/news/valorem-eyes-data-centers-in-savonlinna-and-kankaanp%C3%A4%C3%A4-finland/"
+          },
+          {
+            "tool": "web_search",
+            "query": "Savonlinna Valorem datakeskus Nätkin"
+          },
+          {
+            "tool": "web_search",
+            "query": "Savonlinna Valorem datakeskus Nätkin"
+          },
+          {
+            "tool": "web_search",
+            "query": "Valorem Savonlinna data center"
+          },
+          {
+            "tool": "web_fetch",
+            "url": "https://yle.fi/a/74-20245833?origin=rss"
+          }
+        ],
+        "searches": 3,
+        "fetches": 2,
+        "sources": [
+          {
+            "url": "https://www.datacenterdynamics.com/en/news/valorem-eyes-data-centers-in-savonlinna-and-kankaanp%C3%A4%C3%A4-finland/",
+            "title": "Valorem eyes data centers in Savonlinna and Kankaanpää, Finland",
+            "grade": "B"
+          },
+          {
+            "url": "https://yle.fi/a/74-20245833?origin=rss",
+            "title": "Savonlinnan Nätkin teollisuusalueelle suunnitellaan datakeskusta, jonka hukkalämpö voisi lämmittää kaupunkia",
+            "grade": "B"
+          },
+          {
+            "url": "https://yle.fi/a/74-20227193",
+            "title": "Datakeskus suunnitteilla Savonlinnaan: energiayhtiö on varannut 32 hehtaaria",
+            "grade": "B"
+          },
+          {
+            "url": "https://yle.fi/a/74-20142748",
+            "title": "Venäläisten perustama datakeskus hurisee edelleen Savonlinnan konkurssikiinteistössä",
+            "grade": "B"
+          },
+          {
+            "url": "https://www.datacenterdynamics.com/en/news/?term=nordics",
+            "title": "News Nordics - DCD",
+            "grade": "B"
+          },
+          {
+            "url": "https://yle.fi/a/74-20246512",
+            "title": "Suomalaiset heräilevät vastustamaan datakeskuksia, Yhdysvalloissa niitä ei haluta omalle takapihalle",
+            "grade": "B"
+          },
+          {
+            "url": "https://yle.fi/a/74-20240505",
+            "title": "Seinäjokelaisilla valtava tiedonjano datakeskuksesta",
+            "grade": "B"
+          },
+          {
+            "url": "https://www.datacenterdynamics.com/en/news/60mw-data-center-colocated-with-solar-and-battery-storage-planned-in-finland/",
+            "title": "60MW data center colocated with solar and battery storage planned in Finland - DCD",
+            "grade": "B"
+          }
+        ],
+        "errors": [],
+        "usage": {
+          "input_tokens": 184558,
+          "output_tokens": 2332,
+          "web_search_requests": 3,
+          "web_fetch_requests": 2,
+          "requests": 1
+        }
+      },
+      "counter_search": {
+        "at": "2026-10-04",
+        "found": 1,
+        "queries": [
+          {
+            "tool": "web_search",
+            "query": "Valorem datakeskus Savonlinna"
+          },
+          {
+            "tool": "web_search",
+            "query": "Valorem datakeskus Savonlinna"
+          },
+          {
+            "tool": "web_search",
+            "query": "Valorem datakeskus Savonlinna"
+          }
+        ],
+        "searches": 3,
+        "fetches": 0,
+        "usage": {
+          "input_tokens": 41282,
+          "output_tokens": 1274,
+          "web_search_requests": 3,
+          "web_fetch_requests": 0,
+          "requests": 1
+        }
+      },
+      "origin": "scout",
+      "theme": "data_centre_projects",
+      "why_signal": "This adds another Finnish data-centre pipeline of more than 100 MW, with first power planned for 2028, so medium-voltage substation and protection-relay demand would land inside the 18-month component ordering horizon.",
+      "found_at": "2026-10-04T10:36"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "CE-032",
+      "against": "SIG-033",
+      "claim": "An earlier Yle report says Valorem Energies Finland has only reserved about 32 hectares of land in the Nätki industrial area, and the reservation runs only until the end of 2027. At that point the company had not yet said what the data centre would be used for. This suggests the project is still at an early, non-binding stage, which adds some risk that the 2028 first-phase date slips.",
+      "source": {
+        "name": "Yle Uutiset – \"Datakeskus suunnitteilla Savonlinnaan: energiayhtiö on varannut 32 hehtaaria\"",
+        "url": "https://yle.fi/a/74-20227193",
+        "date": ""
+      },
+      "reliability": "B",
+      "strength": 0.15,
+      "data_label": "SOURCE",
+      "web": {
+        "verified": true,
+        "quote": "Tekniikkatien päässä olevalle alueelle tehty varaus on voimassa vuoden 2027 loppuun saakka."
+      }
+    }
+  ],
+  "seen": {
+    "fingrid.fi/en/news/news/2026/fingrids-study-locating-industrial-facilities-close-to-electricity-generation-increases-overall-connectability-of-the-transmission-grid": {
+      "at": "2026-10-03",
+      "code": "already_known"
+    },
+    "datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue": {
+      "at": "2026-10-03",
+      "code": "already_known"
+    },
+    "datacenterdynamics.com/en/news/valorem-eyes-data-centers-in-savonlinna-and-kankaanp%C3%A4%C3%A4-finland": {
+      "at": "2026-10-04",
+      "code": "accepted"
+    }
+  },
+  "runs": [
+    {
+      "id": "SCOUT-001",
+      "at": "2026-10-03T23:14:18",
+      "reason": "startup",
+      "status": "failed",
+      "candidates": [],
+      "accepted": 0,
+      "rejected": 0,
+      "searches": 0,
+      "queries": [],
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "error": "bad request: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': \"The following domains are not accessible to our user agent: ['ft.com', 'hs.fi', 'kauppalehti.fi', 'reuters.com']. Read more: https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler\"}, 'request_id': 'req_011Cffv6iNyNaHmUzMfwLSbH'}",
+      "duration_s": 0.6,
+      "est_cost_usd": 0.0,
+      "cost_note": "Searches at USD 0.01 plus Claude Opus 5.5 tokens for discovery, verification and counter-evidence; the classifier's own tokens are not included."
+    },
+    {
+      "id": "SCOUT-002",
+      "at": "2026-10-03T23:23:37",
+      "reason": "startup",
+      "status": "done",
+      "candidates": [
+        {
+          "title": "Fingrid study: better siting could add up to 20 GW of transmission connection capacity; signed agreements would add ~40% to Finnish consumption",
+          "url": "https://www.fingrid.fi/en/news/news/2026/fingrids-study-locating-industrial-facilities-close-to-electricity-generation-increases-overall-connectability-of-the-transmission-grid",
+          "source_name": "Fingrid",
+          "date": "2026-09-09",
+          "grade": "A",
+          "theme": "grid_and_connections",
+          "why_signal": "Up to 20 GW of extra connection capacity, plus a contracted load pipeline of nearly 40% of national consumption, means more new substations and grid connection bays in Finland, and each one needs medium-voltage protection relays.",
+          "decision": "rejected",
+          "reason": {
+            "code": "already_known",
+            "en": "The link is already used by a signal or was reviewed earlier.",
+            "fi": "Linkki on jo käytössä signaalissa tai tarkistettu aiemmin."
+          }
+        },
+        {
+          "title": "Finland draft amendment would replace first-come, first-served grid connections with four priority groups, moving large data centres down the queue",
+          "url": "https://www.datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue/",
+          "source_name": "DatacenterDynamics (DCD)",
+          "date": "2026-09-29",
+          "grade": "B",
+          "theme": "energy_policy",
+          "why_signal": "Moving large data centres down the queue, and linking priority to local generation, would delay large Finnish data-centre connections and change the timing and mix of relay demand, with relatively more on small and co-located generation sites.",
+          "decision": "rejected",
+          "reason": {
+            "code": "already_known",
+            "en": "The link is already used by a signal or was reviewed earlier.",
+            "fi": "Linkki on jo käytössä signaalissa tai tarkistettu aiemmin."
+          }
+        }
+      ],
+      "accepted": 0,
+      "rejected": 2,
+      "searches": 4,
+      "queries": [
+        "Fingrid data centre connection September 2026",
+        "Fingrid data centre connection September 2026",
+        "Fingrid data centre connection September 2026",
+        "data center Finland announced 2026",
+        "https://www.fingrid.fi/en/news/news/2026/fingrids-study-locating-industrial-facilities-close-to-electricity-generation-increases-overall-connectability-of-the-transmission-grid",
+        "https://www.datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue/"
+      ],
+      "usage": {
+        "input_tokens": 86166,
+        "output_tokens": 2441
+      },
+      "note": {
+        "en": "Candidates were found but none passed every check; nothing was added.",
+        "fi": "Ehdokkaita löytyi, mutta yksikään ei läpäissyt kaikkia tarkistuksia; mitään ei lisätty."
+      },
+      "duration_s": 46.3,
+      "est_cost_usd": 0.433,
+      "cost_note": "Searches at USD 0.01 plus Claude Opus 5.5 tokens for discovery, verification and counter-evidence; the classifier's own tokens are not included."
+    },
+    {
+      "id": "SCOUT-003",
+      "at": "2026-10-04T01:07:32",
+      "reason": "startup",
+      "status": "done",
+      "candidates": [],
+      "accepted": 0,
+      "rejected": 0,
+      "searches": 4,
+      "queries": [
+        "Fingrid data centre connection September 2026",
+        "Fingrid data centre connection September 2026",
+        "Finland data center investment October 2026",
+        "Nordic data centre grid connection agreement MW",
+        "https://www.datacenterdynamics.com/en/news/data-center-development-planned-for-180-hectare-plot-in-isojoki-finland/",
+        "https://www.fingrid.fi/en/news/news/2026/electricity-consumption-is-set-to-increase-sharply--more-balancing-power-will-also-be-needed/"
+      ],
+      "usage": {
+        "input_tokens": 160307,
+        "output_tokens": 2247
+      },
+      "note": {
+        "en": "No source met the criteria; nothing was added.",
+        "fi": "Yksikään lähde ei täyttänyt ehtoja; mitään ei lisätty."
+      },
+      "duration_s": 58.3,
+      "est_cost_usd": 0.726,
+      "cost_note": "Searches at USD 0.01 plus Claude Opus 5.5 tokens for discovery, verification and counter-evidence; the classifier's own tokens are not included."
+    },
+    {
+      "id": "SCOUT-004",
+      "at": "2026-10-04T10:34:19",
+      "reason": "startup",
+      "status": "done",
+      "candidates": [
+        {
+          "title": "Valorem plans 30–50 MW data centre in Savonlinna, Finland, growing to over 100 MW by 2032",
+          "url": "https://www.datacenterdynamics.com/en/news/valorem-eyes-data-centers-in-savonlinna-and-kankaanp%C3%A4%C3%A4-finland/",
+          "source_name": "DatacenterDynamics (DCD)",
+          "date": "2026-09-21",
+          "grade": "B",
+          "theme": "data_centre_projects",
+          "why_signal": "This adds another Finnish data-centre pipeline of more than 100 MW, with first power planned for 2028, so medium-voltage substation and protection-relay demand would land inside the 18-month component ordering horizon.",
+          "weight": 0.227,
+          "reliability": "B",
+          "corroborated": true,
+          "signal_id": "SIG-033",
+          "decision": "accepted",
+          "reason": {
+            "code": "accepted",
+            "en": "Passed every check and was added.",
+            "fi": "Läpäisi kaikki tarkistukset ja lisättiin."
+          }
+        }
+      ],
+      "accepted": 1,
+      "rejected": 0,
+      "searches": 9,
+      "queries": [
+        "data centre Finland grid connection September 2026",
+        "DRAM contract prices fourth quarter 2026 TrendForce",
+        "transformer switchgear order data centre Europe September 2026",
+        "https://www.datacenterdynamics.com/en/news/?term=nordics",
+        "https://www.datacenterdynamics.com/en/news/valorem-eyes-data-centers-in-savonlinna-and-kankaanp%C3%A4%C3%A4-finland/"
+      ],
+      "usage": {
+        "input_tokens": 405317,
+        "output_tokens": 6611
+      },
+      "duration_s": 139.9,
+      "est_cost_usd": 1.843,
+      "cost_note": "Searches at USD 0.01 plus Claude Opus 5.5 tokens for discovery, verification and counter-evidence; the classifier's own tokens are not included."
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "note": "Inputs for the deterministic bullwhip metrics. Every series is labelled. The engine computes the metric values; nothing here is a result.",
+  "metrics": [
+    {
+      "id": "BW-1",
+      "name": "Order amplification ratio",
+      "method": "amplification_ratio",
+      "definition": "(1 + growth of intermediary orders) / (1 + growth of end demand) over the same 12 months. Above 1.3 means intermediaries are ordering faster than end demand grows: amplification.",
+      "inputs": {
+        "orders_growth": 1.1,
+        "end_demand_growth": 0.55
+      },
+      "inputs_label": "DEMODATA",
+      "inputs_note": "[DEMODATA] intermediary orders = switchgear-OEM relay orders; end demand = energised data-centre MW. Replace with ABB order intake and Fingrid energisation data.",
+      "threshold": 1.3,
+      "sources": [
+        {
+          "name": "Method: Lee, Padmanabhan, Whang (1997) bullwhip definition; ABB order intake (internal, not connected)",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "BW-2",
+      "name": "Memory price momentum (second derivative)",
+      "method": "momentum",
+      "definition": "Change in the quarter-on-quarter price increment. Prices rising but the increment shrinking two quarters in a row is the pre-peak pattern.",
+      "inputs": {
+        "series": [
+          25,
+          95.5,
+          60.5,
+          15.5,
+          12.5
+        ],
+        "dates": [
+          "4Q25",
+          "1Q26",
+          "2Q26",
+          "3Q26",
+          "4Q26 (forecast)"
+        ]
+      },
+      "inputs_label": "SOURCE",
+      "inputs_note": "1Q26–4Q26 midpoints from TrendForce press releases (2026-02-02, 2026-03-31, 2026-07-09, 2026-09-30); the 4Q25 value is a [DEMODATA] placeholder.",
+      "threshold": -20,
+      "sources": [
+        {
+          "name": "TrendForce press releases",
+          "url": "https://www.trendforce.com/presscenter/news/20260709-13140.html"
+        }
+      ]
+    },
+    {
+      "id": "BW-3",
+      "name": "Double-ordering index (lead time vs distributor inventory)",
+      "method": "double_order_index",
+      "definition": "Lead times and distributor inventory days rising together means buyers are ordering ahead of need (hoarding). Lead times rising while inventory falls means genuine scarcity.",
+      "inputs": {
+        "lead_time_change_pct": 0.65,
+        "inventory_days_change_pct": 0.22
+      },
+      "inputs_label": "DEMODATA",
+      "inputs_note": "[DEMODATA] lead time change is consistent with the 32 -> 52 week MCU series (SIG-008); distributor inventory days change is illustrative. Replace with distributor quarterly reports (Arrow, Avnet) and ECIA data.",
+      "threshold": 0.15,
+      "sources": [
+        {
+          "name": "Distributor quarterly reports; ECIA survey",
+          "url": "https://electronics360.globalspec.com/article/23407/ecia-strongest-sales-sentiment-for-electronic-components-in-4-5-years"
+        }
+      ]
+    },
+    {
+      "id": "BW-4",
+      "name": "DRAM spot-to-contract spread",
+      "method": "spot_contract_spread",
+      "definition": "Spot premium over contract price. A high premium means urgency; a collapsing premium while lead times are still long means hoarding is ending.",
+      "inputs": {
+        "spread_series": [
+          12,
+          28,
+          22,
+          14,
+          9,
+          6
+        ]
+      },
+      "inputs_label": "DEMODATA",
+      "inputs_note": "[DEMODATA] entire series illustrative (same as SIG-015). Replace with DRAMeXchange spot vs contract.",
+      "threshold": 10,
+      "sources": [
+        {
+          "name": "TrendForce / DRAMeXchange (paid)",
+          "url": "https://www.trendforce.com/research/category/Semiconductors/DRAM"
+        }
+      ]
+    },
+    {
+      "id": "BW-5",
+      "name": "Order push-out and cancellation rate (ABB internal)",
+      "method": "cancellation_rate",
+      "definition": "Share of frame-order quantities rescheduled out or cancelled in the last 90 days. The earliest internal sign that intermediaries over-ordered.",
+      "inputs": {
+        "cancelled_or_pushed": null,
+        "total": null
+      },
+      "inputs_label": "ASSUMPTION",
+      "inputs_note": "Not connected. Requires ABB SAP sales order change history (VBAP/VBEP schedule line changes).",
+      "threshold": 0.1,
+      "sources": [
+        {
+          "name": "ABB SAP ERP (internal, not connected)",
+          "url": ""
+        }
+      ]
+    }
+  ],
+  "analog_2021_2023": {
+    "label": "SOURCE+DEMODATA",
+    "note": "Indexed shape of the 2021-2023 semiconductor cycle for visual comparison only. Anchors: Broadcom lead time 12.2 weeks (Feb 2020) to 22.2 weeks (Apr 2021); SIA 2022 sales USD 573.5 bn with December 2022 down 4.4% MoM; memory corrected first in 2022 and rebounded first in 2023. Intermediate points are illustrative.",
+    "months": [
+      "2020-06",
+      "2020-12",
+      "2021-06",
+      "2021-12",
+      "2022-06",
+      "2022-12",
+      "2023-06",
+      "2023-12"
+    ],
+    "lead_time_index": [
+      100,
+      115,
+      165,
+      200,
+      205,
+      180,
+      140,
+      115
+    ],
+    "price_index": [
+      100,
+      105,
+      135,
+      150,
+      140,
+      105,
+      80,
+      90
+    ],
+    "current_cycle_months": [
+      "2025-06",
+      "2025-09",
+      "2025-12",
+      "2026-03",
+      "2026-06",
+      "2026-09"
+    ],
+    "current_lead_time_index": [
+      100,
+      120,
+      150,
+      185,
+      215,
+      240
+    ],
+    "current_price_index": [
+      100,
+      125,
+      160,
+      310,
+      500,
+      580
+    ],
+    "sources": [
+      {
+        "name": "Wikipedia: 2020-2023 global chip shortage (lead time anchors)",
+        "url": "https://en.wikipedia.org/wiki/2020%E2%80%932023_global_chip_shortage"
+      },
+      {
+        "name": "Nomad Semi: State of the Semiconductor Cycle (SIA data)",
+        "url": "https://www.nomadsemi.com/p/state-of-the-semiconductor-cycle"
+      },
+      {
+        "name": "Roland Berger: Semiconductor shortage, a different kind of (Oct 2022)",
+        "url": "https://content.rolandberger.com/hubfs/07_presse/22_2131_WP_Semiconductor_shortage_V6.pdf"
+      }
+    ]
+  }
+}

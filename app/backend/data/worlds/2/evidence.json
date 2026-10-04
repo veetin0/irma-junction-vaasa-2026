@@ -1,0 +1,210 @@
+[
+  {
+    "id": "CE-010",
+    "against": "SIG-006",
+    "claim": "The IEA base case is bracketed by alternative cases (Lift-Off, High Efficiency, Headwinds). Efficiency gains in AI hardware and software could materially lower the 2030 figure; the report itself flags this uncertainty.",
+    "source": {
+      "name": "IEA, Energy and AI (full report PDF)",
+      "url": "https://iea.blob.core.windows.net/assets/86ed1178-4d77-45ac-ab38-28e849f3b93f/EnergyandAI.pdf",
+      "date": "2025-04-10"
+    },
+    "reliability": "A",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-013",
+    "against": "SIG-011",
+    "claim": "Fingrid's own study shows the Finnish constraint is grid connectability, not price: 70% of generation sits in the west and north, over 50% of consumption in the south. Cheap power that cannot be connected does not attract load.",
+    "source": {
+      "name": "Fingrid news: locating industrial facilities close to generation increases connectability",
+      "url": "https://www.fingrid.fi/en/news/news/2026/fingrids-study-locating-industrial-facilities-close-to-electricity-generation-increases-overall-connectability-of-the-transmission-grid",
+      "date": "2026-03-10"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-W2-001",
+    "against": "SIG-004",
+    "claim": "[DEMODATA, world situation 2] The guidance cut is concentrated in non-AI cloud capacity at two companies; AI-specific capex guidance was reaffirmed. Demand for AI data centres may continue even as the total falls.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] earnings call transcripts (illustrative)",
+      "url": "",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-W2-002",
+    "against": "SIG-007",
+    "claim": "[DEMODATA, world situation 2] The DRAM price fall is led by PC and mobile grades; server DRAM allocation to AI customers is unchanged, so industrial buyers may not see relief.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] memory market commentary (illustrative)",
+      "url": "",
+      "date": "2026-10-01"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-W2-003",
+    "against": "SIG-001",
+    "claim": "[DEMODATA, world situation 2] The two withdrawn agreements were speculative filings; the remaining 3 GW continue toward energisation on the published timetable.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] Fingrid statement (illustrative)",
+      "url": "",
+      "date": "2026-10-01"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-W2-004",
+    "against": "SIG-010",
+    "claim": "[DEMODATA, world situation 2] The copper decline reflects an unwind of speculative positions; physical premiums and grid-related orders remain firm.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] metals market commentary (illustrative)",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "B",
+    "strength": 0.3,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-W2-005",
+    "against": "SIG-003",
+    "claim": "[DEMODATA, world situation 2] The postponement concerns two of four sites; the Hamina expansion and the Loviisa power agreement continue unchanged.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] company statement (illustrative)",
+      "url": "",
+      "date": "2026-09-25"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-W2-006",
+    "against": "SIG-005",
+    "claim": "[DEMODATA, world situation 2] Most cancellations are of announcements that never entered construction; capacity under construction is unchanged.",
+    "source": {
+      "name": "[DEMODATA, world situation 2] construction statistics (illustrative)",
+      "url": "",
+      "date": "2026-09-20"
+    },
+    "reliability": "C",
+    "strength": 0.4,
+    "data_label": "DEMODATA"
+  },
+  {
+    "id": "CE-024",
+    "against": "SIG-026",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-025",
+    "against": "SIG-027",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-026",
+    "against": "SIG-029",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-027",
+    "against": "SIG-030",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-028",
+    "against": "SIG-031",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-029",
+    "against": "SIG-032",
+    "claim": "Jonathan Koomey and co-authors find that data-centre electricity forecasts are biased toward overestimation: duplicate and speculative interconnection requests inflate expected load, service-demand growth and efficiency gains are both uncertain, and historical utility forecasts have consistently overshot. Projections of explosive growth should be discounted, not taken at face value.",
+    "source": {
+      "name": "Koomey Analytics and GridLab, Separating fact from fiction in data center electricity forecasts: a guide for regulators (Koomey, Schmidt, Sreedharan, Kumar, McNair, 2026)",
+      "url": "https://www.koomey.com/koomey_blog/new-report-out-today-separating-fact-from-fiction-in-data-center-electricity-forecasts-a-guide-for-regulators/",
+      "date": "2026-03-01"
+    },
+    "reliability": "A",
+    "strength": 0.5,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-030",
+    "against": "SIG-028",
+    "claim": "A perception survey of operators measures reported concern, not load; respondents facing constraints are more likely to answer, and rising density reflects AI hardware rather than site count. [ASSUMPTION]",
+    "source": {
+      "name": "[ASSUMPTION] survey-method caution",
+      "url": "",
+      "date": "2026-10-03"
+    },
+    "reliability": "C",
+    "strength": 0.3,
+    "data_label": "ASSUMPTION"
+  },
+  {
+    "id": "CE-031",
+    "against": "SIG-032",
+    "claim": "LUT University (May 2026) finds continuous data-centre supply from new renewables technically and economically feasible in Finland at about EUR 103–121/MWh, and more than 7.2 GW of permitted wind and solar is ready to build; the price impact of new load can be mitigated if data centres bring their own generation.",
+    "source": {
+      "name": "LUT University, Researchers find answer to data centres' massive electricity demand (May 2026)",
+      "url": "https://www.lut.fi/en/news/researchers-find-answer-data-centres-massive-electricity-demand",
+      "date": "2026-05-20"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  }
+]

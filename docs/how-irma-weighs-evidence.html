@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Irma Weighs Evidence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one reading column (about 46rem) on a quiet off-white ground; diagrams sit in white panels;
+   ABB red is reserved for the brand mark and for the result in each example, blue/red for pushes up/down. */
+:root {
+  --bg: #f6f6f4; --surface: #ffffff; --fg: #161616; --muted: #5b5954; --faint: #8b8983; --line: #e3e1db; --grid: #eeece7;
+  --accent: #d6000e; --accent-soft: #fbe8e9;
+  --for: #2a78d6; --against: #d64545; --neutral: #b9b6ae;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #4a3aa7;
+  --r1: #d6000e; --r2: #2a78d6; --r3: #1baf7a; --r4: #4a3aa7;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111111; --surface: #1a1a19; --fg: #f2f1ed; --muted: #b3b1aa; --faint: #8a8882; --line: #2f2e2b; --grid: #262624;
+    --accent: #ff4a54; --accent-soft: #3a1618; --for: #4b93ea; --against: #ec6a6a; --neutral: #5f5d58;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #9085e9;
+    --r1: #ff4a54; --r2: #3987e5; --r3: #199e70; --r4: #9085e9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111111; --surface: #1a1a19; --fg: #f2f1ed; --muted: #b3b1aa; --faint: #8a8882; --line: #2f2e2b; --grid: #262624;
+  --accent: #ff4a54; --accent-soft: #3a1618; --for: #4b93ea; --against: #ec6a6a; --neutral: #5f5d58;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #9085e9;
+  --r1: #ff4a54; --r2: #3987e5; --r3: #199e70; --r4: #9085e9;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 20px; padding-block: 0 64px; }
+.wrap { max-width: 46rem; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.12rem; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.mark { display: inline-block; width: 10px; height: 10px; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
+.lede { font-size: 1.15rem; color: var(--muted); }
+section { display: grid; gap: 18px; }
+.stack { display: grid; gap: 12px; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.small { font-size: 0.9rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.caption { font-size: 0.88rem; color: var(--muted); }
+header.top { padding-top: 56px; display: grid; gap: 16px; }
+
+/* in short */
+.short { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+.short li { padding-left: 18px; position: relative; }
+.short li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 8px; height: 8px; background: var(--accent); }
+
+/* flow */
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.flow .step { position: relative; display: grid; gap: 6px; align-content: start; }
+.flow .step:not(:last-child)::after { content: "→"; position: absolute; right: -13px; top: 22px; color: var(--faint); font-size: 1.1rem; }
+.step .eyebrow { font-size: 0.7rem; }
+.step .ex { margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--muted); }
+.step .big { font-family: var(--font-mono); font-size: 1.25rem; color: var(--fg); }
+
+/* factors */
+.factors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.factor { display: grid; gap: 6px; align-content: start; }
+.factor .q { font-family: var(--font-display); font-weight: 700; }
+.factor ul { margin: 0; padding-left: 1.1rem; font-size: 0.92rem; color: var(--muted); }
+.factor .ex { font-size: 0.88rem; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 4px; }
+.equation { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; font-family: var(--font-mono); font-size: 1.05rem; }
+.equation .op { color: var(--faint); }
+.equation .result { color: var(--accent); font-weight: 500; font-size: 1.3rem; }
+.equation .lbl { display: block; font-family: var(--font-body); font-size: 0.72rem; color: var(--muted); }
+.term { display: grid; text-align: center; }
+
+/* calculator */
+.calc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; }
+.calc .field { display: grid; gap: 6px; min-width: 0; }
+.calc label, .calc legend { font-size: 0.9rem; font-weight: 600; }
+.calc fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg label { font-weight: 400; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; background: var(--bg); }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg input:checked + span { font-weight: 700; }
+.seg label:has(input:checked) { border-color: var(--fg); background: var(--surface); }
+.seg label:focus-within { outline: 2px solid var(--for); outline-offset: 2px; }
+.calc select, .calc input[type=range] { width: 100%; font: inherit; }
+.calc select { padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.calc .check { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+.calc-out { grid-column: 1 / -1; display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 16px; }
+.wbar { position: relative; height: 14px; background: var(--grid); border-radius: 7px; }
+.wbar .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 7px; transition: width 0.2s; }
+.wbar .tick { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--fg); opacity: 0.5; }
+.wticks { position: relative; height: 18px; font-size: 0.75rem; color: var(--muted); }
+.wticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.status { font-size: 0.95rem; }
+
+/* freshness chart */
+.chart-scroll { overflow-x: auto; }
+.chart-scroll svg { display: block; width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.86rem; color: var(--muted); }
+.legend .key { display: inline-block; width: 18px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+svg .gridline { stroke: var(--grid); stroke-width: 1; }
+svg .axis { stroke: var(--neutral); stroke-width: 1; }
+svg .t { fill: var(--muted); font-family: var(--font-body); font-size: 14px; }
+svg .t-strong { fill: var(--fg); font-family: var(--font-body); font-size: 12px; font-weight: 600; }
+svg .ln { fill: none; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+.c1 { stroke: var(--s1); } .c2 { stroke: var(--s2); } .c3 { stroke: var(--s3); } .c4 { stroke: var(--s4); }
+.f1 { fill: var(--s1); } .f2 { fill: var(--s2); } .f3 { fill: var(--s3); } .f4 { fill: var(--s4); }
+svg .dot-ring { stroke: var(--surface); stroke-width: 2; }
+svg .hl { fill: var(--accent); }
+
+/* doubts */
+.doubt-rows { display: grid; gap: 10px; }
+.drow { display: grid; grid-template-columns: 13rem minmax(0, 1fr) 3.5rem; gap: 12px; align-items: center; font-size: 0.92rem; }
+.dtrack { position: relative; height: 18px; background: var(--grid); border-radius: 4px; overflow: visible; }
+.dtrack .seg-bar { position: absolute; top: 0; bottom: 0; }
+.dtrack .left { background: var(--neutral); border-radius: 4px 0 0 4px; }
+.dtrack .removed { background: var(--against); opacity: 0.85; }
+.dtrack .end { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--fg); }
+.drow .v { text-align: right; font-family: var(--font-mono); }
+.drow.result .v { color: var(--accent); }
+.dsep { height: 1px; background: var(--line); margin: 6px 0; }
+
+/* fingerprints */
+.fp { display: grid; grid-template-columns: 8.5rem repeat(3, minmax(0, 1fr)); gap: 8px 12px; align-items: center; font-size: 0.9rem; }
+.fp .h { font-weight: 700; font-size: 0.85rem; line-height: 1.25; align-self: end; }
+.fp .theme { color: var(--muted); }
+.dv { display: grid; grid-template-columns: minmax(0, 1fr) 2.6rem; gap: 6px; align-items: center; }
+.dv .track { position: relative; height: 12px; background: var(--grid); border-radius: 3px; }
+.dv .track::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--neutral); }
+.dv .bar { position: absolute; top: 2px; bottom: 2px; }
+.dv .pos { left: 50%; background: var(--for); border-radius: 0 3px 3px 0; }
+.dv .neg { right: 50%; background: var(--against); border-radius: 3px 0 0 3px; }
+.dv .v { font-family: var(--font-mono); font-size: 0.82rem; text-align: right; color: var(--muted); }
+.fp .rule { grid-column: 1 / -1; height: 1px; background: var(--line); }
+.fp .short { display: none; }
+p .num { font-size: 0.92em; }
+.fp .total { font-family: var(--font-mono); font-weight: 500; }
+.fp .total.up { color: var(--for); } .fp .total.down { color: var(--against); }
+
+/* waterfall and shares */
+.wf { display: grid; gap: 8px; }
+.wf-row { display: grid; grid-template-columns: 14rem minmax(0, 1fr) 3.4rem; gap: 12px; align-items: center; font-size: 0.9rem; }
+.wf-track { position: relative; height: 18px; }
+.wf-zero { position: absolute; top: -4px; bottom: -4px; width: 1px; background: var(--neutral); }
+.wf-bar { position: absolute; top: 2px; bottom: 2px; border-radius: 3px; }
+.wf-bar.start { background: var(--neutral); } .wf-bar.up { background: var(--for); } .wf-bar.down { background: var(--against); } .wf-bar.final { background: var(--accent); }
+.wf-row .v { text-align: right; font-family: var(--font-mono); }
+.wf-row.final { font-weight: 700; } .wf-row.final .v { color: var(--accent); }
+.wf-axis { position: relative; height: 18px; font-size: 0.75rem; color: var(--muted); }
+.wf-axis span { position: absolute; transform: translateX(-50%); }
+.scores { display: grid; gap: 8px; }
+.sc-row { display: grid; grid-template-columns: minmax(0, 1fr) 4rem 3rem; gap: 12px; align-items: center; font-size: 0.92rem; }
+.sc-name { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.sw { flex: none; width: 10px; height: 10px; border-radius: 2px; transform: translateY(1px); }
+.b1 { background: var(--r1); } .b2 { background: var(--r2); } .b3 { background: var(--r3); } .b4 { background: var(--r4); }
+.sc-row .v { text-align: right; font-family: var(--font-mono); }
+.sc-row .p { text-align: right; font-family: var(--font-mono); font-weight: 600; }
+.sc-head { font-size: 0.78rem; color: var(--muted); }
+.shares { display: flex; height: 26px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--surface); }
+.shares span { display: block; height: 100%; }
+
+/* examples */
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.case { display: grid; gap: 10px; align-content: start; }
+.case h3 { font-size: 1.02rem; }
+.case .what { font-size: 0.93rem; }
+.case .why { font-size: 0.88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 8px; }
+.mini { display: grid; gap: 6px; }
+.mini-row { display: grid; grid-template-columns: 8.6rem minmax(0, 1fr) 2.8rem; gap: 8px; align-items: center; font-size: 0.82rem; color: var(--muted); }
+.mini-track { position: relative; height: 10px; background: var(--grid); border-radius: 5px; }
+.mini-track span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+.mini-track .before { background: var(--neutral); } .mini-track .after { background: var(--accent); }
+.mini-row .v { text-align: right; font-family: var(--font-mono); color: var(--fg); }
+.mini-row.after-row .v { color: var(--accent); }
+.kv { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+
+/* table */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; width: 22%; }
+.verdict { padding: 16px 18px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; display: grid; gap: 8px; }
+ol.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; }
+footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+:focus-visible { outline: 2px solid var(--for); outline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .flow { grid-template-columns: 1fr 1fr; }
+  .flow .step:nth-child(2)::after { display: none; }
+  .cases { grid-template-columns: 1fr; }
+  .calc { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  table, tbody, tr, td { display: block; } thead { display: none; } td { border-bottom: 0; padding: 4px 14px; } td:first-child { width: auto; padding-top: 14px; } tr { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+  td[data-label]::before { content: attr(data-label) ": "; font-weight: 700; color: var(--muted); }
+  .flow { grid-template-columns: 1fr; }
+  .flow .step::after { display: none; }
+  .drow { grid-template-columns: 1fr 3rem; } .drow .lbl { grid-column: 1 / -1; }
+  .wf-row { grid-template-columns: 1fr 3.2rem; } .wf-row .lbl { grid-column: 1 / -1; }
+  .fp { grid-template-columns: 5.6rem repeat(3, minmax(0, 1fr)); font-size: 0.8rem; }
+  .fp .full { display: none; } .fp .short { display: inline; }
+  .dv { grid-template-columns: 1fr; } .dv .v { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { .wbar .fill { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow"><span class="mark" aria-hidden="true"></span>Irma · how the numbers are made</div>
+    <h1>How Irma weighs evidence</h1>
+    <p class="lede">Every percentage on Irma's overview comes from a short chain of simple arithmetic. This page walks through that chain with real examples from the data of 4 October 2026, and says plainly which parts are standard methods and which parts are our own choices.</p>
+    <div class="panel">
+      <div class="eyebrow" style="margin-bottom:10px">In short</div>
+      <ul class="short">
+        <li>A signal's <strong>weight</strong> is five simple answers multiplied together: how reliable the publisher is, how fresh the news is, how big the change is, how much doubt has been found, and what the planner thinks.</li>
+        <li>Each weighted signal <strong>pushes</strong> the situations it fits up and the ones it contradicts down. The pushes are added up and turned into <strong>percentages</strong> that always total 100%.</li>
+        <li>The building blocks are well-known methods. The way they are combined and the numbers inside them are <strong>our own judgement</strong>, not an official standard, and they have not yet been checked against ABB's actual orders.</li>
+      </ul>
+    </div>
+  </header>
+
+  <section aria-labelledby="chain">
+    <h2 id="chain">The chain in one picture</h2>
+    <div class="flow">
+      <div class="panel step"><span class="eyebrow">A signal</span><span>A dated fact from a named source, with the sentence it rests on.</span><span class="ex">Google commits EUR 13 bn to Finnish data centres, 9 Sep 2026</span></div>
+      <div class="panel step"><span class="eyebrow">Its weight</span><span>How much this signal should count, from 0 to 1.</span><span class="ex"><span class="big">0.59</span></span></div>
+      <div class="panel step"><span class="eyebrow">Its pushes</span><span>Up for situations it fits, down for those it contradicts.</span><span class="ex"><span class="num" style="color:var(--for)">+0.40</span> to "Growth continues, components stay scarce"</span></div>
+      <div class="panel step"><span class="eyebrow">The shares</span><span>The four most likely situations, adding up to 100%.</span><span class="ex"><span class="big">50%</span> for the leading situation, then 36, 10 and 3%</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s1">
+    <div class="eyebrow">Step 1 of 3</div>
+    <h2 id="s1">How much one signal counts</h2>
+    <p>Irma asks five questions about every signal. Each answer becomes a number, and the five numbers are multiplied. The result is the signal's weight, from 0 (ignore it) to 1 (it counts fully).</p>
+    <div class="factors">
+      <div class="panel factor"><span class="q">Who published it?</span><span class="small">Reliability</span>
+        <ul><li>A, the original source (grid operator, regulator, company, research institute): 1.0</li><li>B, reputable press: 0.7</li><li>C, anything else: 0.4</li></ul>
+        <span class="ex">Google's own announcement: <span class="num">1.00</span></span></div>
+      <div class="panel factor"><span class="q">How old is it?</span><span class="small">Freshness</span>
+        <ul><li>Halves after a set time</li><li>Daily prices: 14 days. One-off news: 90 days. Quarterly reports: 120 days. Annual studies: 240 days</li></ul>
+        <span class="ex">One-off news, 25 days old: <span class="num">0.82</span></span></div>
+      <div class="panel factor"><span class="q">How big is the change?</span><span class="small">Size of the move</span>
+        <ul><li>Set when the signal is read</li><li>A record or a doubling is close to 1, a small change close to 0</li></ul>
+        <span class="ex">A EUR 13 bn programme: <span class="num">0.90</span></span></div>
+      <div class="panel factor"><span class="q">What speaks against it?</span><span class="small">Doubt</span>
+        <ul><li>Each piece of counter-evidence removes part of what is left</li><li>At most 80% can be removed</li></ul>
+        <span class="ex">One moderate doubt, so 79% remains: <span class="num">0.79</span></span></div>
+      <div class="panel factor"><span class="q">What does the planner say?</span><span class="small">Your view</span>
+        <ul><li>Confirm: ×1.2. Dispute: ×0.5</li><li>Kept between 0.25 and 1.5, and logged with name and reason</li></ul>
+        <span class="ex">No assessment yet: <span class="num">1.00</span></span></div>
+    </div>
+    <div class="panel equation" aria-label="Google example: 1.00 times 0.82 times 0.90 times 0.79 times 1.00 equals 0.59">
+      <span class="term"><span>1.00</span><span class="lbl">publisher</span></span><span class="op">×</span>
+      <span class="term"><span>0.82</span><span class="lbl">freshness</span></span><span class="op">×</span>
+      <span class="term"><span>0.90</span><span class="lbl">size</span></span><span class="op">×</span>
+      <span class="term"><span>0.79</span><span class="lbl">after doubt</span></span><span class="op">×</span>
+      <span class="term"><span>1.00</span><span class="lbl">your view</span></span><span class="op">=</span>
+      <span class="term"><span class="result">0.59</span><span class="lbl">weight</span></span>
+    </div>
+
+    <div class="stack">
+      <h3>Why multiply?</h3>
+      <p>Multiplying works like a chain: the weakest link decides. A huge number from an unreliable blog should count little, and so should a solid fact that is two years old. If the five answers were added instead, a top score on one question could hide a failing score on another.</p>
+    </div>
+    <div class="stack">
+      <h3>One safety rule</h3>
+      <p>Until Irma has searched for counter-evidence, a signal's weight is capped at 0.6. A claim that nobody has examined can never dominate the picture.</p>
+    </div>
+    <div class="stack">
+      <h3>Strong and weak</h3>
+      <p>A weight of 0.25 or more is listed as a strong signal, anything lower as weak. Today 10 of the 32 signals are strong. The automatic search adds a new signal only if its weight still reaches 0.15 after all its checks.</p>
+    </div>
+
+    <div class="stack">
+      <h3>Try it</h3>
+      <p class="muted small">Starts with the Google example. Change any answer and the weight updates.</p>
+      <form class="panel calc" id="calc" aria-label="Weight calculator">
+        <fieldset class="field"><legend>Who published it?</legend>
+          <div class="seg">
+            <label><input type="radio" name="grade" id="grade-a" value="A" checked><span>A · original source</span></label>
+            <label><input type="radio" name="grade" id="grade-b" value="B"><span>B · press</span></label>
+            <label><input type="radio" name="grade" id="grade-c" value="C"><span>C · other</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="calc-freq">What kind of source?</label>
+          <select id="calc-freq">
+            <option value="14">Daily prices (half-life 14 days)</option>
+            <option value="30">Weekly data (30 days)</option>
+            <option value="60">Monthly data (60 days)</option>
+            <option value="90" selected>One-off announcement (90 days)</option>
+            <option value="120">Quarterly report (120 days)</option>
+            <option value="240">Annual study (240 days)</option>
+          </select></div>
+        <div class="field"><label for="calc-age">How old is it? <span class="num" id="calc-age-out">25 days</span></label>
+          <input type="range" id="calc-age" min="0" max="730" step="1" value="25"></div>
+        <div class="field"><label for="calc-size">How big is the change? <span class="num" id="calc-size-out">0.90</span></label>
+          <input type="range" id="calc-size" min="0" max="1" step="0.05" value="0.9"></div>
+        <div class="field"><label for="calc-doubt">What speaks against it?</label>
+          <select id="calc-doubt">
+            <option value="none">Nothing found</option>
+            <option value="mild" selected>One moderate doubt (removes 21%)</option>
+            <option value="strong">One strong doubt (removes 60%)</option>
+            <option value="three">Three doubts, like the Fingrid card (removes 72%)</option>
+          </select>
+          <label class="check"><input type="checkbox" id="calc-checked" checked> Irma has searched for counter-evidence</label></div>
+        <div class="field"><label for="calc-view">What does the planner say?</label>
+          <select id="calc-view">
+            <option value="1" selected>No assessment</option>
+            <option value="1.2">Confirmed</option>
+            <option value="0.5">Disputed</option>
+            <option value="0.25">Disputed twice</option>
+          </select></div>
+        <div class="calc-out" aria-live="polite">
+          <div class="equation" id="calc-eq">
+            <span class="term"><span>1.00</span><span class="lbl">publisher</span></span><span class="op">×</span>
+            <span class="term"><span>0.82</span><span class="lbl">freshness</span></span><span class="op">×</span>
+            <span class="term"><span>0.90</span><span class="lbl">size</span></span><span class="op">×</span>
+            <span class="term"><span>0.79</span><span class="lbl">after doubt</span></span><span class="op">×</span>
+            <span class="term"><span>1.00</span><span class="lbl">your view</span></span><span class="op">=</span>
+            <span class="term"><span class="result">0.59</span><span class="lbl">weight</span></span>
+          </div>
+          <div class="wbar" aria-hidden="true"><span class="fill" id="calc-fill" style="width:58.6%"></span><span class="tick" style="left:15%"></span><span class="tick" style="left:25%"></span><span class="tick" style="left:60%"></span></div>
+          <div class="wticks" aria-hidden="true"><span style="left:0;transform:none">0</span><span style="left:15%">0.15</span><span style="left:25%;transform:none;padding-left:4px">0.25 strong</span><span style="left:60%">0.6 cap</span><span style="left:100%;transform:translateX(-100%)">1</span></div>
+          <p class="status" id="calc-status">Strong signal. It is listed among the strong signals and moves the picture noticeably. The automatic search would add a new signal like this.</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="stack">
+      <h3>News fades at different speeds</h3>
+      <div class="legend"><span><span class="key" style="background:var(--s1)"></span>Daily prices, half-life 14 days</span><span><span class="key" style="background:var(--s2)"></span>One-off announcements, 90 days</span><span><span class="key" style="background:var(--s3)"></span>Quarterly reports, 120 days</span><span><span class="key" style="background:var(--s4)"></span>Annual studies, 240 days</span><span><span class="key" style="background:var(--accent);width:10px;height:10px;border-radius:50%"></span>Google programme today: 25 days old, freshness 0.82</span></div>
+      <div class="panel chart-scroll">
+        <svg viewBox="0 0 640 270" role="img" aria-label="Freshness falls by half after each half-life: daily prices after 14 days, one-off news after 90 days, quarterly reports after 120 days, annual studies after 240 days.">
+          <line class="gridline" x1="56" x2="616" y1="16" y2="16"/><line class="gridline" x1="56" x2="616" y1="71" y2="71"/>
+          <line class="gridline" x1="56" x2="616" y1="181" y2="181"/>
+          <line class="axis" x1="56" x2="616" y1="126" y2="126"/>
+          <line class="axis" x1="56" x2="616" y1="236" y2="236"/>
+          <text class="t" x="48" y="20" text-anchor="end">1.0</text><text class="t" x="48" y="75" text-anchor="end">0.75</text>
+          <text class="t" x="48" y="130" text-anchor="end">0.5</text><text class="t" x="48" y="185" text-anchor="end">0.25</text><text class="t" x="48" y="240" text-anchor="end">0</text>
+          <text class="t" x="56" y="256" text-anchor="middle">0</text><text class="t" x="194.1" y="256" text-anchor="middle">90</text>
+          <text class="t" x="332.2" y="256" text-anchor="middle">180</text><text class="t" x="470.2" y="256" text-anchor="middle">270</text>
+          <text class="t" x="616" y="256" text-anchor="end">365 days</text>
+          <text class="t" x="612" y="120" text-anchor="end">half the weight</text>
+          <path class="ln c4" d="M56.0,16.0 L60.6,17.9 L65.2,19.8 L69.8,21.6 L74.4,23.5 L79.0,25.3 L83.6,27.1 L88.2,28.9 L92.8,30.7 L97.4,32.5 L102.0,34.3 L106.6,36.0 L111.2,37.7 L115.8,39.4 L120.4,41.1 L125.0,42.8 L129.6,44.5 L134.2,46.1 L138.8,47.8 L143.5,49.4 L148.1,51.0 L152.7,52.6 L157.3,54.2 L161.9,55.7 L166.5,57.3 L171.1,58.8 L175.7,60.4 L180.3,61.9 L184.9,63.4 L189.5,64.9 L194.1,66.4 L198.7,67.8 L203.3,69.3 L207.9,70.7 L212.5,72.1 L217.1,73.5 L221.7,75.0 L226.3,76.3 L230.9,77.7 L235.5,79.1 L240.1,80.4 L244.7,81.8 L249.3,83.1 L253.9,84.4 L258.5,85.7 L263.1,87.0 L267.7,88.3 L272.3,89.6 L276.9,90.9 L281.5,92.1 L286.1,93.3 L290.7,94.6 L295.3,95.8 L299.9,97.0 L304.5,98.2 L309.2,99.4 L313.8,100.6 L318.4,101.7 L323.0,102.9 L327.6,104.0 L332.2,105.2 L336.8,106.3 L341.4,107.4 L346.0,108.5 L350.6,109.6 L355.2,110.7 L359.8,111.8 L364.4,112.9 L369.0,113.9 L373.6,115.0 L378.2,116.0 L382.8,117.1 L387.4,118.1 L392.0,119.1 L396.6,120.1 L401.2,121.1 L405.8,122.1 L410.4,123.1 L415.0,124.1 L419.6,125.0 L424.2,126.0 L428.8,126.9 L433.4,127.9 L438.0,128.8 L442.6,129.7 L447.2,130.7 L451.8,131.6 L456.4,132.5 L461.0,133.4 L465.6,134.3 L470.2,135.1 L474.8,136.0 L479.5,136.9 L484.1,137.7 L488.7,138.6 L493.3,139.4 L497.9,140.2 L502.5,141.1 L507.1,141.9 L511.7,142.7 L516.3,143.5 L520.9,144.3 L525.5,145.1 L530.1,145.9 L534.7,146.7 L539.3,147.4 L543.9,148.2 L548.5,148.9 L553.1,149.7 L557.7,150.4 L562.3,151.2 L566.9,151.9 L571.5,152.6 L576.1,153.4 L580.7,154.1 L585.3,154.8 L589.9,155.5 L594.5,156.2 L599.1,156.9 L603.7,157.5 L608.3,158.2 L612.9,158.9 L616.0,159.3"/>
+          <path class="ln c3" d="M56.0,16.0 L60.6,19.8 L65.2,23.5 L69.8,27.1 L74.4,30.7 L79.0,34.3 L83.6,37.7 L88.2,41.1 L92.8,44.5 L97.4,47.8 L102.0,51.0 L106.6,54.2 L111.2,57.3 L115.8,60.4 L120.4,63.4 L125.0,66.4 L129.6,69.3 L134.2,72.1 L138.8,75.0 L143.5,77.7 L148.1,80.4 L152.7,83.1 L157.3,85.7 L161.9,88.3 L166.5,90.9 L171.1,93.3 L175.7,95.8 L180.3,98.2 L184.9,100.6 L189.5,102.9 L194.1,105.2 L198.7,107.4 L203.3,109.6 L207.9,111.8 L212.5,113.9 L217.1,116.0 L221.7,118.1 L226.3,120.1 L230.9,122.1 L235.5,124.1 L240.1,126.0 L244.7,127.9 L249.3,129.7 L253.9,131.6 L258.5,133.4 L263.1,135.1 L267.7,136.9 L272.3,138.6 L276.9,140.2 L281.5,141.9 L286.1,143.5 L290.7,145.1 L295.3,146.7 L299.9,148.2 L304.5,149.7 L309.2,151.2 L313.8,152.6 L318.4,154.1 L323.0,155.5 L327.6,156.9 L332.2,158.2 L336.8,159.6 L341.4,160.9 L346.0,162.2 L350.6,163.4 L355.2,164.7 L359.8,165.9 L364.4,167.1 L369.0,168.3 L373.6,169.5 L378.2,170.6 L382.8,171.7 L387.4,172.8 L392.0,173.9 L396.6,175.0 L401.2,176.0 L405.8,177.1 L410.4,178.1 L415.0,179.1 L419.6,180.0 L424.2,181.0 L428.8,181.9 L433.4,182.9 L438.0,183.8 L442.6,184.7 L447.2,185.6 L451.8,186.4 L456.4,187.3 L461.0,188.1 L465.6,188.9 L470.2,189.8 L474.8,190.5 L479.5,191.3 L484.1,192.1 L488.7,192.8 L493.3,193.6 L497.9,194.3 L502.5,195.0 L507.1,195.7 L511.7,196.4 L516.3,197.1 L520.9,197.8 L525.5,198.4 L530.1,199.1 L534.7,199.7 L539.3,200.3 L543.9,200.9 L548.5,201.6 L553.1,202.1 L557.7,202.7 L562.3,203.3 L566.9,203.9 L571.5,204.4 L576.1,205.0 L580.7,205.5 L585.3,206.0 L589.9,206.5 L594.5,207.0 L599.1,207.5 L603.7,208.0 L608.3,208.5 L612.9,209.0 L616.0,209.3"/>
+          <path class="ln c2" d="M56.0,16.0 L60.6,21.0 L65.2,25.9 L69.8,30.7 L74.4,35.4 L79.0,40.0 L83.6,44.5 L88.2,48.9 L92.8,53.1 L97.4,57.3 L102.0,61.4 L106.6,65.4 L111.2,69.3 L115.8,73.1 L120.4,76.8 L125.0,80.4 L129.6,84.0 L134.2,87.5 L138.8,90.9 L143.5,94.2 L148.1,97.4 L152.7,100.6 L157.3,103.7 L161.9,106.7 L166.5,109.6 L171.1,112.5 L175.7,115.3 L180.3,118.1 L184.9,120.8 L189.5,123.4 L194.1,126.0 L198.7,128.5 L203.3,131.0 L207.9,133.4 L212.5,135.7 L217.1,138.0 L221.7,140.2 L226.3,142.4 L230.9,144.6 L235.5,146.7 L240.1,148.7 L244.7,150.7 L249.3,152.6 L253.9,154.5 L258.5,156.4 L263.1,158.2 L267.7,160.0 L272.3,161.7 L276.9,163.4 L281.5,165.1 L286.1,166.7 L290.7,168.3 L295.3,169.8 L299.9,171.3 L304.5,172.8 L309.2,174.3 L313.8,175.7 L318.4,177.1 L323.0,178.4 L327.6,179.7 L332.2,181.0 L336.8,182.3 L341.4,183.5 L346.0,184.7 L350.6,185.9 L355.2,187.0 L359.8,188.1 L364.4,189.2 L369.0,190.3 L373.6,191.3 L378.2,192.3 L382.8,193.3 L387.4,194.3 L392.0,195.3 L396.6,196.2 L401.2,197.1 L405.8,198.0 L410.4,198.9 L415.0,199.7 L419.6,200.5 L424.2,201.4 L428.8,202.1 L433.4,202.9 L438.0,203.7 L442.6,204.4 L447.2,205.1 L451.8,205.8 L456.4,206.5 L461.0,207.2 L465.6,207.9 L470.2,208.5 L474.8,209.1 L479.5,209.7 L484.1,210.3 L488.7,210.9 L493.3,211.5 L497.9,212.1 L502.5,212.6 L507.1,213.1 L511.7,213.7 L516.3,214.2 L520.9,214.7 L525.5,215.2 L530.1,215.6 L534.7,216.1 L539.3,216.6 L543.9,217.0 L548.5,217.4 L553.1,217.9 L557.7,218.3 L562.3,218.7 L566.9,219.1 L571.5,219.5 L576.1,219.8 L580.7,220.2 L585.3,220.6 L589.9,220.9 L594.5,221.3 L599.1,221.6 L603.7,221.9 L608.3,222.2 L612.9,222.6 L616.0,222.8"/>
+          <path class="ln c1" d="M56.0,16.0 L60.6,46.4 L65.2,72.5 L69.8,95.1 L74.4,114.6 L79.0,131.3 L83.6,145.8 L88.2,158.2 L92.8,169.0 L97.4,178.2 L102.0,186.2 L106.6,193.1 L111.2,199.0 L115.8,204.1 L120.4,208.5 L125.0,212.3 L129.6,215.6 L134.2,218.4 L138.8,220.8 L143.5,222.9 L148.1,224.7 L152.7,226.3 L157.3,227.6 L161.9,228.8 L166.5,229.8 L171.1,230.6 L175.7,231.4 L180.3,232.0 L184.9,232.6 L189.5,233.0 L194.1,233.4 L198.7,233.8 L203.3,234.1 L207.9,234.4 L212.5,234.6 L217.1,234.8 L221.7,235.0 L226.3,235.1 L230.9,235.2 L235.5,235.3 L240.1,235.4 L244.7,235.5 L249.3,235.6 L253.9,235.6 L258.5,235.7 L263.1,235.7 L267.7,235.8 L272.3,235.8 L276.9,235.8 L281.5,235.8 L286.1,235.9 L290.7,235.9 L295.3,235.9 L299.9,235.9 L304.5,235.9 L309.2,235.9 L313.8,235.9 L318.4,236.0 L323.0,236.0 L327.6,236.0 L332.2,236.0 L336.8,236.0 L341.4,236.0 L346.0,236.0 L350.6,236.0 L355.2,236.0 L359.8,236.0 L364.4,236.0 L369.0,236.0 L373.6,236.0 L378.2,236.0 L382.8,236.0 L387.4,236.0 L392.0,236.0 L396.6,236.0 L401.2,236.0 L405.8,236.0 L410.4,236.0 L415.0,236.0 L419.6,236.0 L424.2,236.0 L428.8,236.0 L433.4,236.0 L438.0,236.0 L442.6,236.0 L447.2,236.0 L451.8,236.0 L456.4,236.0 L461.0,236.0 L465.6,236.0 L470.2,236.0 L474.8,236.0 L479.5,236.0 L484.1,236.0 L488.7,236.0 L493.3,236.0 L497.9,236.0 L502.5,236.0 L507.1,236.0 L511.7,236.0 L516.3,236.0 L520.9,236.0 L525.5,236.0 L530.1,236.0 L534.7,236.0 L539.3,236.0 L543.9,236.0 L548.5,236.0 L553.1,236.0 L557.7,236.0 L562.3,236.0 L566.9,236.0 L571.5,236.0 L576.1,236.0 L580.7,236.0 L585.3,236.0 L589.9,236.0 L594.5,236.0 L599.1,236.0 L603.7,236.0 L608.3,236.0 L612.9,236.0 L616.0,236.0"/>
+          <circle class="f1 dot-ring" cx="77.5" cy="126" r="5"/><circle class="f2 dot-ring" cx="194.1" cy="126" r="5"/>
+          <circle class="f3 dot-ring" cx="240.1" cy="126" r="5"/><circle class="f4 dot-ring" cx="424.2" cy="126" r="5"/>
+          <circle class="hl dot-ring" cx="94.4" cy="54.5" r="6"/>
+          <line id="fresh-cross" class="axis" x1="0" x2="0" y1="16" y2="236" style="display:none"/>
+          <rect id="fresh-hit" x="56" y="16" width="560" height="220" fill="transparent"/>
+                  </svg>
+      </div>
+      <p class="caption" id="fresh-readout" aria-live="polite">Point at the chart to read every line at a given age.</p>
+      <p class="caption">A daily copper price is worth half as much after two weeks, while an annual research report keeps half its weight for eight months. Each half-life matches how often that kind of source normally publishes something new. The dots mark where each line reaches half.</p>
+    </div>
+
+    <div class="stack">
+      <h3>How doubts add up</h3>
+      <p>The Fingrid card on signed data-centre connections is reliable (grade A) but has three pieces of counter-evidence. Their strengths are 0.40, 0.21 and 0.40. Simply adding them gives 1.01, which would erase the signal completely, even though the three doubts partly overlap. Irma instead lets each doubt remove its share of what is still left.</p>
+      <div class="panel doubt-rows" role="img" aria-label="Adding the doubts gives 1.01 and erases the signal. Irma removes 40 percent, then 21 percent of the rest, then 40 percent of what remains, leaving 28 percent.">
+        <div class="drow"><span class="lbl">If doubts were simply added</span><div class="dtrack"><span class="seg-bar removed" style="left:0;width:40%"></span><span class="seg-bar removed" style="left:40.4%;width:20.6%"></span><span class="seg-bar removed" style="left:61.4%;width:38.6%"></span><span class="end" style="left:100%"></span></div><span class="v">0.00</span></div>
+        <div class="dsep"></div>
+        <div class="drow"><span class="lbl">Signal before any doubt</span><div class="dtrack"><span class="seg-bar left" style="left:0;width:100%"></span></div><span class="v">1.00</span></div>
+        <div class="drow"><span class="lbl">After doubt 1 (removes 40%)</span><div class="dtrack"><span class="seg-bar left" style="left:0;width:60%"></span><span class="seg-bar removed" style="left:60%;width:40%"></span></div><span class="v">0.60</span></div>
+        <div class="drow"><span class="lbl">After doubt 2 (removes 21%)</span><div class="dtrack"><span class="seg-bar left" style="left:0;width:47.4%"></span><span class="seg-bar removed" style="left:47.4%;width:12.6%"></span></div><span class="v">0.47</span></div>
+        <div class="drow result"><span class="lbl">After doubt 3 (removes 40%)</span><div class="dtrack"><span class="seg-bar left" style="left:0;width:28.4%;background:var(--accent)"></span><span class="seg-bar removed" style="left:28.4%;width:19%"></span></div><span class="v">0.28</span></div>
+      </div>
+      <p class="caption">28% of the signal survives, so the doubt factor is 0.28 (in the formula: 1 minus a doubt of 0.72). With freshness 0.66 and size 0.80, the card's weight ends at 1.00 × 0.66 × 0.80 × 0.28 = 0.15. However many doubts pile up, at least 20% of a signal always survives.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="s2">
+    <div class="eyebrow">Step 2 of 3</div>
+    <h2 id="s2">How a signal pushes the situations</h2>
+    <p>Every signal is described by six themes: demand, component supply, rules and policy, material prices, a shift toward the Nordics, and stock-building by middlemen. Each of the nine candidate situations has its own pattern on the same six themes. The better the two patterns agree, the harder the signal pushes that situation up. If they point in opposite directions, it pushes the situation down. Each theme is scored from −1 to +1. Plus means more demand, tighter components, friendlier rules, dearer materials, a shift toward the Nordics, or middlemen stockpiling.</p>
+    <div class="panel">
+      <div class="fp" role="img" aria-label="Google card: demand plus 0.9 and Nordic shift plus 0.9. Growth situation pattern matches at plus 0.45; slowdown situation pattern at minus 0.31.">
+        <span></span><span class="h"><span class="full">Google programme (the signal)</span><span class="short">Google (signal)</span></span><span class="h"><span class="full">"Growth continues, components stay scarce"</span><span class="short">Growth, scarce</span></span><span class="h"><span class="full">"Investment slows down, stock piles up"</span><span class="short">Slowdown, surplus</span></span>
+        <span class="theme">Demand grows</span><span class="dv"><span class="track"><span class="bar pos" style="width:45.0%"></span></span><span class="v">+0.9</span></span><span class="dv"><span class="track"><span class="bar pos" style="width:50.0%"></span></span><span class="v">+1.0</span></span><span class="dv"><span class="track"><span class="bar neg" style="width:50.0%"></span></span><span class="v">−1.0</span></span>
+        <span class="theme">Components tight</span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"><span class="bar pos" style="width:50.0%"></span></span><span class="v">+1.0</span></span><span class="dv"><span class="track"><span class="bar neg" style="width:50.0%"></span></span><span class="v">−1.0</span></span>
+        <span class="theme">Rules favour projects</span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"></span><span class="v">0</span></span>
+        <span class="theme">Materials dearer</span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"><span class="bar pos" style="width:15.0%"></span></span><span class="v">+0.3</span></span><span class="dv"><span class="track"><span class="bar neg" style="width:30.0%"></span></span><span class="v">−0.6</span></span>
+        <span class="theme">Shift to the Nordics</span><span class="dv"><span class="track"><span class="bar pos" style="width:45.0%"></span></span><span class="v">+0.9</span></span><span class="dv"><span class="track"><span class="bar pos" style="width:15.0%"></span></span><span class="v">+0.3</span></span><span class="dv"><span class="track"></span><span class="v">0</span></span>
+        <span class="theme">Middlemen stockpile</span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"></span><span class="v">0</span></span><span class="dv"><span class="track"><span class="bar neg" style="width:15.0%"></span></span><span class="v">−0.3</span></span>
+        <span class="rule"></span>
+        <span class="theme">Match</span><span class="muted small">weight 0.59</span><span class="total up">+0.45</span><span class="total down">−0.31</span>
+        <span class="theme">Push</span><span></span><span class="total up">+0.40</span><span class="total down">−0.27</span>
+      </div>
+    </div>
+    <p>Irma compares the two patterns theme by theme. Demand agrees strongly (0.9 × 1.0) and the Nordic shift agrees a little (0.9 × 0.3). Adding these gives 1.17, and dividing by the size of the situation's own pattern (2.6) gives a match of 0.45. The match always lands between −1 and +1. The push is then <span class="num">1.5 × weight × match</span>: 1.5 × 0.59 × 0.45 = +0.40. The 1.5 is a fixed setting that limits how far one signal can move the picture.</p>
+  </section>
+
+  <section aria-labelledby="s3">
+    <div class="eyebrow">Step 3 of 3</div>
+    <h2 id="s3">From pushes to percentages</h2>
+    <p>Each candidate situation starts from a starting belief. For "Growth continues, components stay scarce" it is 30%, because ABB describes the market as strong with components on allocation. This starting belief is our assumption, and it is shown on the scenario card. Irma turns that belief into a starting score and adds every push from every signal. Here is how the leading situation's score is built today:</p>
+    <div class="panel wf" role="img" aria-label="Starting score minus 1.20, pushes from Google plus 0.40, big-tech commitments plus 0.21, DRAM prices plus 0.21, Micron plus 0.19, Uptime survey plus 0.14, 22 smaller pushes plus 1.16, evidence against minus 0.08, final score plus 1.03.">
+      <div class="wf-row"><span class="lbl">Starting score (starting belief 30%)</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar start" style="left:7.14%;width:42.86%"></span></div><span class="v">−1.20</span></div>
+      <div class="wf-row"><span class="lbl">Google programme in Finland</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:7.14%;width:14.29%"></span></div><span class="v">+0.40</span></div>
+      <div class="wf-row"><span class="lbl">Big-tech commitments to Finland</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:21.43%;width:7.50%"></span></div><span class="v">+0.21</span></div>
+      <div class="wf-row"><span class="lbl">DRAM contract prices rising</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:28.93%;width:7.50%"></span></div><span class="v">+0.21</span></div>
+      <div class="wf-row"><span class="lbl">Micron: memory shortage to 2028</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:36.43%;width:6.79%"></span></div><span class="v">+0.19</span></div>
+      <div class="wf-row"><span class="lbl">Uptime survey: power is the limit</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:43.21%;width:5.00%"></span></div><span class="v">+0.14</span></div>
+      <div class="wf-row"><span class="lbl">22 smaller pushes</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar up" style="left:48.21%;width:41.43%"></span></div><span class="v">+1.16</span></div>
+      <div class="wf-row"><span class="lbl">3 signals against</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar down" style="left:86.79%;width:2.86%"></span></div><span class="v">−0.08</span></div>
+      <div class="wf-row final"><span class="lbl">Final score</span><div class="wf-track"><span class="wf-zero" style="left:50.00%"></span><span class="wf-bar final" style="left:50.00%;width:36.79%"></span></div><span class="v">+1.03</span></div>
+      <div class="wf-row"><span></span><div class="wf-axis"><span style="left:14.29%">−1</span><span style="left:32.14%">−0.5</span><span style="left:50.00%">0</span><span style="left:67.86%">+0.5</span><span style="left:85.71%">+1</span></div><span></span></div>
+    </div>
+    <p>Irma keeps nine candidate situations. The four with the highest final scores are shown, and their scores are turned into shares of 100%. The rule is simple to state: a score that is 0.7 higher means twice as likely. The leader is 0.33 ahead of the runner-up, so it is about 1.4 times as likely: 50% against 36%.</p>
+    <div class="panel scores" role="img" aria-label="Final scores 1.03, 0.70, minus 0.55 and minus 1.70 become shares of 50, 36, 10 and 3 percent.">
+      <div class="sc-row sc-head"><span>Situation</span><span style="text-align:right">Score</span><span style="text-align:right">Share</span></div>
+      <div class="sc-row"><span class="sc-name"><span class="sw b1"></span>Growth continues, components stay scarce</span><span class="v">1.03</span><span class="p">50%</span></div>
+      <div class="sc-row"><span class="sc-name"><span class="sw b2"></span>Investment concentrates in the Nordics</span><span class="v">0.70</span><span class="p">36%</span></div>
+      <div class="sc-row"><span class="sc-name"><span class="sw b3"></span>Growth continues, components become easier to get</span><span class="v">−0.55</span><span class="p">10%</span></div>
+      <div class="sc-row"><span class="sc-name"><span class="sw b4"></span>Projects slip, components stay scarce</span><span class="v">−1.70</span><span class="p">3%</span></div>
+      <div class="shares" aria-hidden="true"><span class="b1" style="width:50.2%"></span><span class="b2" style="width:36.2%"></span><span class="b3" style="width:10.3%"></span><span class="b4" style="width:3.3%"></span></div>
+    </div>
+    <p>Irma also shows how evenly the 100% is spread. 0 means one situation has it all, 1 means all four are equally likely. Today the value is 0.76: the leader is clear but far from certain, which is why the other three stay on screen.</p>
+  </section>
+
+  <section aria-labelledby="ex">
+    <h2 id="ex">Eight examples</h2>
+    <p>Each example uses the real data, or a single change to it, so you can see what moves the numbers and why.</p>
+    <div class="cases">
+      <article class="panel case"><h3>1 · Strong news from the original source</h3><p class="what">Google announces a EUR 13 bn programme in Finland. The source is grade A, the news is 25 days old, the change is large, and one moderate doubt was found: the money is spread over 2027–2028 and includes energy infrastructure.</p><div class="mini"><div class="mini-row after-row"><span>Weight</span><span class="mini-track"><span class="after" style="width:59.0%"></span></span><span class="v">0.59</span></div></div><p class="why">Every factor is high, so the chain has no weak link. It is one of the strongest of the 32 signals.</p></article>
+      <article class="panel case"><h3>2 · The same news, from a blog</h3><p class="what">Suppose the only source were an unknown blog (grade C). Nothing else changes.</p><div class="mini"><div class="mini-row"><span>Original source</span><span class="mini-track"><span class="before" style="width:59.0%"></span></span><span class="v">0.59</span></div><div class="mini-row after-row"><span>Blog</span><span class="mini-track"><span class="after" style="width:23.0%"></span></span><span class="v">0.23</span></div></div><p class="why">Irma trusts the publisher, not the claim. The signal drops from strong to weak until someone finds the original announcement.</p></article>
+      <article class="panel case"><h3>3 · Nobody has checked it yet</h3><p class="what">Before the counter-evidence search runs, the Google card has no doubts against it, and its weight would be 0.74.</p><div class="mini"><div class="mini-row"><span>Without the cap</span><span class="mini-track"><span class="before" style="width:74.0%"></span></span><span class="v">0.74</span></div><div class="mini-row after-row"><span>Capped</span><span class="mini-track"><span class="after" style="width:60.0%"></span></span><span class="v">0.60</span></div></div><p class="why">The safety cap holds it at 0.60 until the search is done. An unexamined claim can never be the strongest voice.</p></article>
+      <article class="panel case"><h3>4 · Old research fades</h3><p class="what">The Lawrence Berkeley National Laboratory study of US data-centre electricity is grade A, but it was published in December 2024. After 658 days, with an annual half-life of 240 days, 15% of its freshness remains.</p><div class="mini"><div class="mini-row"><span>If published today</span><span class="mini-track"><span class="before" style="width:30.0%"></span></span><span class="v">0.30</span></div><div class="mini-row after-row"><span>Today</span><span class="mini-track"><span class="after" style="width:4.0%"></span></span><span class="v">0.04</span></div></div><p class="why">The study is still true as history, but it says little about the next 12–36 months. A new edition would restore its weight.</p></article>
+      <article class="panel case"><h3>5 · Doubts pile up</h3><p class="what">Fingrid&#x27;s count of signed data-centre connections is grade A. Three counter-claims say that signed agreements are not real load and that the grid is nearly full. Together they remove 72%.</p><div class="mini"><div class="mini-row"><span>Without doubts</span><span class="mini-track"><span class="before" style="width:52.0%"></span></span><span class="v">0.52</span></div><div class="mini-row after-row"><span>With doubts</span><span class="mini-track"><span class="after" style="width:15.0%"></span></span><span class="v">0.15</span></div></div><p class="why">Several separate doubts matter, but they are combined so that they never wipe out a reliable fact completely.</p></article>
+      <article class="panel case"><h3>6 · The planner disagrees</h3><p class="what">A planner disputes the Google card, for example because ABB&#x27;s own sales pipeline shows no related enquiries. Its weight halves to 0.29.</p><div class="mini"><div class="mini-row"><span>Nordics, before</span><span class="mini-track"><span class="before" style="width:36.2%"></span></span><span class="v">36%</span></div><div class="mini-row after-row"><span>Nordics, after</span><span class="mini-track"><span class="after" style="width:33.4%"></span></span><span class="v">33%</span></div><div class="mini-row"><span>Leader, before</span><span class="mini-track"><span class="before" style="width:50.2%"></span></span><span class="v">50%</span></div><div class="mini-row after-row"><span>Leader, after</span><span class="mini-track"><span class="after" style="width:51.4%"></span></span><span class="v">51%</span></div></div><p class="why">Google supported the Nordic situation more than the leader. Shares are relative, so weakening one situation lifts the others. The dispute is logged with a name and a reason and can be undone.</p></article>
+      <article class="panel case"><h3>7 · The world changes</h3><p class="what">&quot;World situation 2&quot; is a constructed downturn made of demo data. With 24 different signals, the top four change completely: &quot;Double orders unwind, stock is released&quot; leads with 36%, just ahead of &quot;Investment slows down, stock piles up&quot; with 35%.</p><div class="mini"><div class="mini-row"><span>Leader, today</span><span class="mini-track"><span class="before" style="width:50.0%"></span></span><span class="v">50%</span></div><div class="mini-row after-row"><span>Leader, world 2</span><span class="mini-track"><span class="after" style="width:36.0%"></span></span><span class="v">36%</span></div><div class="mini-row"><span>Uncertainty, today</span><span class="mini-track"><span class="before" style="width:76.0%"></span></span><span class="v">0.76</span></div><div class="mini-row after-row"><span>Uncertainty, world 2</span><span class="mini-track"><span class="after" style="width:94.0%"></span></span><span class="v">0.94</span></div></div><p class="why">The formulas stay the same; only the evidence changed. A near tie tells the planner to watch the signposts that separate the two situations.</p></article>
+      <article class="panel case"><h3>8 · The automatic search finds something</h3><p class="what">An imagined example: a press report (grade B) about a modest change (size 0.3) with one moderate doubt. The automatic search adds a new signal only if its weight reaches 0.15.</p><div class="mini"><div class="mini-row after-row"><span>10 days old</span><span class="mini-track"><span class="after" style="width:15.0%"></span></span><span class="v">0.15</span></div><div class="mini-row"><span>25 days old</span><span class="mini-track"><span class="before" style="width:14.0%"></span></span><span class="v">0.14</span></div></div><p class="why">At 10 days old the report is added. At 25 days it falls just short and is left out, as is any blog post. When nothing clears the bar, nothing is added.</p></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="std">
+    <h2 id="std">Standard methods or our own invention?</h2>
+    <p>Both. Each building block is an established, well-understood method. The recipe that combines them, and the numbers inside it, are our own choices for this prototype.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Part</th><th>Based on</th><th>Chosen by us</th></tr></thead>
+        <tbody>
+          <tr><td>Publisher grades</td><td data-label="Based on">Source grading used by intelligence analysts (the Admiralty or NATO system rates sources from A, reliable, to F, cannot be judged).</td><td data-label="Chosen by us">Three grades instead of six, and the values 1.0, 0.7 and 0.4.</td></tr>
+          <tr><td>Freshness</td><td data-label="Based on">Half-life decay, the same arithmetic used for radioactivity and for giving recent data more weight in forecasting.</td><td data-label="Chosen by us">The half-life for each kind of source, from 14 to 240 days.</td></tr>
+          <tr><td>Combining doubts</td><td data-label="Based on">The "noisy-OR" rule from probability models, a standard way to combine separate causes (Judea Pearl, 1988).</td><td data-label="Chosen by us">The 80% ceiling and how strong each doubt is judged to be.</td></tr>
+          <tr><td>Adding evidence and turning it into percentages</td><td data-label="Based on">Scoring evidence in log-odds, as in the "weight of evidence" of I. J. Good and Alan Turing, and the standard softmax step that turns scores into shares.</td><td data-label="Chosen by us">The starting belief for each situation, the setting 1.5, and showing the top four of nine.</td></tr>
+          <tr><td>Theme matching</td><td data-label="Based on">A simple pattern-similarity score of the kind used widely in data analysis.</td><td data-label="Chosen by us">The six themes, each situation's pattern, and each signal's theme scores, which are set when the signal is read.</td></tr>
+          <tr><td>Uncertainty value</td><td data-label="Based on">Shannon entropy (1948), scaled from 0 to 1.</td><td data-label="Chosen by us">Nothing; it is used as is.</td></tr>
+          <tr><td>Scenarios with signposts</td><td data-label="Based on">Scenario planning as used in corporate foresight since the 1970s, best known from Shell, with signposts that confirm or refute each scenario.</td><td data-label="Chosen by us">The nine candidate situations and their texts.</td></tr>
+          <tr><td>Five factors multiplied, the 0.6 cap, ×1.2 and ×0.5 for the planner</td><td data-label="Based on">Common practice in evidence scoring, but no single standard.</td><td data-label="Chosen by us">The whole recipe and its numbers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="verdict">
+      <h3>What this means for reading the percentages</h3>
+      <p>Irma's percentages are a transparent ranking of today's evidence, not measured probabilities. Every number can be opened and traced to its sources, but nobody has yet checked how often a situation shown at 50% actually happens. Until that check is done, read 50% as "today's evidence points this way most strongly", not as "a 50% chance".</p>
+    </div>
+    <div class="stack">
+      <h3>How the numbers can be checked and tuned</h3>
+      <ol class="steps">
+        <li>Keep the percentages over time. Irma already stores one point per day.</li>
+        <li>After 6 to 18 months, compare them with what happened: ABB's order intake by segment and which situation actually unfolded.</li>
+        <li>Score the past percentages with a standard accuracy measure for probability forecasts, the Brier score.</li>
+        <li>Adjust the numbers we chose (grades, half-lives, the setting 1.5, starting beliefs) to the values that would have scored best, and repeat.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>Figures come from Irma's data for the current world situation on 4 October 2026 and are rounded. The formulas are in the app's engine files weights.py and archetypes.py. Irma shows evidence and alternatives; it does not recommend order quantities or timing.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var R = { A: 1, B: 0.7, C: 0.4 };
+  var DOUBT = { none: [], mild: [0.21], strong: [0.6], three: [0.4, 0.21, 0.4] };
+  function weight(o) {
+    var f = Math.pow(0.5, o.age / o.halfLife);
+    var survive = DOUBT[o.doubt].reduce(function (a, x) { return a * (1 - x); }, 1);
+    var c = Math.min(0.8, 1 - survive);
+    var h = Math.max(0.25, Math.min(1.5, o.view));
+    var raw = R[o.grade] * f * o.size * (1 - c) * h;
+    var capped = !o.checked && raw > 0.6;
+    return { r: R[o.grade], f: f, s: o.size, keep: 1 - c, h: h, w: capped ? 0.6 : raw, capped: capped };
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  function term(v, label, cls) {
+    var t = document.createElement("span"); t.className = "term";
+    var a = document.createElement("span"); a.textContent = v.toFixed(2); if (cls) a.className = cls;
+    var b = document.createElement("span"); b.className = "lbl"; b.textContent = label;
+    t.append(a, b); return t;
+  }
+  function op(x) { var s = document.createElement("span"); s.className = "op"; s.textContent = x; return s; }
+  function render() {
+    var gradeEl = document.querySelector('input[name="grade"]:checked');
+    var o = { grade: gradeEl ? gradeEl.value : "A", halfLife: Number($("calc-freq").value), age: Number($("calc-age").value),
+              size: Number($("calc-size").value), doubt: $("calc-doubt").value, checked: $("calc-checked").checked, view: Number($("calc-view").value) };
+    var r = weight(o);
+    $("calc-age-out").textContent = o.age + (o.age === 1 ? " day" : " days");
+    $("calc-size-out").textContent = o.size.toFixed(2);
+    $("calc-eq").replaceChildren(term(r.r, "publisher"), op("×"), term(r.f, "freshness"), op("×"), term(r.s, "size"), op("×"),
+      term(r.keep, "after doubt"), op("×"), term(r.h, "your view"), op("="), term(r.w, r.capped ? "weight (capped)" : "weight", "result"));
+    $("calc-fill").style.width = (r.w * 100).toFixed(1) + "%";
+    var msg;
+    if (r.w >= 0.25) msg = "Strong signal. It is listed among the strong signals and moves the picture noticeably.";
+    else if (r.w >= 0.15) msg = "Weak signal. It still counts, but only a little.";
+    else msg = "Weak signal. It barely moves the picture.";
+    if (r.capped) msg += " The weight is capped at 0.60 because no counter-evidence search has been run yet.";
+    var why = [];
+    if (r.w < 0.15) why.push("its weight is below 0.15");
+    if (o.grade === "C") why.push("only grade A or B sources are accepted");
+    if (o.age > 30) why.push("only items up to 30 days old are accepted");
+    msg += why.length ? " The automatic search would not add a new signal like this: " + why.join("; ") + "."
+                      : " The automatic search would add a new signal like this.";
+    $("calc-status").textContent = msg;
+  }
+  ["calc-freq", "calc-age", "calc-size", "calc-doubt", "calc-checked", "calc-view", "grade-a", "grade-b", "grade-c"].forEach(function (id) {
+    var el = $(id); if (el) { el.addEventListener("input", render); el.addEventListener("change", render); }
+  });
+  render();
+
+  var svg = document.querySelector(".chart-scroll svg"), hit = $("fresh-hit"), cross = $("fresh-cross"), out = $("fresh-readout");
+  var LINES = [["daily prices", 14], ["one-off news", 90], ["quarterly reports", 120], ["annual studies", 240]];
+  function readAt(clientX) {
+    var p = svg.createSVGPoint(); p.x = clientX; p.y = 0;
+    var m = svg.getScreenCTM(); if (!m) return;
+    var x = Math.max(56, Math.min(616, p.matrixTransform(m.inverse()).x));
+    var d = Math.round((x - 56) / 560 * 365);
+    cross.setAttribute("x1", x); cross.setAttribute("x2", x); cross.style.display = "";
+    out.textContent = "At " + d + " days: " + LINES.map(function (l) { return l[0] + " " + Math.pow(0.5, d / l[1]).toFixed(2); }).join(", ") + ".";
+  }
+  if (svg && hit) {
+    hit.addEventListener("pointermove", function (e) { readAt(e.clientX); });
+    hit.addEventListener("pointerdown", function (e) { readAt(e.clientX); });
+    hit.addEventListener("pointerleave", function () { cross.style.display = "none"; });
+  }
+})();
+</script>
+
+</html>

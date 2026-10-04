@@ -1,0 +1,81 @@
+{
+  "_note": "Pre-recorded agent outputs used when no Anthropic credentials are present (AGENT_MODE=replay). Each is labelled 'replay' in the pipeline trace. Numbers inside are DEMODATA.",
+  "demo_fingrid_q3": {
+    "item": {
+      "title": "[DEMODATA] Fingrid Q3 2026 interim: signed data-centre connection agreements rise to 3.6 GW",
+      "text": "[DEMODATA] Fingrid reports that the planned total capacity of data centre projects with signed connection agreements rose to 3.6 GW by the end of September 2026, up from just over 3 GW at the end of June. Two further agreements were signed in the Kymenlaakso and Northern Ostrobothnia regions. Fingrid repeats that connection capacity in Southern Finland remains the limiting factor and that the government's proposed connection priority rules are still under consultation.",
+      "date": "2026-10-01",
+      "source_name": "[DEMODATA] Fingrid Q3 2026 interim report (illustrative)",
+      "source_url": "https://www.fingrid.fi/en/",
+      "access": "Public press release (illustrative)",
+      "data_label": "DEMODATA",
+      "replay_key": "demo_fingrid_q3"
+    },
+    "classify": {
+      "category": "demand",
+      "measures": "end_demand",
+      "region": "FI",
+      "signal_type": "leading",
+      "lead_months": 30,
+      "lead_months_rationale": "Signed connection agreement precedes substation energisation by roughly 2-4 years; relays are specified 12-18 months before energisation. [ASSUMPTION]",
+      "reliability": "A",
+      "direction": 1,
+      "strength": 0.85,
+      "classification": "structural",
+      "classification_rationale": "A 20% quarter-on-quarter rise in signed (financially committed) agreements, while inquiries are being filtered by new rules, strengthens the structural reading: the committed pipeline is growing even as speculative applications are discouraged.",
+      "value_number": 3.6,
+      "value_unit": "GW",
+      "value_label": "planned capacity of DC projects with signed connection agreements, end of September 2026 [DEMODATA]",
+      "excerpt": "the planned total capacity of data centre projects with signed connection agreements rose to 3.6 GW by the end of September 2026, up from just over 3 GW at the end of June",
+      "scenario_links": {
+        "A": 0.6,
+        "B": 0.6,
+        "C": -0.5,
+        "D": -0.5
+      },
+      "updates_signal_id": "SIG-001",
+      "axes": {
+        "demand": 0.8,
+        "supply": 0.0,
+        "policy": 0.0,
+        "price": 0.0,
+        "nordic": 0.8,
+        "bullwhip": 0.0
+      }
+    },
+    "counter": [
+      {
+        "claim": "The same release says Southern Finland connection capacity remains the limiting factor. Agreements signed in the south may not be energised on schedule; the proposed priority rules could re-sequence data centres behind smaller connections.",
+        "source": {
+          "name": "[DEMODATA] same Fingrid Q3 release; DCD on priority rules (2026-08-27)",
+          "url": "https://www.datacenterdynamics.com/en/news/finland-to-abandon-first-come-first-served-grid-connections-dropping-data-centers-down-the-queue/",
+          "date": "2026-10-01"
+        },
+        "reliability": "B",
+        "strength": 0.3,
+        "data_label": "DEMODATA"
+      },
+      {
+        "claim": "Signed capacity (GW) is not relay count. Two large campuses can add 0.6 GW with a handful of MV substations; relay demand scales with the number of feeders, not with MW. [ASSUMPTION: confirm the MW-to-relay ratio with ABB]",
+        "source": {
+          "name": "[ASSUMPTION] engineering judgement, to be verified",
+          "url": "",
+          "date": "2026-10-03"
+        },
+        "reliability": "C",
+        "strength": 0.2,
+        "data_label": "ASSUMPTION"
+      }
+    ],
+    "interpretation": {
+      "A": "If 'Sustained expansion, constrained supply' holds: the committed Finnish pipeline would convert into substation projects through 2027–2028 while memory and microcontroller supply remains on allocation. Relay demand from data-centre switchgear would add to utility demand already growing under the EU grid plan, and the allocation question between internal switchgear factories and external customers would sharpen. Delivery times would not return to two weeks; the component orders placed 18 months ahead would be the binding constraint, and under-ordering would be the main exposure. [replayed demonstration text]",
+      "B": "If 'Sustained expansion, easing supply' holds: the same pipeline converts, but 2027 memory capacity additions and long-term agreements release the constraint. The bottleneck would move from electronics to assembly and test capacity, and components bought at 2026 peak prices would arrive into a falling price environment. The exposure would be price rather than availability. [replayed demonstration text]",
+      "C": "If 'Deferred demand, constrained supply' holds: the new agreements are real but their energisation dates slip behind grid priority rules and southern connection limits. Frame orders from switchgear factories would be rescheduled 6–12 months before public data shows it; delivery times would shorten because of lower intake rather than better supply, and components ordered at the peak would arrive against a smaller order book. [replayed demonstration text]",
+      "D": "If 'Demand contraction, supply surplus' holds: the Finnish signal would be an outlier against a global investment pause; utility grid investment would be the floor under relay demand. Components ordered 18 months earlier at peak prices would become excess inventory. [replayed demonstration text]"
+    },
+    "brief": "Situation brief (replayed demonstration text; figures are DEMODATA). The committed Finnish data-centre pipeline grew again: signed connection agreements reached 3.6 GW at the end of September [SIG-001], up from just over 3 GW in June, while the Google EUR 13 bn programme [SIG-003] and Microsoft's Vaasa land purchase [SIG-016] add structural weight to the Nordic shift. On the supply side, DRAM contract price increments are decelerating (+13–18% in 3Q26 after +58–63%) [SIG-007] and the spot premium is fading [SIG-015], which the demand-quality check reads as hoarding beginning to unwind while end-demand signals remain intact. The counter-evidence is specific: southern Finland connection capacity is the limiting factor and the proposed priority rules could re-sequence data centres [SIG-014], and US project delays [SIG-005] show that announced and energised capacity diverge by years. 'Sustained expansion, constrained supply' remains the most likely scenario but is not settled; 'Deferred demand, constrained supply' is the alternative to test most closely in the next four weeks. Next analysis step: follow the Finnish priority-rule decision [SIG-014], the 4Q26 TrendForce release [SIG-007] and hyperscaler Q3 earnings guidance [SIG-004]; re-evaluate at the first S&OP cycle after those are published; review with the S&OP owner, the component procurement lead and the data-centre segment manager. The planner judges what this means for orders; this brief presents evidence and alternatives, not a decision."
+  },
+  "ask_examples": {
+    "why is sustained expansion the leading scenario": "Because the three largest positive contributions come from signed Finnish connection agreements [SIG-001], hyperscaler capex guidance [SIG-004] and the Google Finland programme [SIG-003], all A-grade and recent. The counter-evidence that limits it is the US delay data [SIG-005] and the decelerating DRAM price increments [SIG-007]."
+  }
+}

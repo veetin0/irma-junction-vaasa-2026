@@ -1,0 +1,202 @@
+{
+  "scaling_k": 1.5,
+  "scaling_note": "[ASSUMPTION: k = 1.5 with axis-based relevance (typically |r| ≤ 0.5) so that one fresh, unchallenged A-grade signal shifts a candidate's log-odds by at most about 0.75. The four highest-scoring candidates are shown; probabilities are renormalised over them.]",
+  "archetypes": [
+    {
+      "id": "expansion_tight",
+      "name": { "en": "Growth continues, components stay scarce", "fi": "Kasvu jatkuu, komponentit pysyvät niukkoina" },
+      "demand": { "en": "accelerates", "fi": "kiihtyy" }, "supply": { "en": "tight", "fi": "kireä" },
+      "profile": { "demand": 1.0, "supply": 1.0, "policy": 0.0, "price": 0.3, "nordic": 0.3, "bullwhip": 0.0 },
+      "prior": 0.30, "prior_note": "[ASSUMPTION: highest prior; ABB describes the market as high with components on allocation.]",
+      "path": { "demand_yearly": [0.35, 0.30, 0.25], "supply_yearly": [0.15, 0.13, 0.15], "band": 0.12 },
+      "narrative": { "en": "Data-centre investment keeps growing through 2027, Nordic connection agreements turn into substation projects on schedule, and memory and microcontroller capacity stays allocated to AI servers. Relay demand keeps rising, delivery times stay at or above 8–10 weeks and component lead times stay above 40 weeks.", "fi": "Datakeskusinvestoinnit kasvavat vuoteen 2027 asti, Pohjoismaiden liittymäsopimukset muuttuvat sähköasemahankkeiksi aikataulussa, ja muisti- ja mikro-ohjainkapasiteetti pysyy tekoälypalvelimien käytössä. Relekysyntä kasvaa, toimitusajat pysyvät vähintään 8–10 viikossa ja komponenttien toimitusajat yli 40 viikossa." },
+      "signposts": [
+        { "text": { "en": "Fingrid signed agreements keep rising quarter on quarter", "fi": "Fingridin allekirjoitetut sopimukset kasvavat neljännes toisensa jälkeen" }, "signal_id": "SIG-001" },
+        { "text": { "en": "Hyperscaler capex guidance for 2027 raised again", "fi": "Suurten pilviyhtiöiden investointiohjaus vuodelle 2027 nousee uudelleen" }, "signal_id": "SIG-004" },
+        { "text": { "en": "Server DRAM contract prices still rising next quarter", "fi": "Palvelinmuistin sopimushinnat nousevat vielä ensi neljänneksellä" }, "signal_id": "SIG-007" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "DRAM price increments turn negative while lead times are still long", "fi": "Muistin hinnanmuutokset kääntyvät negatiivisiksi toimitusaikojen ollessa yhä pitkiä" }, "signal_id": "SIG-007" },
+        { "text": { "en": "Any hyperscaler cuts its capex guidance", "fi": "Jokin pilviyhtiö leikkaa investointiohjaustaan" }, "signal_id": "SIG-004" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, relay demand from Nordic data-centre substations keeps growing into 2028 on top of utility grid demand; the allocation question between internal switchgear factories and external customers sharpens.", "fi": "Jos tämä toteutuu, Pohjoismaiden datakeskusten sähköasemien relekysyntä kasvaa vuoteen 2028 asti sähköverkkojen kysynnän päälle; jakokysymys sisäisten kojeistotehtaiden ja ulkoisten asiakkaiden välillä kärjistyy." },
+        "delivery": { "en": "If this holds, delivery times do not return to two weeks; the constraint stays in electronics supply.", "fi": "Jos tämä toteutuu, toimitusajat eivät palaa kahteen viikkoon; pullonkaula pysyy elektroniikan saatavuudessa." },
+        "components": { "en": "If this holds, the components ordered 18 months ahead are consumed; the exposure is under-ordering, and memory stays the critical path.", "fi": "Jos tämä toteutuu, 18 kuukautta etukäteen tilatut komponentit kuluvat; riski on alitilaaminen, ja muisti pysyy kriittisenä polkuna." }
+      }
+    },
+    {
+      "id": "expansion_easing",
+      "name": { "en": "Growth continues, components become easier to get", "fi": "Kasvu jatkuu, komponentteja saa helpommin" },
+      "demand": { "en": "accelerates", "fi": "kiihtyy" }, "supply": { "en": "easing", "fi": "helpottuu" },
+      "profile": { "demand": 1.0, "supply": -1.0, "policy": 0.0, "price": -0.2, "nordic": 0.3, "bullwhip": -0.3 },
+      "prior": 0.20, "prior_note": "[ASSUMPTION: moderate prior; new memory capacity arrives in 2027 in several industry forecasts.]",
+      "path": { "demand_yearly": [0.35, 0.30, 0.25], "supply_yearly": [0.25, 0.32, 0.30], "band": 0.10 },
+      "narrative": { "en": "Data-centre investment keeps growing while 2027 memory and microcontroller capacity, long-term supply agreements and distributor destocking relieve the component constraint. Lead times fall toward 20 weeks within a year while end demand still increases.", "fi": "Datakeskusinvestoinnit jatkavat kasvuaan, kun vuoden 2027 muisti- ja mikro-ohjainkapasiteetti, pitkät toimitussopimukset ja jakelijoiden varastojen purku helpottavat komponenttipulaa. Toimitusajat lyhenevät kohti 20 viikkoa vuoden sisällä kysynnän yhä kasvaessa." },
+      "signposts": [
+        { "text": { "en": "DRAM price increments below +5% a quarter while capex still rises", "fi": "Muistin hinnannousu alle 5 % neljänneksessä investointien yhä kasvaessa" }, "signal_id": "SIG-007" },
+        { "text": { "en": "Industrial MCU lead times fall below 40 weeks", "fi": "Teollisuuden mikro-ohjainten toimitusajat alle 40 viikkoa" }, "signal_id": "SIG-008" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Memory makers move more capacity to AI servers", "fi": "Muistivalmistajat siirtävät lisää kapasiteettia tekoälypalvelimiin" }, "signal_id": "SIG-007" },
+        { "text": { "en": "Fingrid signed agreements stall for two quarters", "fi": "Fingridin sopimukset eivät kasva kahteen neljännekseen" }, "signal_id": "SIG-001" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, relay demand keeps growing while the supply constraint fades; the bottleneck moves from electronics to assembly and test capacity.", "fi": "Jos tämä toteutuu, relekysyntä jatkaa kasvuaan ja saatavuusrajoite hälvenee; pullonkaula siirtyy elektroniikasta kokoonpano- ja testauskapasiteettiin." },
+        "delivery": { "en": "If this holds, delivery times can return toward two weeks only if assembly capacity has been scaled in parallel.", "fi": "Jos tämä toteutuu, toimitusajat voivat palata kohti kahta viikkoa vain, jos kokoonpanokapasiteettia on kasvatettu rinnalla." },
+        "components": { "en": "If this holds, components bought at 2026 peak prices arrive into a falling price environment; the exposure is price, not availability.", "fi": "Jos tämä toteutuu, vuoden 2026 huippuhinnoilla ostetut komponentit saapuvat laskevien hintojen markkinaan; riski on hinta, ei saatavuus." }
+      }
+    },
+    {
+      "id": "deferred_tight",
+      "name": { "en": "Projects slip, components stay scarce", "fi": "Hankkeet viivästyvät, komponentit pysyvät niukkoina" },
+      "demand": { "en": "plateaus", "fi": "tasaantuu" }, "supply": { "en": "tight", "fi": "kireä" },
+      "profile": { "demand": -0.5, "supply": 1.0, "policy": -0.6, "price": 0.0, "nordic": 0.0, "bullwhip": 0.5 },
+      "prior": 0.20, "prior_note": "[ASSUMPTION: delays, grid limits and record distributor sentiment fit a timing air pocket while supply stays tight.]",
+      "path": { "demand_yearly": [0.10, -0.05, 0.20], "supply_yearly": [0.10, 0.10, 0.12], "band": 0.14 },
+      "narrative": { "en": "Grid connection limits, permitting and transformer lead times push energisation dates out by one to two years. Orders placed early or in several places are cancelled or rescheduled, so observed demand drops although the structural trend continues. Component supply stays constrained because AI servers keep absorbing capacity.", "fi": "Verkkoliitäntöjen rajoitteet, luvitus ja muuntajien toimitusajat siirtävät käyttöönottoja yhdestä kahteen vuotta. Aikaisin tai useaan paikkaan tehdyt tilaukset perutaan tai siirretään, joten havaittu kysyntä laskee vaikka rakenteellinen trendi jatkuu. Komponenttien saatavuus pysyy kireänä, koska tekoälypalvelimet sitovat kapasiteettia." },
+      "signposts": [
+        { "text": { "en": "Finnish connection priority rule adopted, data centres re-sequenced", "fi": "Suomen liittymien etusijasääntö hyväksytään, datakeskukset siirtyvät jonossa" }, "signal_id": "SIG-014" },
+        { "text": { "en": "US delayed or cancelled share confirmed above 40% by a primary source", "fi": "Yhdysvaltain viivästyneiden hankkeiden osuus yli 40 % ensisijaisen lähteen mukaan" }, "signal_id": "SIG-005" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Fingrid signed agreements convert to energisation on schedule", "fi": "Fingridin sopimukset muuttuvat käyttöönotoiksi aikataulussa" }, "signal_id": "SIG-001" },
+        { "text": { "en": "Hyperscaler capex guidance for 2027 raised", "fi": "Pilviyhtiöiden investointiohjaus vuodelle 2027 nousee" }, "signal_id": "SIG-004" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, frame orders from switchgear factories are pushed out or cancelled 6–12 months before public signals turn; the demand is deferred, not lost.", "fi": "Jos tämä toteutuu, kojeistotehtaiden puitetilauksia siirretään tai perutaan 6–12 kuukautta ennen kuin julkiset signaalit kääntyvät; kysyntä lykkääntyy, ei katoa." },
+        "delivery": { "en": "If this holds, delivery times shorten because of lower intake, not because supply improved.", "fi": "Jos tämä toteutuu, toimitusajat lyhenevät pienemmän tilauskannan, eivät paremman saatavuuden vuoksi." },
+        "components": { "en": "If this holds, components ordered 18 months earlier arrive against a smaller order book; the exposure is holding cost on parts still scarce for everyone else.", "fi": "Jos tämä toteutuu, 18 kuukautta aiemmin tilatut komponentit saapuvat pienempää tilauskantaa vasten; riski on varastointikustannus osista, jotka ovat muille yhä niukkoja." }
+      }
+    },
+    {
+      "id": "contraction_surplus",
+      "name": { "en": "Investment slows down, stock piles up", "fi": "Investoinnit hidastuvat, varastot kasvavat" },
+      "demand": { "en": "contracts", "fi": "supistuu" }, "supply": { "en": "surplus", "fi": "ylitarjonta" },
+      "profile": { "demand": -1.0, "supply": -1.0, "policy": 0.0, "price": -0.6, "nordic": 0.0, "bullwhip": -0.3 },
+      "prior": 0.15, "prior_note": "[ASSUMPTION: the 2023 analogue; both axes would need to turn within 24 months.]",
+      "path": { "demand_yearly": [-0.10, -0.12, 0.05], "supply_yearly": [0.20, 0.10, 0.00], "band": 0.14 },
+      "narrative": { "en": "Growth in AI investment slows under financial pressure or efficiency gains, project pipelines are cut, and inventories built during 2026 are released as new production capacity arrives. Prices and lead times normalise with excess stock throughout the chain, as in the 2023 semiconductor correction.", "fi": "Tekoäly-investointien kasvu hidastuu rahoituspaineen tai tehokkuusparannusten vuoksi, hankeputkia leikataan ja vuonna 2026 kertyneet varastot puretaan uuden tuotantokapasiteetin saapuessa. Hinnat ja toimitusajat normalisoituvat ylivarastojen kanssa koko ketjussa, kuten vuoden 2023 puolijohdekorjauksessa." },
+      "signposts": [
+        { "text": { "en": "Any hyperscaler cuts 2027 capex guidance", "fi": "Jokin pilviyhtiö leikkaa vuoden 2027 investointiohjausta" }, "signal_id": "SIG-004" },
+        { "text": { "en": "DRAM contract prices fall and spot trades below contract", "fi": "Muistin sopimushinnat laskevat ja spot-hinta alittaa sopimushinnan" }, "signal_id": "SIG-015" },
+        { "text": { "en": "Copper below USD 12,000/t for a quarter", "fi": "Kupari alle 12 000 USD/t neljänneksen ajan" }, "signal_id": "SIG-010" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Nordic signed agreements and announced sites proceed on schedule", "fi": "Pohjoismaiden sopimukset ja ilmoitetut hankkeet etenevät aikataulussa" }, "signal_id": "SIG-003" },
+        { "text": { "en": "Memory makers keep AI-server allocation and prices keep rising", "fi": "Muistivalmistajat pitävät tekoälyallokaation ja hinnat nousevat edelleen" }, "signal_id": "SIG-007" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, data-centre relay demand falls back to the utility baseline; the EU grid investment plan is the floor.", "fi": "Jos tämä toteutuu, datakeskusten relekysyntä palaa sähköverkkojen perustasolle; EU:n verkkoinvestointisuunnitelma on lattia." },
+        "delivery": { "en": "If this holds, delivery times return to two weeks with capacity to spare.", "fi": "Jos tämä toteutuu, toimitusajat palaavat kahteen viikkoon ja kapasiteettia jää yli." },
+        "components": { "en": "If this holds, the 18-month orders placed at the 2026 peak become excess inventory at above-market prices.", "fi": "Jos tämä toteutuu, vuoden 2026 huipulla tehdyt 18 kuukauden tilaukset muuttuvat ylivarastoksi markkinahintaa kalliimmalla." }
+      }
+    },
+    {
+      "id": "nordic_concentration",
+      "name": { "en": "Investment concentrates in the Nordics", "fi": "Investoinnit keskittyvät Pohjoismaihin" },
+      "demand": { "en": "accelerates in the Nordics", "fi": "kiihtyy Pohjoismaissa" }, "supply": { "en": "tight", "fi": "kireä" },
+      "profile": { "demand": 0.6, "supply": 0.3, "policy": 0.2, "price": 0.0, "nordic": 1.0, "bullwhip": 0.0 },
+      "prior": 0.20, "prior_note": "[ASSUMPTION: cheap Nordic power and core-market moratoria redirect sites north.]",
+      "path": { "demand_yearly": [0.40, 0.32, 0.28], "supply_yearly": [0.15, 0.17, 0.18], "band": 0.14 },
+      "narrative": { "en": "Moratoria in Amsterdam, Dublin and Frankfurt and cheap Nordic electricity move new data-centre capacity to Finland, Sweden and Norway faster than elsewhere in Europe. Nordic substation projects grow faster than the European average while component supply remains tight.", "fi": "Amsterdamin, Dublinin ja Frankfurtin rakennuskiellot sekä halpa pohjoismainen sähkö siirtävät uutta datakeskuskapasiteettia Suomeen, Ruotsiin ja Norjaan muuta Eurooppaa nopeammin. Pohjoismaiset sähköasemahankkeet kasvavat Euroopan keskiarvoa nopeammin komponenttien saatavuuden pysyessä kireänä." },
+      "signposts": [
+        { "text": { "en": "Share of new European capacity outside the big five markets keeps rising", "fi": "Uuden eurooppalaisen kapasiteetin osuus suurten markkinoiden ulkopuolella kasvaa" }, "signal_id": "SIG-012" },
+        { "text": { "en": "Further hyperscaler site announcements in Finland, Sweden or Norway", "fi": "Lisää pilviyhtiöiden hankeilmoituksia Suomessa, Ruotsissa tai Norjassa" }, "signal_id": "SIG-003" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Core markets reopen connections at scale", "fi": "Ydinmarkkinat avaavat liittymät laajasti" }, "signal_id": "SIG-012" },
+        { "text": { "en": "Finnish connection rules push data centres down the queue", "fi": "Suomen liittymäsäännöt siirtävät datakeskukset jonon hännille" }, "signal_id": "SIG-014" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, the Vaasa unit's home market grows faster than its European customers; internal switchgear factories in the Nordics compete for the same relays.", "fi": "Jos tämä toteutuu, Vaasan yksikön kotimarkkina kasvaa eurooppalaisia asiakkaita nopeammin; Pohjoismaiden sisäiset kojeistotehtaat kilpailevat samoista releistä." },
+        "delivery": { "en": "If this holds, delivery times stay long and the regional allocation question becomes explicit.", "fi": "Jos tämä toteutuu, toimitusajat pysyvät pitkinä ja alueellinen jakokysymys tulee näkyväksi." },
+        "components": { "en": "If this holds, the component need is as in the growth case, concentrated in a narrower set of product variants.", "fi": "Jos tämä toteutuu, komponenttitarve on kuten kasvutapauksessa, mutta keskittyy kapeampaan tuotevalikoimaan." }
+      }
+    },
+    {
+      "id": "regulatory_resequencing",
+      "name": { "en": "Grid rules delay data centres", "fi": "Verkkosäännöt viivästyttävät datakeskuksia" },
+      "demand": { "en": "delayed by policy", "fi": "viivästyy sääntelyn vuoksi" }, "supply": { "en": "tight", "fi": "kireä" },
+      "profile": { "demand": -0.2, "supply": 0.2, "policy": -1.0, "price": 0.0, "nordic": -0.5, "bullwhip": 0.2 },
+      "prior": 0.15, "prior_note": "[ASSUMPTION: Finland's priority-rule consultation and southern connection limits can re-sequence energisation.]",
+      "path": { "demand_yearly": [0.05, 0.00, 0.20], "supply_yearly": [0.15, 0.13, 0.15], "band": 0.12 },
+      "narrative": { "en": "Finland replaces first-come-first-served connections with priority groups and southern connection capacity stays restricted. Signed data-centre agreements remain valid but their energisation dates move later; utility and industrial connections take precedence.", "fi": "Suomi korvaa jonotusjärjestyksen etusijaryhmillä ja Etelä-Suomen liittymäkapasiteetti pysyy rajoitettuna. Allekirjoitetut datakeskussopimukset pysyvät voimassa, mutta niiden käyttöönotot siirtyvät myöhemmäksi; verkkoyhtiöiden ja teollisuuden liittymät menevät edelle." },
+      "signposts": [
+        { "text": { "en": "Priority rule adopted by the government", "fi": "Hallitus hyväksyy etusijasäännön" }, "signal_id": "SIG-014" },
+        { "text": { "en": "Fingrid extends southern connection restrictions", "fi": "Fingrid jatkaa Etelä-Suomen liittymärajoituksia" }, "signal_id": "SIG-001" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Consultation ends without a change in queue order", "fi": "Lausuntokierros päättyy ilman jonojärjestyksen muutosta" }, "signal_id": "SIG-014" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, Finnish data-centre relay demand shifts one to two years later while utility demand arrives earlier; the mix changes more than the total.", "fi": "Jos tämä toteutuu, Suomen datakeskusten relekysyntä siirtyy yhdestä kahteen vuotta myöhemmäksi ja verkkoyhtiöiden kysyntä aikaistuu; tuotejakauma muuttuu enemmän kuin kokonaismäärä." },
+        "delivery": { "en": "If this holds, delivery times ease for data-centre variants and tighten for utility variants.", "fi": "Jos tämä toteutuu, datakeskusvarianttien toimitusajat helpottuvat ja verkkovarianttien kiristyvät." },
+        "components": { "en": "If this holds, the same components are needed later; the exposure is timing of the 18-month orders.", "fi": "Jos tämä toteutuu, samat komponentit tarvitaan myöhemmin; riski on 18 kuukauden tilausten ajoitus." }
+      }
+    },
+    {
+      "id": "cost_squeeze",
+      "name": { "en": "Rising material prices squeeze projects", "fi": "Nousevat materiaalihinnat puristavat hankkeita" },
+      "demand": { "en": "slows on cost", "fi": "hidastuu kustannusten vuoksi" }, "supply": { "en": "tight and expensive", "fi": "kireä ja kallis" },
+      "profile": { "demand": -0.4, "supply": 0.6, "policy": 0.0, "price": 1.0, "nordic": 0.0, "bullwhip": 0.2 },
+      "prior": 0.15, "prior_note": "[ASSUMPTION: record copper and memory prices raise switchgear costs enough to delay marginal projects.]",
+      "path": { "demand_yearly": [0.15, 0.05, 0.15], "supply_yearly": [0.10, 0.08, 0.12], "band": 0.12 },
+      "narrative": { "en": "Copper near record highs and memory prices far above 2025 levels raise the cost of switchgear and relays. Marginal projects are delayed or re-tendered and customers push price risk back to suppliers through indexed contracts; demand continues but more slowly and with thinner margins.", "fi": "Ennätystasoilla oleva kupari ja vuoden 2025 tasoa selvästi korkeammat muistihinnat nostavat kojeistojen ja releiden kustannuksia. Marginaaliset hankkeet viivästyvät tai kilpailutetaan uudelleen ja asiakkaat siirtävät hintariskiä toimittajille indeksoiduilla sopimuksilla; kysyntä jatkuu, mutta hitaammin ja ohuemmilla katteilla." },
+      "signposts": [
+        { "text": { "en": "Copper stays above its January 2026 high", "fi": "Kupari pysyy tammikuun 2026 huipun yläpuolella" }, "signal_id": "SIG-010" },
+        { "text": { "en": "DRAM contract prices keep rising next quarter", "fi": "Muistin sopimushinnat nousevat edelleen ensi neljänneksellä" }, "signal_id": "SIG-007" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Copper falls back below USD 12,000/t", "fi": "Kupari laskee alle 12 000 USD/t" }, "signal_id": "SIG-010" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, order volumes grow more slowly than announcements suggest and quotations need copper and memory indexation.", "fi": "Jos tämä toteutuu, tilausmäärät kasvavat ilmoituksia hitaammin ja tarjoukset tarvitsevat kupari- ja muisti-indeksoinnin." },
+        "delivery": { "en": "If this holds, delivery times stay long because components stay expensive and allocated.", "fi": "Jos tämä toteutuu, toimitusajat pysyvät pitkinä, koska komponentit pysyvät kalliina ja allokoituina." },
+        "components": { "en": "If this holds, components bought at peak prices are consumed but at a margin cost; price clauses matter more than volumes.", "fi": "Jos tämä toteutuu, huippuhinnoilla ostetut komponentit kuluvat, mutta katteen kustannuksella; hintaehdot merkitsevät enemmän kuin määrät." }
+      }
+    },
+    {
+      "id": "grid_baseline",
+      "name": { "en": "Grid upgrades carry demand while data centres pause", "fi": "Verkkoinvestoinnit kannattelevat kysyntää datakeskusten tauon aikana" },
+      "demand": { "en": "shifts to utilities", "fi": "siirtyy verkkoyhtiöihin" }, "supply": { "en": "easing", "fi": "helpottuu" },
+      "profile": { "demand": -0.3, "supply": -0.3, "policy": 0.6, "price": -0.2, "nordic": 0.0, "bullwhip": -0.2 },
+      "prior": 0.15, "prior_note": "[ASSUMPTION: EU grid investment of EUR 584 bn this decade is the floor under relay demand independent of data centres.]",
+      "path": { "demand_yearly": [0.08, 0.08, 0.10], "supply_yearly": [0.20, 0.12, 0.10], "band": 0.08 },
+      "narrative": { "en": "Data-centre pipelines pause but regulated grid investment in Europe continues on its multi-year plan. Relay demand grows at the utility rate, with a different product mix and longer planning cycles, while component supply gradually loosens.", "fi": "Datakeskushankkeet pysähtyvät, mutta säännelty verkkoinvestointi Euroopassa jatkuu monivuotisen suunnitelman mukaan. Relekysyntä kasvaa verkkoyhtiöiden tahtia eri tuotejakaumalla ja pidemmillä suunnittelusykleillä komponenttien saatavuuden helpottuessa vähitellen." },
+      "signposts": [
+        { "text": { "en": "EU and national grid plans approved with funding", "fi": "EU:n ja kansalliset verkkosuunnitelmat hyväksytään rahoituksineen" }, "signal_id": "SIG-013" },
+        { "text": { "en": "Hyperscaler capex guidance flat or down", "fi": "Pilviyhtiöiden investointiohjaus tasainen tai laskeva" }, "signal_id": "SIG-004" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "New signed data-centre agreements in the Nordics", "fi": "Uusia allekirjoitettuja datakeskussopimuksia Pohjoismaissa" }, "signal_id": "SIG-001" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, total relay demand grows steadily at the utility rate and the data-centre variants lose share.", "fi": "Jos tämä toteutuu, relekysyntä kasvaa tasaisesti verkkoyhtiöiden tahtia ja datakeskusvariantit menettävät osuutta." },
+        "delivery": { "en": "If this holds, delivery times normalise toward two weeks.", "fi": "Jos tämä toteutuu, toimitusajat normalisoituvat kohti kahta viikkoa." },
+        "components": { "en": "If this holds, the component mix shifts; data-centre specific parts ordered at the peak are at risk of excess.", "fi": "Jos tämä toteutuu, komponenttijakauma muuttuu; datakeskuskohtaiset osat, jotka tilattiin huipulla, ovat ylijäämäriskissä." }
+      }
+    },
+    {
+      "id": "inventory_correction",
+      "name": { "en": "Double orders unwind, stock is released", "fi": "Tuplatilaukset purkautuvat, varastot vapautuvat" },
+      "demand": { "en": "plateaus", "fi": "tasaantuu" }, "supply": { "en": "surplus", "fi": "ylitarjonta" },
+      "profile": { "demand": -0.5, "supply": -0.8, "policy": 0.0, "price": -0.4, "nordic": 0.0, "bullwhip": -1.0 },
+      "prior": 0.15, "prior_note": "[ASSUMPTION: the hoarding indicators in the demand-quality check unwind within a year.]",
+      "path": { "demand_yearly": [-0.05, -0.10, 0.10], "supply_yearly": [0.25, 0.15, 0.05], "band": 0.12 },
+      "narrative": { "en": "Distributors and OEMs that ordered ahead of need cancel and push out orders as lead times fall. Component prices drop below contract levels, inventories are released through the chain and apparent demand falls below end use for several quarters, as in 2023.", "fi": "Tarpeen edelle tilanneet jakelijat ja laitevalmistajat perkaavat ja siirtävät tilauksia toimitusaikojen lyhentyessä. Komponenttien hinnat laskevat sopimustasojen alle, varastot purkautuvat ketjussa ja näennäinen kysyntä alittaa loppukäytön useiden neljännesten ajan, kuten vuonna 2023." },
+      "signposts": [
+        { "text": { "en": "Spot DRAM trades below contract", "fi": "Spot-muisti alittaa sopimushinnan" }, "signal_id": "SIG-015" },
+        { "text": { "en": "Distributor sentiment index falls below neutral", "fi": "Jakelijoiden luottamusindeksi laskee neutraalin alle" }, "signal_id": "SIG-009" }
+      ],
+      "falsifiers": [
+        { "text": { "en": "Lead times stay above 40 weeks", "fi": "Toimitusajat pysyvät yli 40 viikossa" }, "signal_id": "SIG-008" }
+      ],
+      "abb_interpretation": {
+        "demand": { "en": "If this holds, frame orders are pushed out before public data turns; apparent demand undershoots end use.", "fi": "Jos tämä toteutuu, puitetilauksia siirretään ennen kuin julkinen data kääntyy; näennäinen kysyntä alittaa loppukäytön." },
+        "delivery": { "en": "If this holds, delivery times normalise quickly.", "fi": "Jos tämä toteutuu, toimitusajat normalisoituvat nopeasti." },
+        "components": { "en": "If this holds, components ordered at the peak arrive into a surplus; the exposure is inventory value.", "fi": "Jos tämä toteutuu, huipulla tilatut komponentit saapuvat ylitarjontaan; riski on varaston arvo." }
+      }
+    }
+  ]
+}

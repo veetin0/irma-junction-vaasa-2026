@@ -37,7 +37,7 @@ from agents.pipeline import Context, Pipeline, _next_analysis_step, _t, build_br
 from agents.scout import SKIP_REASONS, build_prompt, known_urls, post_gate, pre_gate, reason as scout_reason, scout_settings
 from engine.archetypes import axis_scores, plain_summary, select_scenarios
 from engine.bullwhip import compute_bullwhip
-from engine.weights import compute_weights
+from engine.weights import HORIZONS, compute_weights, horizon_weights
 from agents.web import DEFAULT_SCOUT_SETTINGS, DEFAULT_WEB_SETTINGS, THEMES, extract_json, host_of, norm_url
 
 BASE = Path(__file__).resolve().parent
@@ -191,6 +191,16 @@ class Store:
         w = weights or self.weights()
         return select_scenarios(self.scenario_config["archetypes"], self.signals, w, float(self.scenario_config.get("scaling_k", 1.5)))
 
+    def scenarios_by_horizon(self, weights: dict[str, Any]) -> dict[str, Any]:
+        """C2: the scenario selection re-run on w_h = w × T(h) for each horizon. May pick a different four."""
+        out: dict[str, Any] = {}
+        for h in HORIZONS:
+            res = select_scenarios(self.scenario_config["archetypes"], self.signals, horizon_weights(weights, h), float(self.scenario_config.get("scaling_k", 1.5)))
+            ranked = sorted(res["scenarios"], key=lambda s: -s["probability"])
+            out[str(h)] = {"scenarios": [{"id": s["id"], "name": s["name"], "probability": s["probability"], "rank": i + 1} for i, s in enumerate(ranked)],
+                           "entropy": res["entropy"], "leader": ranked[0]["id"]}
+        return out
+
     def _context(self, item: dict[str, Any] | None = None) -> Context:
         return Context(today=today(), signals=self.signals, evidence=self.evidence, scenario_config=self.scenario_config,
                        bullwhip_config=self.bullwhip_config, replay=self.replay, llm=self.llm, item=item,
@@ -333,7 +343,7 @@ class Store:
             s["delta_pp"] = round((s["probability"] - p0) * 100, 2) if p0 is not None else None
         return {
             "meta": {"app": "Irma", "today": today().isoformat(), "llm_mode": self.llm.mode, "model": os.environ.get("ABB_MODEL", "claude-opus-5-5"),
-                     "horizon_months": [12, 36], "agents": self.pipeline.describe(), "source_classes": SOURCE_CLASSES,
+                     "horizon_months": list(HORIZONS), "agents": self.pipeline.describe(), "source_classes": SOURCE_CLASSES,
                      "suggested_prompts": SUGGESTED_PROMPTS, "world": self.world, "worlds": list(WORLDS.values()), "languages": ["en", "fi"]},
             "scheduler": {"interval_minutes": self.settings["run_interval_minutes"], "last_run": self.last_run.isoformat(timespec="minutes") if self.last_run else None,
                           "next_run": self.next_run.isoformat(timespec="minutes") if self.next_run else None, "runs_completed": self.runs_completed},
@@ -343,6 +353,7 @@ class Store:
             "signals": signals,
             "evidence": self.evidence,
             "scenarios": sc,
+            "scenarios_by_horizon": self.scenarios_by_horizon(w),
             "scaling_note": self.scenario_config.get("scaling_note"),
             "history": {"points": self.history, "note": {"en": f"Points before {today().isoformat()} are simulated demonstration data (DEMODATA); today's point is computed live.",
                                                            "fi": f"Pisteet ennen {today().isoformat()} ovat simuloitua esittelydataa (DEMODATA); tämän päivän piste lasketaan reaaliaikaisesti."}},

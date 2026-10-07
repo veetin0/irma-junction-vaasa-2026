@@ -19,3 +19,11 @@ dist/
 
 # Vercel CLI
 .vercel/
+
+# HackForge
+!.env.example
+node_modules/
+*.blend1
+renders/cache/
+.hackforge/LOOP.json
+.hackforge/STOP_LOOP

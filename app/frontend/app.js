@@ -214,21 +214,26 @@
   // The backend headline starts with "Recommended move (confidence, 'X' at N%): ..."; the pills already show that, so the card leads with the move itself.
   function moveSentence(txt) { const m = /^[^()]*\([^)]*\)\s*:\s*([\s\S]+)$/.exec(txt || ""); const r = m ? m[1] : (txt || ""); return r.charAt(0).toUpperCase() + r.slice(1); }
   function recommendationCard(R) {
+    const norm = (x) => String(x || "").toLowerCase().replace(/[^a-zåäö]+/g, " ").trim();
+    const leadInList = (R.moves || []).some((m) => norm(L(m.text)) === norm(moveSentence(L(R.headline))));
     const lead = h("div", { class: "rec-lead" }, h("span", { class: "rec-lead-name" }, dot(R.scenario_id), L(R.scenario_name)), h("span", { class: "rec-lead-p tnum" }, pct(R.probability)));
     const move = (m) => {
       const mentioned = new Set(L(m.trigger).match(/SIG-\d{3}/g) || []);
       const extra = (m.trigger_signals || []).filter((id) => !mentioned.has(id));
-      return h("li", { class: "rec-move" },
+      // Compact: area, type and the move itself stay visible; trigger, horizon and cost if wrong sit behind one disclosure.
+      const isLead = norm(L(m.text)) === norm(moveSentence(L(R.headline)));
+      return h("li", { class: `rec-move ${isLead ? "lead" : ""}` },
         h("div", { class: "rec-move-head" }, h("span", { class: "rec-area" }, t(`area_${m.area}`)), pill(m.type === "no_regret" ? t("noRegret") : t("contingent"), m.type === "no_regret" ? "ok" : "warn")),
         h("div", { class: "rec-move-text" }, L(m.text)),
-        h("div", { class: "rec-trigger" }, h("span", { class: "rec-k" }, `${t("triggerWord")}: `), cites(L(m.trigger)), ...extra.map((id) => [" ", h("a", { class: "cite", href: `#/signal/${id}` }, id)])),
-        disc(t("ifWrong"), h("div", { class: "small" }, h("div", { class: "tiny" }, `${t("horizonWord")}: ${m.horizon_months} ${LANG === "fi" ? "kk" : "mo"}`), h("div", null, h("strong", null, `${t("costIfWrong")}: `), L(m.cost_if_wrong)))));
+        disc(`${t("triggerWord")} · ${t("costIfWrong").toLowerCase()}`, h("div", { class: "small" },
+          h("div", { class: "rec-trigger" }, h("span", { class: "rec-k" }, `${t("triggerWord")}: `), cites(L(m.trigger)), ...extra.map((id) => [" ", h("a", { class: "cite", href: `#/signal/${id}` }, id)])),
+          h("div", { class: "tiny" }, `${t("horizonWord")}: ${m.horizon_months} ${LANG === "fi" ? "kk" : "mo"}`), h("div", null, h("strong", null, `${t("costIfWrong")}: `), L(m.cost_if_wrong)))));
     };
     const na = R.next_action || {};
     return h("div", { class: "card rec-card" },
       h("div", { class: "section-head" }, h("h2", null, t("recMove")), h("div", { class: "rec-pills" }, pill(t(`conf_${R.confidence}`), confClass(R.confidence)), labelPill(R.label || "ASSUMPTION"))),
       lead,
-      h("p", { class: "rec-headline", title: L(R.headline) }, moveSentence(L(R.headline))),
+      leadInList ? null : h("p", { class: "rec-headline", title: L(R.headline) }, moveSentence(L(R.headline))),
       h("ul", { class: "rec-moves" }, ...(R.moves || []).map(move)),
       h("div", { class: "rec-next" }, h("div", { class: "rec-k" }, t("nextAction")), h("div", { class: "small" }, L(na.text)),
         h("dl", { class: "kv small" }, h("dt", null, t("ownerWord")), h("dd", null, L(na.owner)), h("dt", null, t("dueWord")), h("dd", { class: "tnum" }, na.due || "—"), h("dt", null, t("revisitOn")), h("dd", { class: "tnum" }, R.revisit_on || "—"))),

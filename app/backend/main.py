@@ -508,6 +508,8 @@ class Store:
             self.runs.append(record)
             self._sync_blocked_domains()
             created = self._cycle("new_information")
+            w_after = self.weights()
+            record["recommendation"] = build_recommendation(self.scenarios(w_after), self.signals, w_after, today(), self.reco_templates)
             if final_id:
                 card = next(s for s in self.signals if s["id"] == final_id)
                 wgt = self.weights()[final_id]["weight"]
@@ -1037,7 +1039,7 @@ def reset() -> dict[str, Any]:
 def method() -> dict[str, Any]:
     from engine.weights import COUNTER_CAP, HALF_LIFE_DAYS, HUMAN_MULTIPLIERS, RELIABILITY, UNCHALLENGED_CAP
     return {
-        "weight_formula": "w = R × F × S × (1 − C) × H",
+        "weight_formula": "w = min(1, Bel × F × M × H); w_h = w × T(h)",
         "reliability": RELIABILITY, "half_life_days": HALF_LIFE_DAYS, "counter_cap": COUNTER_CAP, "unchallenged_cap": UNCHALLENGED_CAP, "human_multipliers": HUMAN_MULTIPLIERS,
         "scenario_formula": "r = Σ_a axes_a × profile_a / Σ_a |profile_a|;  L_s = ln(prior_s) + k × Σ_i (w_i × r_is);  the 4 highest L are shown, p = softmax over the 4",
         "k": STORE.scenario_config.get("scaling_k"), "k_note": STORE.scenario_config.get("scaling_note"),

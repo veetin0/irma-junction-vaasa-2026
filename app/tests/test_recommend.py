@@ -319,3 +319,14 @@ def test_run_result_delta_rows_use_current_archetype_ids_and_explain_themselves(
 def test_run_state_still_carries_the_recommendation():
     r = client.post("/api/run", json={"preset": "demo_fingrid_q3"}).json()
     assert r["state"]["recommendation"]["moves"] and r["state"]["negative_signals"] and "signal_changes" in r["state"]
+
+
+def test_import_run_returns_recommended_move_and_next_action():
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    c.post("/api/reset")
+    r = c.post("/api/run", json={"preset": "demo_fingrid_q3"}).json()
+    rec = r.get("recommendation") or r.get("run", {}).get("recommendation")
+    assert rec and rec["moves"] and rec["next_action"]["due"]
+    assert c.get("/api/method").json()["weight_formula"].startswith("w = min(1,")

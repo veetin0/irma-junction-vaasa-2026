@@ -377,3 +377,4 @@ details.disc .disc-body { padding-top: 10px; color: var(--text); font-size: 0.9r
   .top-left { display: contents; }
   .summary-card { order: 1; } .rec-card { order: 2; } .controls-card { order: 3; } .market-card { order: 4; }
 }
+.rec-move.lead .rec-move-text { font-weight: 600; color: #000; }

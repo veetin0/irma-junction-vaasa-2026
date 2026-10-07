@@ -1,0 +1,849 @@
+{
+  "_note": "Recommendation templates (C3). Qualitative, conditional decision moves for the S&OP / component procurement planner, one block per scenario archetype. No quantities, no order points, no order dates, no digits in move texts. Triggers name signal themes; engine/recommend.py maps each theme to real signal ids in the current world by matching card fields. Every threshold and every number of days below is an ASSUMPTION.",
+  "label": "ASSUMPTION",
+  "confidence_rules": {
+    "label": "ASSUMPTION",
+    "note": "[ASSUMPTION: confidence comes from the probability margin between the leading scenario and the runner-up and from the normalised entropy across the four shown scenarios. High needs a clear margin and low entropy; low is the default. Thresholds are untested and meant to be tuned with ABB.]",
+    "high": { "min_margin": 0.20, "max_entropy": 0.70 },
+    "medium": { "min_margin": 0.08, "max_entropy": 0.90 }
+  },
+  "defaults": {
+    "label": "ASSUMPTION",
+    "due_days": 14,
+    "revisit_days": 28,
+    "note": "[ASSUMPTION: next action is due in two weeks unless the archetype says otherwise; revisit with the monthly S&OP cycle.]"
+  },
+  "confidence_labels": {
+    "low": { "en": "low", "fi": "matala" },
+    "medium": { "en": "medium", "fi": "kohtalainen" },
+    "high": { "en": "high", "fi": "korkea" }
+  },
+  "headline_template": {
+    "en": "Recommended move ({confidence} confidence, '{name}' at {probability}): {move}.",
+    "fi": "Suositeltu siirto (luottamus {confidence}, '{name}' {probability}): {move}."
+  },
+  "hedge_template": {
+    "en": "If '{runner}' ({runner_p}) overtakes '{lead}', {shift} The no-regret moves above stay in place; the contingent ones would be read again.",
+    "fi": "Jos skenaario '{runner}' ({runner_p}) ohittaa skenaarion '{lead}', {shift} Ehdoitta kannattavat siirrot pysyvät voimassa; ehdolliset arvioitaisiin uudelleen."
+  },
+  "disclaimer": {
+    "en": "The planner decides. Irma has no contract, allocation or cash data, so this gives conditional moves only: no quantities and no order timing.",
+    "fi": "Päätöksen tekee suunnittelija. Irmalla ei ole sopimus-, allokaatio- tai kassadataa, joten se antaa vain ehdollisia siirtoja: ei määriä eikä tilausten ajoitusta."
+  },
+  "themes": {
+    "memory_supply": {
+      "label": { "en": "memory contract prices and microcontroller lead times", "fi": "muistin sopimushinnat ja mikro-ohjainten toimitusajat" },
+      "select": { "measures": ["supply_tightness"] },
+      "fallback_axis": "supply"
+    },
+    "supply_unwind": {
+      "label": { "en": "distributor stock sentiment and the memory spot-to-contract spread", "fi": "jakelijoiden varastotunnelma ja muistin spot- ja sopimushinnan ero" },
+      "select": { "category": ["bullwhip"] },
+      "fallback_axis": "bullwhip"
+    },
+    "price": {
+      "label": { "en": "copper price moves", "fi": "kuparin hintaliikkeet" },
+      "select": { "category": ["price"] },
+      "fallback_axis": "price"
+    },
+    "fi_connections": {
+      "label": { "en": "Finnish signed connection agreements and committed investments", "fi": "Suomen allekirjoitetut liittymäsopimukset ja sitoutuneet investoinnit" },
+      "select": { "region": ["FI"], "measures": ["end_demand"], "source_class": ["contract"] },
+      "fallback_axis": "nordic"
+    },
+    "fi_policy": {
+      "label": { "en": "the Finnish connection priority rule and grid code timeline", "fi": "Suomen liittymien etusijasääntö ja verkkosäännöstön aikataulu" },
+      "select": { "category": ["policy"], "region": ["FI"] },
+      "fallback_axis": "policy"
+    },
+    "capex": {
+      "label": { "en": "hyperscaler capex guidance and projections", "fi": "pilviyhtiöiden investointiohjaus ja -ennusteet" },
+      "select": { "region": ["GLOBAL"], "measures": ["end_demand"], "source_class": ["news"] },
+      "fallback_axis": "demand"
+    },
+    "us_delays": {
+      "label": { "en": "US delay and cancellation reports", "fi": "Yhdysvaltain viivästys- ja peruutusraportit" },
+      "select": { "region": ["US"], "measures": ["end_demand"], "source_class": ["news"] },
+      "fallback_axis": "bullwhip"
+    },
+    "eu_policy": {
+      "label": { "en": "EU grid and core-market connection policy", "fi": "EU:n verkko- ja ydinmarkkinoiden liittymäpolitiikka" },
+      "select": { "category": ["policy"], "region": ["EU"] },
+      "fallback_axis": "policy"
+    },
+    "nordic_sites": {
+      "label": { "en": "Nordic data-centre site announcements", "fi": "Pohjoismaiden datakeskushankeilmoitukset" },
+      "select": { "region": ["FI", "NORDICS"], "measures": ["end_demand"], "source_class": ["news"] },
+      "fallback_axis": "nordic"
+    },
+    "abb_order_book": {
+      "label": { "en": "ABB's own frame-order coverage and order intake", "fi": "ABB:n omat puitetilausten kattavuus ja tilauskertymä" },
+      "select": { "measures": ["intermediary"], "category": ["demand"], "region": ["NORDICS", "GLOBAL"] },
+      "allow_inactive": true,
+      "fallback_axis": "demand"
+    },
+    "grid_investment": {
+      "label": { "en": "EU grid investment plans", "fi": "EU:n verkkoinvestointisuunnitelmat" },
+      "select": { "region": ["EU"], "source_class": ["policy"], "direction": [1] },
+      "fallback_axis": "policy"
+    }
+  },
+  "archetypes": {
+    "expansion_tight": {
+      "headline_move": {
+        "en": "prepare a second-source qualification for memory-dependent relay boards so the next commitment window can be extended if the tight-supply reading holds",
+        "fi": "valmistele muistiriippuvaisten releosien toisen toimittajan kelpuutus, jotta seuraavaa sitoumusikkunaa voidaan pidentää, jos niukkuustulkinta pitää"
+      },
+      "if_leading": {
+        "en": "the emphasis would move to securing component supply and settling how scarce relays are shared between internal and external customers.",
+        "fi": "painopiste siirtyisi komponenttien saatavuuden turvaamiseen ja siihen, miten niukat releet jaetaan sisäisten ja ulkoisten asiakkaiden kesken."
+      },
+      "next_action": {
+        "text": {
+          "en": "Put the second-source qualification of memory-dependent relay boards on the agenda of the next S&OP review, and agree which signals decide whether the commitment window is extended.",
+          "fi": "Tuo muistiriippuvaisten releosien toisen toimittajan kelpuutus seuraavan S&OP-katselmuksen esityslistalle ja sovi, mitkä signaalit ratkaisevat, pidennetäänkö sitoumusikkunaa."
+        },
+        "owner": { "en": "Component procurement lead with the S&OP owner", "fi": "Komponenttihankinnan vastaava yhdessä S&OP-vastaavan kanssa" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 12,
+          "themes": ["memory_supply", "supply_unwind"],
+          "text": {
+            "en": "Prepare a second-source qualification for memory-dependent relay boards so the next commitment window can be extended if the tight-supply reading holds.",
+            "fi": "Valmistele muistiriippuvaisten releosien toisen toimittajan kelpuutus, jotta seuraavaa sitoumusikkunaa voidaan pidentää, jos niukkuustulkinta pitää."
+          },
+          "trigger": {
+            "en": "Stays valid while these keep confirming tight supply: {themes}. Read it again if they turn.",
+            "fi": "Pätee niin kauan kuin nämä vahvistavat niukan saatavuuden: {themes}. Arvioi uudelleen, jos ne kääntyvät."
+          },
+          "cost_if_wrong": {
+            "en": "If supply eases instead, the qualification effort has little short-term use, but a second source stays in the portfolio at modest cost.",
+            "fi": "Jos saatavuus sen sijaan helpottuu, kelpuutustyöstä on lyhyellä aikavälillä vähän hyötyä, mutta toinen toimittaja jää portfolioon vähäisin kustannuksin."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["memory_supply", "fi_connections"],
+          "text": {
+            "en": "Identify which relay variants carry the longest-lead components and protect assembly slots for those variants first, if data-centre project conversion continues.",
+            "fi": "Selvitä, mitkä releversiot sisältävät pisimmän toimitusajan komponentit, ja suojaa niille kokoonpanovuorot ensin, jos datakeskushankkeiden eteneminen jatkuu."
+          },
+          "trigger": {
+            "en": "Activates while these keep their direction: {themes}.",
+            "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If projects convert more slowly, the protected slots sit unused for a while and other variants wait longer than needed.",
+            "fi": "Jos hankkeet etenevät hitaammin, suojatut vuorot jäävät hetkeksi käyttämättä ja muut versiot odottavat tarpeettoman pitkään."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["abb_order_book", "nordic_sites"],
+          "text": {
+            "en": "Agree with the internal switchgear factories how scarce relay supply is shared between internal and external customers, before a demand peak turns it into a dispute.",
+            "fi": "Sovi sisäisten kojeistotehtaiden kanssa, miten niukka relesaanti jaetaan sisäisten ja ulkoisten asiakkaiden kesken, ennen kuin kysyntäpiikki tekee siitä kiistan."
+          },
+          "trigger": {
+            "en": "Activates when these rise together: {themes}.",
+            "fi": "Aktivoituu, kun nämä nousevat yhdessä: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If demand softens, the sharing rule is not needed, but keeping it ready costs little.",
+            "fi": "Jos kysyntä pehmenee, jakosääntöä ei tarvita, mutta sen pitäminen valmiina maksaa vähän."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["memory_supply"],
+          "text": {
+            "en": "Ask the main memory and microcontroller suppliers for a written allocation and lead-time status at every review, and log each change next to the signal cards.",
+            "fi": "Pyydä keskeisiltä muisti- ja mikro-ohjaintoimittajilta kirjallinen allokaatio- ja toimitusaikatilanne jokaisessa katselmuksessa ja kirjaa jokainen muutos signaalikorttien viereen."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; the signals that show what to ask about are: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; kysyttävää ohjaavat nämä signaalit: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time; if supply eases, the log simply documents it.",
+            "fi": "Kustannus on katselmusaika; jos saatavuus helpottuu, kirjaus vain dokumentoi sen."
+          }
+        }
+      ]
+    },
+    "expansion_easing": {
+      "headline_move": {
+        "en": "keep component commitments flexible so they can follow the market down, and test whether assembly and test capacity becomes the next bottleneck",
+        "fi": "pidä komponenttisitoumukset joustavina, jotta ne voivat seurata markkinaa alaspäin, ja selvitä, tuleeko kokoonpano- ja testauskapasiteetista seuraava pullonkaula"
+      },
+      "if_leading": {
+        "en": "the emphasis would move from securing supply to keeping commitments flexible and to assembly and test capacity.",
+        "fi": "painopiste siirtyisi saatavuuden turvaamisesta sitoumusten joustavuuteen sekä kokoonpano- ja testauskapasiteettiin."
+      },
+      "next_action": {
+        "text": {
+          "en": "Bring price and volume flexibility terms for the next memory and microcontroller agreements to the next S&OP review, and agree what counts as easing.",
+          "fi": "Tuo seuraavien muisti- ja mikro-ohjainsopimusten hinta- ja volyymijoustoehdot seuraavaan S&OP-katselmukseen ja sovi, mikä katsotaan helpottumiseksi."
+        },
+        "owner": { "en": "Component procurement lead", "fi": "Komponenttihankinnan vastaava" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 12,
+          "themes": ["memory_supply", "supply_unwind"],
+          "text": {
+            "en": "Add price-adjustment and volume-flexibility terms to the next memory and microcontroller supply agreements, so the commitments can follow the market down as well as up.",
+            "fi": "Lisää seuraaviin muisti- ja mikro-ohjainsopimuksiin hinnanmuutos- ja volyymijoustoehdot, jotta sitoumukset voivat seurata markkinaa sekä ylös että alas."
+          },
+          "trigger": {
+            "en": "Valid in both readings; it matters most while these point to easing: {themes}.",
+            "fi": "Pätee kummassakin tulkinnassa; tärkeintä se on, kun nämä viittaavat helpottumiseen: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the market tightens instead, the flexibility terms may cost some price or supplier priority; that is the price of keeping the option.",
+            "fi": "Jos markkina sen sijaan kiristyy, joustoehdot voivat maksaa hinnassa tai toimittajan prioriteetissa; se on option pitämisen hinta."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["capex", "abb_order_book"],
+          "text": {
+            "en": "Check whether assembly and test capacity, rather than components, becomes the bottleneck, and prepare the case for securing capacity there.",
+            "fi": "Selvitä, muuttuuko pullonkaulaksi komponenttien sijaan kokoonpano- ja testauskapasiteetti, ja valmistele perustelut kapasiteetin turvaamiseksi siellä."
+          },
+          "trigger": {
+            "en": "Activates when components ease while these keep rising: {themes}.",
+            "fi": "Aktivoituu, kun komponentit helpottuvat samalla kun nämä jatkavat nousuaan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If components stay scarce, the capacity case comes early, but the analysis stays useful.",
+            "fi": "Jos komponentit pysyvät niukkoina, kapasiteettiperustelu tulee etuajassa, mutta selvitys pysyy hyödyllisenä."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["memory_supply"],
+          "text": {
+            "en": "Prepare to shorten planned delivery times for data-centre relay variants once component lead times have eased over several consecutive reviews.",
+            "fi": "Valmistaudu lyhentämään datakeskusreleversioiden suunniteltuja toimitusaikoja, kun komponenttien toimitusajat ovat helpottuneet useassa peräkkäisessä katselmuksessa."
+          },
+          "trigger": {
+            "en": "Activates after these ease over consecutive reviews, not on a single reading: {themes}.",
+            "fi": "Aktivoituu, kun nämä ovat helpottuneet peräkkäisissä katselmuksissa, ei yksittäisestä lukemasta: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If lead times rebound, a shorter delivery promise leads to missed commitments to customers.",
+            "fi": "Jos toimitusajat kääntyvät takaisin nousuun, lyhyempi toimituslupaus johtaa asiakaslupausten rikkoutumiseen."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["supply_unwind", "price"],
+          "text": {
+            "en": "Write down in advance what counts as easing, for example sustained falls in memory contract prices, and check it at every review.",
+            "fi": "Kirjaa etukäteen, mikä katsotaan helpottumiseksi, esimerkiksi muistin sopimushintojen jatkuva lasku, ja tarkista se jokaisessa katselmuksessa."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        }
+      ]
+    },
+    "deferred_tight": {
+      "headline_move": {
+        "en": "hold the next extension of the commitment window until the Finnish connection-rule outcome and the first energisation dates are clear, and keep the second-source work running",
+        "fi": "pidä seuraava sitoumusikkunan pidennys odotustilassa, kunnes Suomen liittymäsääntöjen lopputulos ja ensimmäiset käyttöönottopäivät ovat selvillä, ja jatka toisen toimittajan työtä"
+      },
+      "if_leading": {
+        "en": "the commitment window would be timed against revised energisation dates, and internal frame orders would be checked for deferral first.",
+        "fi": "sitoumusikkuna ajoitettaisiin tarkistettuihin käyttöönottopäiviin, ja sisäiset puitetilaukset tarkistettaisiin ensin lykkääntymisen varalta."
+      },
+      "next_action": {
+        "text": {
+          "en": "Ask the switchgear factories for the energisation dates behind their frame orders, and agree in the next S&OP review which outcome of the Finnish connection rule would release the commitment window.",
+          "fi": "Pyydä kojeistotehtailta käyttöönottopäivät puitetilaustensa taustalta ja sovi seuraavassa S&OP-katselmuksessa, mikä Suomen liittymäsäännön lopputulos vapauttaisi sitoumusikkunan."
+        },
+        "owner": { "en": "S&OP owner with the segment manager, data centres", "fi": "S&OP-vastaava yhdessä datakeskussegmentin päällikön kanssa" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "contingent", "horizon_months": 12,
+          "themes": ["fi_policy", "fi_connections"],
+          "text": {
+            "en": "Hold the next extension of the commitment window until the Finnish connection-rule outcome is known and signed agreements start to convert into energisation dates.",
+            "fi": "Pidä seuraava sitoumusikkunan pidennys odotustilassa, kunnes Suomen liittymäsäännön lopputulos tiedetään ja allekirjoitetut sopimukset alkavat muuttua käyttöönottopäiviksi."
+          },
+          "trigger": {
+            "en": "Activates if these show re-sequencing or slipping dates: {themes}.",
+            "fi": "Aktivoituu, jos nämä osoittavat jonon uudelleenjärjestelyä tai siirtyviä päiviä: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If projects proceed on schedule, waiting costs position in the supplier queue while components are scarce.",
+            "fi": "Jos hankkeet etenevät aikataulussa, odottaminen maksaa paikan toimittajan jonossa komponenttien ollessa niukkoja."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["abb_order_book", "us_delays"],
+          "text": {
+            "en": "Ask the switchgear factories for the energisation dates behind their frame orders, so that deferral shows up in ABB's own data before the public signals turn.",
+            "fi": "Pyydä kojeistotehtailta käyttöönottopäivät puitetilausten taustalta, jotta lykkääntyminen näkyy ABB:n omassa datassa ennen kuin julkiset signaalit kääntyvät."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; compare it with these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; vertaa sitä näihin signaaleihin: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "A small coordination effort; the information is useful in every scenario.",
+            "fi": "Pieni koordinointityö; tieto on hyödyllistä kaikissa skenaarioissa."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["fi_policy", "abb_order_book"],
+          "text": {
+            "en": "Prepare the build plan to absorb rescheduled frame orders by shifting capacity between utility and data-centre relay variants.",
+            "fi": "Valmistele valmistussuunnitelma ottamaan vastaan uudelleenaikataulutetut puitetilaukset siirtämällä kapasiteettia verkko- ja datakeskusreleversioiden välillä."
+          },
+          "trigger": {
+            "en": "Activates when frame orders start to be rescheduled or when these move: {themes}.",
+            "fi": "Aktivoituu, kun puitetilauksia aletaan aikatauluttaa uudelleen tai kun nämä liikkuvat: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If orders do not move, the flexible plan carries some changeover effort for no gain.",
+            "fi": "Jos tilaukset eivät liiku, joustava suunnitelma tuo jonkin verran vaihtotyötä ilman hyötyä."
+          }
+        },
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 24,
+          "themes": ["memory_supply"],
+          "text": {
+            "en": "Keep the second-source qualification of memory-dependent boards running at low intensity; parts stay scarce even if project timing slips.",
+            "fi": "Pidä muistiriippuvaisten osien toisen toimittajan kelpuutus käynnissä matalalla intensiteetillä; osat pysyvät niukkoina, vaikka hankkeiden aikataulu lipeäisi."
+          },
+          "trigger": {
+            "en": "Stays valid while these keep confirming tight supply: {themes}.",
+            "fi": "Pätee niin kauan kuin nämä vahvistavat niukan saatavuuden: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "A modest, steady effort; if supply eases, it still reduces dependence on a single supplier.",
+            "fi": "Vähäinen, tasainen työ; jos saatavuus helpottuu, se silti vähentää riippuvuutta yhdestä toimittajasta."
+          }
+        }
+      ]
+    },
+    "contraction_surplus": {
+      "headline_move": {
+        "en": "review which open component commitments could be rescheduled or made flexible, and hold new capacity plans for data-centre variants until capex signals confirm demand",
+        "fi": "selvitä, mitkä avoimet komponenttisitoumukset voitaisiin aikatauluttaa uudelleen tai tehdä joustaviksi, ja pidä datakeskusversioiden uudet kapasiteettisuunnitelmat odotustilassa, kunnes investointisignaalit vahvistavat kysynnän"
+      },
+      "if_leading": {
+        "en": "the emphasis would move from securing supply to limiting excess commitments and protecting utility-side demand.",
+        "fi": "painopiste siirtyisi saatavuuden turvaamisesta ylimääräisten sitoumusten rajaamiseen ja verkkopuolen kysynnän suojaamiseen."
+      },
+      "next_action": {
+        "text": {
+          "en": "List the open component commitments with their flexibility terms for the next S&OP review, so that a capex cut can be answered quickly.",
+          "fi": "Listaa avoimet komponenttisitoumukset joustoehtoineen seuraavaa S&OP-katselmusta varten, jotta investointileikkaukseen voidaan vastata nopeasti."
+        },
+        "owner": { "en": "Component procurement lead with the S&OP owner", "fi": "Komponenttihankinnan vastaava yhdessä S&OP-vastaavan kanssa" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "contingent", "horizon_months": 12,
+          "themes": ["capex", "supply_unwind"],
+          "text": {
+            "en": "Review which open component commitments could be rescheduled, split or made flexible, and open talks with suppliers if hyperscaler capex guidance is cut.",
+            "fi": "Selvitä, mitkä avoimet komponenttisitoumukset voitaisiin aikatauluttaa uudelleen, jakaa tai tehdä joustaviksi, ja avaa keskustelut toimittajien kanssa, jos pilviyhtiöiden investointiohjausta leikataan."
+          },
+          "trigger": {
+            "en": "Activates if these turn down together: {themes}.",
+            "fi": "Aktivoituu, jos nämä kääntyvät yhdessä laskuun: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If demand holds, early talks may cost goodwill with suppliers while parts are still scarce.",
+            "fi": "Jos kysyntä pitää, aikaiset keskustelut voivat heikentää toimittajasuhdetta osien ollessa yhä niukkoja."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["capex", "grid_investment"],
+          "text": {
+            "en": "Prepare to rebalance the build plan toward utility relay variants, which carry baseline demand if data-centre variants slow.",
+            "fi": "Valmistaudu painottamaan valmistussuunnitelmaa verkkoreleversioihin, jotka kantavat perustason kysyntää, jos datakeskusversiot hidastuvat."
+          },
+          "trigger": {
+            "en": "Activates when the first of these weakens while the second holds: {themes}.",
+            "fi": "Aktivoituu, kun ensimmäinen näistä heikkenee ja toinen pitää: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If data-centre demand continues, the shift leaves those variants short for a time.",
+            "fi": "Jos datakeskuskysyntä jatkuu, siirto jättää nämä versiot hetkeksi vajaiksi."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["supply_unwind", "price"],
+          "text": {
+            "en": "Track the memory spot-to-contract spread, distributor stock sentiment and metal prices at every review; they tend to turn before the order book does.",
+            "fi": "Seuraa muistin spot- ja sopimushinnan eroa, jakelijoiden varastotunnelmaa ja metallien hintoja jokaisessa katselmuksessa; ne kääntyvät yleensä ennen tilauskantaa."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 36,
+          "themes": ["capex", "price"],
+          "text": {
+            "en": "Hold any case for new assembly and test capacity aimed at data-centre variants until capex and contract-price signals confirm that demand is not turning.",
+            "fi": "Pidä datakeskusversioille suunnattu uusi kokoonpano- ja testauskapasiteetti odotustilassa, kunnes investointi- ja sopimushintasignaalit vahvistavat, ettei kysyntä ole kääntymässä."
+          },
+          "trigger": {
+            "en": "Activates while these weaken or stay flat: {themes}.",
+            "fi": "Aktivoituu, kun nämä heikkenevät tai pysyvät paikallaan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If growth resumes, capacity arrives later than demand.",
+            "fi": "Jos kasvu jatkuu, kapasiteetti tulee kysyntää myöhemmin."
+          }
+        }
+      ]
+    },
+    "nordic_concentration": {
+      "headline_move": {
+        "en": "prepare the case for relay capacity and delivery priority for Nordic data-centre projects, and qualify a second source for the variants those projects need",
+        "fi": "valmistele perustelut releiden kapasiteetille ja toimitusprioriteetille Pohjoismaiden datakeskushankkeissa ja kelpuuta toinen toimittaja niille versioille, joita nämä hankkeet tarvitsevat"
+      },
+      "if_leading": {
+        "en": "capacity and delivery priority for Nordic projects would come first, with variant standardisation following.",
+        "fi": "Pohjoismaiden hankkeiden kapasiteetti ja toimitusprioriteetti nousisivat ensimmäiseksi, ja versioiden vakiointi seuraisi."
+      },
+      "next_action": {
+        "text": {
+          "en": "Take the Nordic delivery-priority question to the segment manager, data centres, and agree which projects and variants it would cover.",
+          "fi": "Vie Pohjoismaiden toimitusprioriteettikysymys datakeskussegmentin päällikölle ja sovi, mitä hankkeita ja versioita se koskisi."
+        },
+        "owner": { "en": "Segment manager, data centres, with the S&OP owner", "fi": "Datakeskussegmentin päällikkö yhdessä S&OP-vastaavan kanssa" },
+        "due_days": 21
+      },
+      "moves": [
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["nordic_sites", "fi_connections"],
+          "text": {
+            "en": "Prepare the case for securing relay capacity and delivery priority for Nordic data-centre projects, the home market of the Vaasa unit.",
+            "fi": "Valmistele perustelut releiden kapasiteetin ja toimitusprioriteetin turvaamiselle Pohjoismaiden datakeskushankkeissa, Vaasan yksikön kotimarkkinalla."
+          },
+          "trigger": {
+            "en": "Activates while these keep adding Nordic projects: {themes}.",
+            "fi": "Aktivoituu niin kauan kuin nämä lisäävät Pohjoismaiden hankkeita: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If core markets reopen, priority given to the Nordics comes at the expense of other regions.",
+            "fi": "Jos ydinmarkkinat avautuvat uudelleen, Pohjoismaille annettu prioriteetti tulee muiden alueiden kustannuksella."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["nordic_sites"],
+          "text": {
+            "en": "Review whether the variants requested in Nordic projects can be standardised, so that the narrower range is built efficiently.",
+            "fi": "Selvitä, voidaanko Pohjoismaiden hankkeissa pyydetyt versiot vakioida, jotta kapeampi valikoima valmistetaan tehokkaasti."
+          },
+          "trigger": {
+            "en": "Activates when these show the same few variants recurring: {themes}.",
+            "fi": "Aktivoituu, kun nämä osoittavat samojen harvojen versioiden toistuvan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If investment spreads out again, a narrow variant range limits flexibility.",
+            "fi": "Jos investoinnit hajaantuvat uudelleen, kapea versiovalikoima rajoittaa joustavuutta."
+          }
+        },
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 12,
+          "themes": ["memory_supply"],
+          "text": {
+            "en": "Start the second-source qualification for the variants Nordic projects need most; the component need is as in the growth case, but narrower.",
+            "fi": "Aloita toisen toimittajan kelpuutus niille versioille, joita Pohjoismaiden hankkeet tarvitsevat eniten; komponenttitarve on kuin kasvutapauksessa, mutta kapeampi."
+          },
+          "trigger": {
+            "en": "Stays valid while these keep confirming tight supply: {themes}.",
+            "fi": "Pätee niin kauan kuin nämä vahvistavat niukan saatavuuden: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If supply eases, the qualification comes early, but a second source stays in the portfolio.",
+            "fi": "Jos saatavuus helpottuu, kelpuutus tulee etuajassa, mutta toinen toimittaja jää portfolioon."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["eu_policy", "fi_policy"],
+          "text": {
+            "en": "Follow whether core-market connection limits are lifted or Finnish rules change; either would show that investment is spreading out again or being re-sequenced.",
+            "fi": "Seuraa, poistuvatko ydinmarkkinoiden liittymärajoitukset tai muuttuvatko Suomen säännöt; kumpikin osoittaisi investointien hajaantuvan uudelleen tai jonon järjestyvän uudelleen."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        }
+      ]
+    },
+    "regulatory_resequencing": {
+      "headline_move": {
+        "en": "time the next commitment window against revised energisation dates once the Finnish connection rule is decided, and prepare to shift the product mix toward utility variants",
+        "fi": "ajoita seuraava sitoumusikkuna tarkistettuihin käyttöönottopäiviin, kun Suomen liittymäsääntö on ratkaistu, ja valmistaudu siirtämään tuotevalikoiman painopistettä verkkoversioihin"
+      },
+      "if_leading": {
+        "en": "commitments would be timed against revised energisation dates, and the product mix would move toward utility variants.",
+        "fi": "sitoumukset ajoitettaisiin tarkistettuihin käyttöönottopäiviin ja tuotevalikoiman painopiste siirtyisi verkkoversioihin."
+      },
+      "next_action": {
+        "text": {
+          "en": "Set up a watch on the Finnish consultation outcome and agree which commitment decisions wait for it.",
+          "fi": "Perusta seuranta Suomen lausuntokierroksen lopputulokselle ja sovi, mitkä sitoumuspäätökset odottavat sitä."
+        },
+        "owner": { "en": "S&OP owner", "fi": "S&OP-vastaava" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "contingent", "horizon_months": 12,
+          "themes": ["fi_policy", "fi_connections"],
+          "text": {
+            "en": "Time the next commitment window against revised energisation dates, not against signing dates, once the Finnish connection rule is decided.",
+            "fi": "Ajoita seuraava sitoumusikkuna tarkistettuihin käyttöönottopäiviin, ei allekirjoituspäiviin, kun Suomen liittymäsääntö on ratkaistu."
+          },
+          "trigger": {
+            "en": "Activates when these show the queue being re-ordered: {themes}.",
+            "fi": "Aktivoituu, kun nämä osoittavat jonon järjestyksen muuttuvan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the rule leaves the queue unchanged, the wait costs some position in the supplier queue.",
+            "fi": "Jos sääntö jättää jonon ennalleen, odotus maksaa jonkin verran paikkaa toimittajan jonossa."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["fi_policy", "grid_investment"],
+          "text": {
+            "en": "Prepare to move the product mix toward utility relay variants earlier and toward data-centre variants later.",
+            "fi": "Valmistaudu siirtämään tuotevalikoimaa aiemmin verkkoreleversioihin ja myöhemmin datakeskusversioihin."
+          },
+          "trigger": {
+            "en": "Activates when these point to utility connections going first: {themes}.",
+            "fi": "Aktivoituu, kun nämä viittaavat verkkoliittymien etenevän ensin: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the queue order stays, the mix change comes too early and data-centre variants are delayed without cause.",
+            "fi": "Jos jonon järjestys säilyy, valikoiman muutos tulee liian aikaisin ja datakeskusversiot viivästyvät syyttä."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["fi_policy"],
+          "text": {
+            "en": "Follow the consultation outcome and the grid code timeline, and write down which decisions each outcome would unlock.",
+            "fi": "Seuraa lausuntokierroksen lopputulosta ja verkkosäännöstön aikataulua ja kirjaa, mitkä päätökset kukin lopputulos vapauttaisi."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["grid_investment", "abb_order_book"],
+          "text": {
+            "en": "Keep capacity plans flexible between variant families; the total need moves less than the mix does.",
+            "fi": "Pidä kapasiteettisuunnitelmat joustavina versioperheiden välillä; kokonaistarve liikkuu vähemmän kuin tuotejakauma."
+          },
+          "trigger": {
+            "en": "Activates when these point to a change in mix rather than in total: {themes}.",
+            "fi": "Aktivoituu, kun nämä viittaavat jakauman eikä kokonaismäärän muutokseen: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the mix does not change, the flexibility costs some planning effort.",
+            "fi": "Jos jakauma ei muutu, joustavuus maksaa jonkin verran suunnittelutyötä."
+          }
+        }
+      ]
+    },
+    "cost_squeeze": {
+      "headline_move": {
+        "en": "review price-adjustment clauses on both the supplier and the customer side, so that material price risk is shared and not carried by ABB alone",
+        "fi": "tarkista hinnanmuutosehdot sekä toimittaja- että asiakaspuolella, jotta materiaalihintojen riski jaetaan eikä ABB kanna sitä yksin"
+      },
+      "if_leading": {
+        "en": "price clauses and shared price risk would come ahead of securing volume.",
+        "fi": "hintaehdot ja jaettu hintariski nousisivat saatavuuden turvaamisen edelle."
+      },
+      "next_action": {
+        "text": {
+          "en": "Collect the price-adjustment clauses of current supplier and customer agreements for review, and note which are indexed.",
+          "fi": "Kerää nykyisten toimittaja- ja asiakassopimusten hinnanmuutosehdot katselmointia varten ja merkitse, mitkä ovat indeksoituja."
+        },
+        "owner": { "en": "Component procurement lead with the commercial lead", "fi": "Komponenttihankinnan vastaava yhdessä kaupallisen vastaavan kanssa" },
+        "due_days": 21
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 12,
+          "themes": ["price", "memory_supply"],
+          "text": {
+            "en": "Review price-adjustment clauses on both the supplier and the customer side, so that material price risk is shared and not carried by ABB alone.",
+            "fi": "Tarkista hinnanmuutosehdot sekä toimittaja- että asiakaspuolella, jotta materiaalihintojen riski jaetaan eikä ABB kanna sitä yksin."
+          },
+          "trigger": {
+            "en": "Stays valid while these keep pushing costs up: {themes}.",
+            "fi": "Pätee niin kauan kuin nämä jatkavat kustannusten nostamista: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If prices fall back, the clauses pass part of the fall on; that is the price of the protection.",
+            "fi": "Jos hinnat laskevat takaisin, ehdot siirtävät osan laskusta eteenpäin; se on suojan hinta."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 24,
+          "themes": ["price"],
+          "text": {
+            "en": "Ask engineering which lower-cost component or material alternatives could be qualified for the most exposed relay variants.",
+            "fi": "Kysy tuotekehitykseltä, mitkä edullisemmat komponentti- tai materiaalivaihtoehdot voitaisiin kelpuuttaa eniten alttiina oleville releversioille."
+          },
+          "trigger": {
+            "en": "Activates while these stay above their earlier highs: {themes}.",
+            "fi": "Aktivoituu niin kauan kuin nämä pysyvät aiempien huippujensa yläpuolella: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If prices fall back, the alternatives stay unused, but the engineering work remains reusable.",
+            "fi": "Jos hinnat laskevat takaisin, vaihtoehdot jäävät käyttämättä, mutta suunnittelutyö on silti uudelleenkäytettävissä."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["price", "memory_supply"],
+          "text": {
+            "en": "Track copper and memory prices against their earlier highs at every review, and note which customer projects are re-tendered.",
+            "fi": "Seuraa kuparin ja muistin hintoja suhteessa aiempiin huippuihin jokaisessa katselmuksessa ja merkitse, mitkä asiakashankkeet kilpailutetaan uudelleen."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["capex", "price"],
+          "text": {
+            "en": "Hold decisions on new capacity until customer projects confirm that they proceed at the higher prices.",
+            "fi": "Pidä päätökset uudesta kapasiteetista odotustilassa, kunnes asiakashankkeet vahvistavat etenevänsä korkeammilla hinnoilla."
+          },
+          "trigger": {
+            "en": "Activates while customers push back on cost and these stay elevated: {themes}.",
+            "fi": "Aktivoituu, kun asiakkaat vastustavat kustannuksia ja nämä pysyvät koholla: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If projects proceed anyway, capacity arrives later than it could have.",
+            "fi": "Jos hankkeet etenevät joka tapauksessa, kapasiteetti tulee myöhemmin kuin se olisi voinut."
+          }
+        }
+      ]
+    },
+    "grid_baseline": {
+      "headline_move": {
+        "en": "rebalance the build plan toward utility-grid relay variants, which carry demand while data-centre projects pause, and keep commitments for parts shared with those variants",
+        "fi": "painota valmistussuunnitelmaa verkkoreleversioihin, jotka kantavat kysyntää datakeskushankkeiden tauon aikana, ja säilytä sitoumukset niille osille, jotka ovat yhteisiä näiden versioiden kanssa"
+      },
+      "if_leading": {
+        "en": "the build plan would lean toward utility variants and data-centre-specific commitments would be reviewed for excess risk.",
+        "fi": "valmistussuunnitelma painottuisi verkkoversioihin ja datakeskuskohtaiset sitoumukset arvioitaisiin ylimääräisen riskin varalta."
+      },
+      "next_action": {
+        "text": {
+          "en": "Put the utility-side order signals next to the data-centre view in the next S&OP review, and agree which variants carry the baseline.",
+          "fi": "Tuo verkkopuolen tilaussignaalit datakeskusnäkymän rinnalle seuraavaan S&OP-katselmukseen ja sovi, mitkä versiot kantavat perustason."
+        },
+        "owner": { "en": "S&OP owner", "fi": "S&OP-vastaava" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["grid_investment", "capex"],
+          "text": {
+            "en": "Rebalance the build plan toward utility-grid relay variants, which carry demand while data-centre projects pause.",
+            "fi": "Painota valmistussuunnitelmaa verkkoreleversioihin, jotka kantavat kysyntää datakeskushankkeiden tauon aikana."
+          },
+          "trigger": {
+            "en": "Activates while grid investment holds and data-centre signals pause: {themes}.",
+            "fi": "Aktivoituu, kun verkkoinvestoinnit pitävät ja datakeskussignaalit tauolla: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If data-centre projects restart soon, those variants are short for a time.",
+            "fi": "Jos datakeskushankkeet käynnistyvät pian uudelleen, nämä versiot ovat hetken vajaita."
+          }
+        },
+        {
+          "area": "procurement", "type": "contingent", "horizon_months": 12,
+          "themes": ["capex", "memory_supply"],
+          "text": {
+            "en": "Review data-centre-specific component commitments for excess risk, and keep commitments for parts shared with utility variants.",
+            "fi": "Arvioi datakeskuskohtaiset komponenttisitoumukset ylimääräisen riskin varalta ja säilytä sitoumukset osille, jotka ovat yhteisiä verkkoversioiden kanssa."
+          },
+          "trigger": {
+            "en": "Activates if these weaken for data-centre parts while shared parts stay scarce: {themes}.",
+            "fi": "Aktivoituu, jos nämä heikkenevät datakeskusosien osalta yhteisten osien pysyessä niukkoina: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If data-centre demand returns, parts released too early are harder to get back.",
+            "fi": "Jos datakeskuskysyntä palaa, liian aikaisin vapautettuja osia on vaikeampi saada takaisin."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["grid_investment", "abb_order_book"],
+          "text": {
+            "en": "Track utility-side order signals and the EU grid investment plan as the floor under relay demand.",
+            "fi": "Seuraa verkkopuolen tilaussignaaleja ja EU:n verkkoinvestointisuunnitelmaa releiden kysynnän pohjana."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        },
+        {
+          "area": "capacity", "type": "contingent", "horizon_months": 24,
+          "themes": ["grid_investment"],
+          "text": {
+            "en": "Keep capacity flexible between utility and data-centre variants, so that it can follow whichever side leads.",
+            "fi": "Pidä kapasiteetti joustavana verkko- ja datakeskusversioiden välillä, jotta se voi seurata kumpaa puolta tahansa, joka johtaa."
+          },
+          "trigger": {
+            "en": "Activates while these keep the utility side steady: {themes}.",
+            "fi": "Aktivoituu niin kauan kuin nämä pitävät verkkopuolen vakaana: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If one side clearly leads, the flexibility costs some efficiency.",
+            "fi": "Jos jompikumpi puoli selvästi johtaa, joustavuus maksaa jonkin verran tehokkuutta."
+          }
+        }
+      ]
+    },
+    "inventory_correction": {
+      "headline_move": {
+        "en": "compare the frame-order book with end-customer consumption before any further commitment is extended, to separate real demand from duplicated orders",
+        "fi": "vertaa puitetilauskantaa loppuasiakkaiden kulutukseen, ennen kuin sitoumuksia pidennetään, jotta todellinen kysyntä erottuu päällekkäisistä tilauksista"
+      },
+      "if_leading": {
+        "en": "no further commitment would be extended until duplicated demand has been separated out, and open commitments would be reviewed for release.",
+        "fi": "sitoumuksia ei pidennettäisi, ennen kuin päällekkäinen kysyntä on erotettu, ja avoimet sitoumukset arvioitaisiin vapautettaviksi."
+      },
+      "next_action": {
+        "text": {
+          "en": "Request end-customer consumption data from the main frame-order holders and compare it with their orders in the next demand review.",
+          "fi": "Pyydä pääasiallisilta puitetilausten haltijoilta loppukulutuksen tiedot ja vertaa niitä heidän tilauksiinsa seuraavassa kysyntäkatselmuksessa."
+        },
+        "owner": { "en": "S&OP owner with the segment manager, data centres", "fi": "S&OP-vastaava yhdessä datakeskussegmentin päällikön kanssa" },
+        "due_days": 14
+      },
+      "moves": [
+        {
+          "area": "procurement", "type": "no_regret", "horizon_months": 12,
+          "themes": ["abb_order_book", "supply_unwind"],
+          "text": {
+            "en": "Compare the frame-order book with end-customer consumption to separate real demand from duplicated orders before any further commitment is extended.",
+            "fi": "Vertaa puitetilauskantaa loppuasiakkaiden kulutukseen, jotta todellinen kysyntä erottuu päällekkäisistä tilauksista, ennen kuin sitoumuksia pidennetään."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it matters most while these show hoarding unwinding: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; tärkeintä se on, kun nämä osoittavat varastoinnin purkautuvan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If demand is real, the check delays the next extension briefly; the cost is review time.",
+            "fi": "Jos kysyntä on todellista, tarkistus viivästyttää seuraavaa pidennystä hetkellisesti; kustannus on katselmusaika."
+          }
+        },
+        {
+          "area": "procurement", "type": "contingent", "horizon_months": 12,
+          "themes": ["supply_unwind", "price"],
+          "text": {
+            "en": "Prepare to reschedule or release open component commitments that were placed against duplicated demand.",
+            "fi": "Valmistaudu aikatauluttamaan uudelleen tai vapauttamaan avoimet komponenttisitoumukset, jotka tehtiin päällekkäistä kysyntää vasten."
+          },
+          "trigger": {
+            "en": "Activates if the duplication is confirmed and these keep falling: {themes}.",
+            "fi": "Aktivoituu, jos päällekkäisyys vahvistuu ja nämä jatkavat laskuaan: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the demand turns out to be real, releasing commitments loses position with suppliers while parts are scarce.",
+            "fi": "Jos kysyntä osoittautuu todelliseksi, sitoumusten vapauttaminen menettää paikan toimittajien luona osien ollessa niukkoja."
+          }
+        },
+        {
+          "area": "manufacturing", "type": "contingent", "horizon_months": 12,
+          "themes": ["abb_order_book", "capex"],
+          "text": {
+            "en": "Expect the order book to look weaker than end demand for a time, and avoid dismantling build capability in response.",
+            "fi": "Varaudu siihen, että tilauskanta näyttää hetken loppukysyntää heikommalta, äläkä pura valmistuskykyä sen seurauksena."
+          },
+          "trigger": {
+            "en": "Activates while end-demand signals hold but the order book weakens: {themes}.",
+            "fi": "Aktivoituu, kun loppukysynnän signaalit pitävät mutta tilauskanta heikkenee: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "If the decline is lasting, holding capability costs money without work to fill it.",
+            "fi": "Jos lasku on pysyvä, valmistuskyvyn pitäminen maksaa ilman täyttävää työtä."
+          }
+        },
+        {
+          "area": "supply_reliability", "type": "no_regret", "horizon_months": 12,
+          "themes": ["supply_unwind", "memory_supply"],
+          "text": {
+            "en": "Track the memory spot-to-contract spread, distributor stock sentiment and lead times at every review; they show when the correction is ending.",
+            "fi": "Seuraa muistin spot- ja sopimushinnan eroa, jakelijoiden varastotunnelmaa ja toimitusaikoja jokaisessa katselmuksessa; ne osoittavat, milloin korjaus on päättymässä."
+          },
+          "trigger": {
+            "en": "Applies in every scenario; it uses these signals: {themes}.",
+            "fi": "Koskee kaikkia skenaarioita; siinä käytetään näitä signaaleja: {themes}."
+          },
+          "cost_if_wrong": {
+            "en": "The cost is review time.",
+            "fi": "Kustannus on katselmusaika."
+          }
+        }
+      ]
+    }
+  }
+}

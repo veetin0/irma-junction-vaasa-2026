@@ -179,7 +179,7 @@
     },
     {
       "id": "inventory_correction",
-      "name": { "en": "Double orders unwind, stock is released", "fi": "Tuplatilaukset purkautuvat, varastot vapautuvat" },
+      "name": { "en": "Duplicate orders unwind, stock is released", "fi": "Tuplatilaukset purkautuvat, varastot vapautuvat" },
       "demand": { "en": "plateaus", "fi": "tasaantuu" }, "supply": { "en": "surplus", "fi": "ylitarjonta" },
       "profile": { "demand": -0.5, "supply": -0.8, "policy": 0.0, "price": -0.4, "nordic": 0.0, "bullwhip": -1.0 },
       "prior": 0.0910, "prior_note": "[ASSUMPTION: the hoarding indicators in the demand-quality check unwind within a year. Normalised proportionally from raw 0.15 (raw total 1.65) so the nine priors sum to exactly 1.0; this last prior absorbs the 4 dp rounding remainder; ranking unchanged.]",

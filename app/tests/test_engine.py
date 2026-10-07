@@ -108,6 +108,12 @@ def test_pipeline_replay_run():
     assert set(ctx.interpretation) >= {s["id"] for s in ctx.after["scenarios"]}
 
 
+def test_archetype_priors_sum_to_one_and_notes_say_so():
+    archetypes = load("scenario_archetypes.json")["archetypes"]
+    assert abs(sum(a["prior"] for a in archetypes) - 1.0) < 1e-9
+    assert all("sum to exactly 1.0" in a["prior_note"] for a in archetypes)
+
+
 def test_replay_uses_current_archetype_ids_and_names():
     replay = load("replay.json")["demo_fingrid_q3"]
     archetypes = {a["id"]: a for a in load("scenario_archetypes.json")["archetypes"]}

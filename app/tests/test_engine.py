@@ -104,3 +104,15 @@ def test_pipeline_replay_run():
     assert ctx.after is not None and len(ctx.after["scenarios"]) == 4
     assert ctx.brief and "SIG-001" in ctx.brief["text"]
     assert all(t.status in ("ok", "degraded") for t in ctx.trace)
+    # replayed interpretation must cover every selected scenario, under current ids and names
+    assert set(ctx.interpretation) >= {s["id"] for s in ctx.after["scenarios"]}
+
+
+def test_replay_uses_current_archetype_ids_and_names():
+    replay = load("replay.json")["demo_fingrid_q3"]
+    archetypes = {a["id"]: a for a in load("scenario_archetypes.json")["archetypes"]}
+    assert set(replay["interpretation"]) <= set(archetypes) and set(replay["classify"]["scenario_links"]) <= set(archetypes)
+    for sid, text in replay["interpretation"].items():
+        assert archetypes[sid]["name"]["en"] in text
+    for old in ("Sustained expansion", "Deferred demand", "Demand contraction"):
+        assert old not in json.dumps(replay)

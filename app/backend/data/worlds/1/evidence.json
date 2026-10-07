@@ -401,5 +401,57 @@
     "reliability": "A",
     "strength": 0.4,
     "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-033",
+    "against": "SIG-034",
+    "claim": "The pause is temporary and does not touch projects that already hold a connection agreement. Energinet expects the first pool of projects to be processed under the new principles in autumn 2026, and describes the cause as applications far above its planning assumptions, not as a fall in demand.",
+    "source": {
+      "name": "Energinet press release (27 May 2026), via Ritzau",
+      "url": "https://via.ritzau.dk/pressemeddelelse/14952374/energinet-indforer-ny-model-for-storre-tilslutninger-og-vil-forst-underskrive-nye-nettilslutningsaftaler-til-efteraret?publisherId=10304728&lang=da",
+      "date": "2026-05-27"
+    },
+    "reliability": "A",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-034",
+    "against": "SIG-035",
+    "claim": "The CRU decision of 12 December 2025 gives data centres a path to connect and EirGrid forecasts data-centre electricity demand rising from 9.4 TWh in 2025 to 14.6 TWh in 2034 on currently contracted demand; the constraint steers location and conditions rather than stopping the sector.",
+    "source": {
+      "name": "CRU: decision on new electricity connection policy for data centres",
+      "url": "https://www.cru.ie/about-us/news/the-cru-publishes-its-decision-on-new-electricity-connection-policy-for-data-centres/",
+      "date": "2025-12-12"
+    },
+    "reliability": "A",
+    "strength": 0.4,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-035",
+    "against": "SIG-036",
+    "claim": "Projects still receive permits in the congested Amsterdam region: Equinix was granted permission to build another data centre in Amsterdam Zuidoost with 80 MW connection capacity by building its own connection to TenneT's high-voltage grid, so congestion changes how and when projects connect more than whether they do.",
+    "source": {
+      "name": "NL Times: Construction permit granted for massive data center in Amsterdam Zuidoost",
+      "url": "https://nltimes.nl/2026/07/07/construction-permit-granted-massive-data-center-amsterdam-zuidoost",
+      "date": "2026-07-07"
+    },
+    "reliability": "B",
+    "strength": 0.3,
+    "data_label": "SOURCE"
+  },
+  {
+    "id": "CE-036",
+    "against": "SIG-037",
+    "claim": "A different Wood Mackenzie analysis puts the US data-centre pipeline at 220 GW of additional demand, of which 183 GW is already backed by firm commercial commitments, about 22% of US peak demand in 2025; filtering a very large request queue does not shrink the committed load.",
+    "source": {
+      "name": "Wood Mackenzie, Energy Gang podcast: Data centers are adding an extra 220 gigawatts of electricity demand in the US",
+      "url": "https://www.woodmac.com/podcasts/energy-gang/data-centers-are-adding-an-extra-220-gigawatts-of-electricity-demand-in-us/",
+      "date": "2026-02-27"
+    },
+    "reliability": "B",
+    "strength": 0.4,
+    "data_label": "SOURCE"
   }
 ]

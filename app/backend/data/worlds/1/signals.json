@@ -1982,5 +1982,229 @@
       "checks": 0,
       "last_checked": null
     }
+  },
+  {
+    "id": "SIG-034",
+    "name": "Energinet (Denmark): no new large grid connection agreements signed before autumn 2026; new maturity-based model replaces first-come, first-served",
+    "short": "DK Energinet connection pause",
+    "category": "policy",
+    "measures": "policy",
+    "region": "NORDICS",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 18,
+    "lead_months_rationale": "[ASSUMPTION: transmission connection capacity that is not granted removes or delays substation projects that would otherwise be specified in the following 1-2 years; protection relays are specified roughly 12-18 months before energisation. Verify with ABB.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Energinet press release: Energinet introduces new model for larger connections and will first sign new grid connection agreements in autumn (27 May 2026)",
+      "url": "https://via.ritzau.dk/pressemeddelelse/14952374/energinet-indforer-ny-model-for-storre-tilslutninger-og-vil-forst-underskrive-nye-nettilslutningsaftaler-til-efteraret?publisherId=10304728&lang=da",
+      "access": "Public press release (Danish), free; the earlier 2 March 2026 pause release is at via.ritzau.dk/pressemeddelelse/14813920",
+      "date": "2026-05-27"
+    },
+    "reliability": "A",
+    "direction": -1,
+    "strength": 0.6,
+    "observed_at": "2026-05-27",
+    "classification": "mixed",
+    "classification_rationale": "The pause itself is temporary (introduced 2 March 2026), but Energinet says it will not return to the pre-pause process: projects are now assessed collectively under stricter maturity, progress and grid-friendliness requirements, and its analyses show that free transmission capacity is very limited. The capacity limit is structural; the timing of agreements is cyclical. Energinet does not say demand has fallen: it describes applications amounting to a potential eightfold of current Danish maximum consumption.",
+    "value": {
+      "number": 8,
+      "unit": "x",
+      "label": "applications for new consumption amount to a potential eightfold of Denmark's current maximum consumption (Energinet, 27 May 2026); the 2 March 2026 release put the queue at about 60 GW against about 7 GW maximum consumption"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "Den 2. marts 2026 indførte Energinet midlertidig pause for nye tilslutningsaftaler til transmissionsnettet. ... Der vil ikke blive underskrevet nye nettilslutningsaftaler før til efteråret.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal. Source text is Danish (excerpt untranslated). Energinet expects the first pool of projects to be processed under the new principles in autumn 2026.",
+    "usage_restrictions": "Public. Overlaps with the Energinet reference inside SIG-012, which reads the same decision as a redirect of sites toward Finland; this card reads the constraint on Danish projects themselves. Review the two together.",
+    "counter_evidence": [
+      "CE-033"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.3,
+      "supply": 0.0,
+      "policy": -0.6,
+      "price": 0.0,
+      "nordic": -0.3,
+      "bullwhip": 0.0
+    },
+    "short_fi": "DK: Energinetin uusien liittymäsopimusten tauko"
+  },
+  {
+    "id": "SIG-035",
+    "name": "EirGrid (Ireland): data-centre connection applications in constrained network areas cannot progress (DCCOPP version 3)",
+    "short": "IE EirGrid constrained-area rule",
+    "category": "policy",
+    "measures": "policy",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 18,
+    "lead_months_rationale": "[ASSUMPTION: a location rule decides within 1-2 years where Irish data-centre projects can reach substation design; the redirected project then follows the normal 2-4 year build cycle. Verify with ABB.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "EirGrid, Data Centre Connection Offer Process and Policy, Version 3 (20 May 2026), implementing CRU/2025236",
+      "url": "https://cms.eirgrid.ie/sites/default/files/publications/Data-Centre-Connection-Offer-Process-and-Policy-V3-May-2026.pdf",
+      "access": "Public PDF, free",
+      "date": "2026-05-20"
+    },
+    "reliability": "A",
+    "direction": -1,
+    "strength": 0.5,
+    "observed_at": "2026-05-20",
+    "classification": "structural",
+    "classification_rationale": "A location limit follows the network and changes only when reinforcement is built. The framework implements the CRU decision of 12 December 2025, which ends the de facto moratorium where capacity exists and requires on-site or proximate generation or storage; it decides where Irish data-centre demand can land, not whether the sector grows.",
+    "value": {
+      "number": 1,
+      "unit": "event",
+      "label": "EirGrid must assess every new data-centre application (1 MVA and above) as constrained or unconstrained by location; applications in constrained areas cannot progress"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "For the avoidance of doubt, a data centre application cannot be progressed if it is in a constrained area.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal. EirGrid will publish constrained-area information on an interim basis and heat maps in the 2027 Ten Year Transmission Forecast Statement.",
+    "usage_restrictions": "Public. CE-009 (against SIG-012) uses the same CRU framework as a reason the shift toward the Nordics may weaken; this card reads its restrictions.",
+    "counter_evidence": [
+      "CE-034"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "policy",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.3,
+      "supply": 0.0,
+      "policy": -0.5,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "IE: EirGrid, rajoitetuilla alueilla datakeskushakemukset eivät etene"
+  },
+  {
+    "id": "SIG-036",
+    "name": "Netherlands: court rules TenneT need not connect a 70 MW data centre because the local grid is overloaded (Goodman, Vijfhuizen)",
+    "short": "NL court: TenneT congestion ruling",
+    "category": "policy",
+    "measures": "policy",
+    "region": "EU",
+    "segment": "datacenter",
+    "type": "coincident",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: a refused connection removes the project from substation design within 1-2 quarters; relay orders for it do not arrive.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "W.Media (Simon Dux): Goodman reviews Dutch court decision blocking grid connection, citing NU.nl",
+      "url": "https://w.media/goodman-reviews-dutch-court-decision-blocking-grid-connection/",
+      "access": "Public trade press; the ruling itself (District Court of Gelderland) was not read",
+      "date": "2026-04-30"
+    },
+    "reliability": "B",
+    "direction": -1,
+    "strength": 0.4,
+    "observed_at": "2026-04-30",
+    "classification": "structural",
+    "classification_rationale": "The ruling reflects congestion in the North Holland grid that the report says TenneT has identified as at or near capacity; the developer applied in 2021 and signed a preliminary agreement in 2023, and the court held that no definitive connection agreement existed. A preliminary agreement did not secure a connection. Congestion is a grid-build question and does not reverse within a quarter.",
+    "value": {
+      "number": 70,
+      "unit": "MW",
+      "label": "data-centre connection at the Vijfhuizen high-voltage substation that TenneT was held not to be required to provide"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "the District Court of Gelderland ruled that TenneT was not required to connect the facility, as the local grid is already overloaded.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal. Single project and single ruling; Goodman said it is reviewing the decision.",
+    "usage_restrictions": "Public trade press (secondary); read the ruling and TenneT's congestion map before any external use. Same congestion theme as SIG-012 (Amsterdam moratorium), but a separate, dated event.",
+    "counter_evidence": [
+      "CE-035"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.3,
+      "supply": 0.0,
+      "policy": -0.4,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.0
+    },
+    "short_fi": "NL: tuomioistuin, TenneTin ei tarvitse liittää datakeskusta"
+  },
+  {
+    "id": "SIG-037",
+    "name": "Wood Mackenzie: US grid operators expected to commit to about 28% of 1,066 GW of data-centre interconnection requests",
+    "short": "WoodMac: ~28% of US DC requests served",
+    "category": "demand",
+    "measures": "end_demand",
+    "region": "US",
+    "segment": "datacenter",
+    "type": "leading",
+    "lead_months": 12,
+    "lead_months_rationale": "[ASSUMPTION: the share of requests that become firm commitments decides which projects reach substation design in the following 1-2 years. Verify with ABB.]",
+    "update_frequency": "event",
+    "source": {
+      "name": "Energy Central news summary of Wood Mackenzie analysis (first reported by Bloomberg)",
+      "url": "https://www.energycentral.com/energy-management/post/news-don-t-count-on-over-two-thirds-of-the-gigawatts-requested-by-data-GpjK0sKC3LNtVVG",
+      "access": "Public summary; the Wood Mackenzie report and the Bloomberg article are paywalled",
+      "date": "2026-08-12"
+    },
+    "reliability": "C",
+    "direction": -1,
+    "strength": 0.4,
+    "observed_at": "2026-08-12",
+    "classification": "mixed",
+    "classification_rationale": "This is a filter on how much of the announced request pipeline is real (duplicate and speculative requests sent to several utilities), not a fall in committed demand: the same page reports roughly 12% of projects with firm service commitments and nearly 17% rated likely. It is neither a cycle nor a trend, so it is marked mixed.",
+    "value": {
+      "number": 28,
+      "unit": "%",
+      "label": "share of the 1,066 GW of US data-centre power requests that grid operators and utilities are expected to commit to (Wood Mackenzie, via Energy Central summary)"
+    },
+    "data_label": "SOURCE",
+    "excerpt": "WoodMac expects that US grid operators and utilities will commit to roughly 28% of the 1,066 GW requested to serve data centers. ... Roughly 12% of US data center projects have secured firm service commitments, according to utility forecasts, while nearly 17% seem “likely” to pan out.",
+    "history": [],
+    "history_label": "NONE",
+    "history_note": "Event signal. Reliability C: secondary summary; obtain the Wood Mackenzie report before internal use.",
+    "usage_restrictions": "Secondary source; do not quote the figure externally without the primary report. US market: it says how much of an announced pipeline converts, and is no direct reading of Nordic demand.",
+    "counter_evidence": [
+      "CE-036"
+    ],
+    "ce_searched": true,
+    "annotations": [],
+    "source_class": "news",
+    "locked": false,
+    "tracking": {
+      "checks": 0,
+      "last_checked": null
+    },
+    "axes": {
+      "demand": -0.4,
+      "supply": 0.0,
+      "policy": 0.0,
+      "price": 0.0,
+      "nordic": 0.0,
+      "bullwhip": 0.3
+    },
+    "short_fi": "USA: WoodMac, noin 28 % datakeskuspyynnöistä toteutuu"
   }
 ]

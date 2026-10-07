@@ -104,3 +104,40 @@ def test_pipeline_replay_run():
     assert ctx.after is not None and len(ctx.after["scenarios"]) == 4
     assert ctx.brief and "SIG-001" in ctx.brief["text"]
     assert all(t.status in ("ok", "degraded") for t in ctx.trace)
+    # replayed interpretation must cover every selected scenario, under current ids and names
+    assert set(ctx.interpretation) >= {s["id"] for s in ctx.after["scenarios"]}
+
+
+def test_new_negative_cards_follow_the_card_schema_and_are_sourced():
+    signals = load("worlds/1/signals.json")
+    ce = {e["id"]: e for e in load("worlds/1/evidence.json")}
+    keys = set(next(s for s in signals if s["id"] == "SIG-001"))
+    ids = [s["id"] for s in signals]
+    assert len(ids) == len(set(ids)) and len(ce) == len(load("worlds/1/evidence.json"))
+    new = [s for s in signals if s["id"] in {"SIG-034", "SIG-035", "SIG-036", "SIG-037"}]
+    assert len(new) == 4
+    for s in new:
+        assert set(s) == keys
+        assert s["direction"] == -1 and s["data_label"] == "SOURCE" and s["ce_searched"] is True
+        assert s["source"]["url"].startswith("https://") and s["source"]["date"] == s["observed_at"] and s["excerpt"]
+        assert s["lead_months_rationale"].startswith("[ASSUMPTION") and s["classification"] in ("structural", "cyclical", "mixed")
+        assert s["reliability"] in "ABC" and s["short_fi"] and s["region"] and s["segment"] == "datacenter"
+        assert s["counter_evidence"] and all(ce[c]["against"] == s["id"] for c in s["counter_evidence"])
+    for e in ce.values():
+        assert any(e["against"] == s["id"] for s in signals) or e["id"] == "CE-032"  # CE-032 belongs to a scouted card in additions.json
+
+
+def test_archetype_priors_sum_to_one_and_notes_say_so():
+    archetypes = load("scenario_archetypes.json")["archetypes"]
+    assert abs(sum(a["prior"] for a in archetypes) - 1.0) < 1e-9
+    assert all("sum to exactly 1.0" in a["prior_note"] for a in archetypes)
+
+
+def test_replay_uses_current_archetype_ids_and_names():
+    replay = load("replay.json")["demo_fingrid_q3"]
+    archetypes = {a["id"]: a for a in load("scenario_archetypes.json")["archetypes"]}
+    assert set(replay["interpretation"]) <= set(archetypes) and set(replay["classify"]["scenario_links"]) <= set(archetypes)
+    for sid, text in replay["interpretation"].items():
+        assert archetypes[sid]["name"]["en"] in text
+    for old in ("Sustained expansion", "Deferred demand", "Demand contraction"):
+        assert old not in json.dumps(replay)

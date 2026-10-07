@@ -1,4 +1,7 @@
-"""The agent layer: eight agents, one orchestrator, no recommendation agent.
+"""The agent layer: eight agents in the run trace, one orchestrator, and a code-only recommendation step.
+
+The recommended move (engine/recommend.py) is composed in code from templates and the current scenario
+state; no language model writes it, and it carries no quantities or order timing. The planner decides.
 
 Each agent has one responsibility, declared inputs and outputs, and a defined
 failure behaviour. The LLM is used only to read and classify; all numbers come
@@ -493,6 +496,84 @@ class CounterEvidenceAgent:
 # ----------------------------------------------------------------------------------
 # 6. Scenario agent
 # ----------------------------------------------------------------------------------
+AXIS_WORDS = {
+    "demand": {"en": "end demand", "fi": "loppukysyntä"}, "supply": {"en": "component supply", "fi": "komponenttien saatavuus"},
+    "policy": {"en": "grid and permitting policy", "fi": "verkko- ja lupasääntely"}, "price": {"en": "material prices", "fi": "materiaalihinnat"},
+    "nordic": {"en": "the Nordic share", "fi": "Pohjoismaiden osuus"}, "bullwhip": {"en": "order amplification", "fi": "tilausten vahvistuminen"},
+}
+
+
+def _contrib_map(result: dict[str, Any] | None, scenario_id: str) -> dict[str, dict[str, Any]] | None:
+    sc = next((x for x in (result or {}).get("scenarios", []) if x["id"] == scenario_id), None)
+    return None if sc is None else {c["signal_id"]: c for c in sc["contributions"]}
+
+
+def explain_scenario_move(row: dict[str, Any], scenario: dict[str, Any], before: dict[str, Any] | None, signals: list[dict[str, Any]],
+                          new_signal_id: str | None) -> dict[str, str]:
+    """Which signal moved a scenario and why, from the contributions (code, bilingual).
+
+    The mover is the signal whose log-odds contribution to this scenario changed most between the two runs.
+    For a scenario that was not among the four before, it is the new item's own contribution, else the largest one.
+    """
+    after_c = {c["signal_id"]: c for c in scenario["contributions"]}
+    before_c = _contrib_map(before, scenario["id"])
+    changes: dict[str, float] = {}
+    if before_c is not None:
+        for sid in set(after_c) | set(before_c):
+            changes[sid] = float(after_c.get(sid, {}).get("contribution", 0.0)) - float(before_c.get(sid, {}).get("contribution", 0.0))
+    else:
+        pick = new_signal_id if new_signal_id in after_c else None
+        if pick is None and after_c:
+            pick = max(after_c, key=lambda k: abs(after_c[k]["contribution"]))
+        if pick:
+            changes[pick] = float(after_c[pick]["contribution"])
+    p1, p0 = row["after"], row["before"]
+
+    def pp(v: float) -> str:
+        return f"{v * 100:.1f}"
+
+    if p0 is None:
+        head = {"en": f"Entered the four most likely situations at {pp(p1)}%. ", "fi": f"Nousi neljän todennäköisimmän tilanteen joukkoon: {pp(p1).replace('.', ',')} %. "}
+    else:
+        head = {"en": f"{pp(p0)}% to {pp(p1)}%. ", "fi": f"{pp(p0).replace('.', ',')} % → {pp(p1).replace('.', ',')} %. "}
+    moved = max(changes.items(), key=lambda kv: (abs(kv[1]), kv[0])) if changes else None
+    if moved is None or abs(moved[1]) < 0.005:
+        return {"en": head["en"] + "No single signal moved it directly; the change comes from the other scenarios moving, because the four probabilities are renormalised to sum to one.",
+                "fi": head["fi"] + "Mikään yksittäinen signaali ei siirtänyt sitä suoraan; muutos johtuu muiden skenaarioiden liikkeestä, koska neljän todennäköisyys normalisoidaan summaksi yksi."}
+    sid, d = moved
+    sig = next((x for x in signals if x["id"] == sid), {})
+    c = after_c.get(sid) or (before_c or {}).get(sid) or {}
+    rel = float(c.get("relevance", 0.0))
+    # Which axis explains the relevance: the largest product of the card's axis load and the scenario's profile.
+    prof = scenario.get("profile") or {}
+    axes = sig.get("axes") or {}
+    top = max(prof, key=lambda a: abs(float(axes.get(a, 0.0)) * float(prof.get(a, 0.0))), default=None)
+    why = {"en": "", "fi": ""}
+    if top and float(axes.get(top, 0.0)) * float(prof.get(top, 0.0)) != 0 and top in AXIS_WORDS:
+        agrees = float(axes.get(top, 0.0)) * float(prof.get(top, 0.0)) > 0
+        why["en"] = f" It loads on {AXIS_WORDS[top]['en']}, which this scenario {'shares' if agrees else 'runs against'}."
+        why["fi"] = f" Vaikutus tulee ulottuvuudesta {AXIS_WORDS[top]['fi']}; tämä skenaario on sen suhteen {'samansuuntainen' if agrees else 'vastakkainen'}."
+    short_en, short_fi = sig.get("short", c.get("signal_name", sid)), sig.get("short_fi", sig.get("short", sid))
+    w1 = float(c.get("weight", 0.0))
+    ow = float(before_c[sid]["weight"]) if before_c is not None and sid in before_c else None
+    wtxt_en = f"weight {ow:.2f} to {w1:.2f}" if ow is not None and abs(ow - w1) >= 0.005 else f"weight {w1:.2f}"
+    wtxt_fi = f"paino {ow:.2f} → {w1:.2f}" if ow is not None and abs(ow - w1) >= 0.005 else f"paino {w1:.2f}"
+    verb_en, verb_fi = ("supports this scenario", "tukee tätä skenaariota") if rel > 0 else ("counts against this scenario", "puhuu tätä skenaariota vastaan")
+    dir_en, dir_fi = ("raised", "nosti") if d > 0 else ("lowered", "laski")
+    rel_fi = f"{rel:+.2f}".replace(".", ",")
+    d_fi = f"{abs(d):.3f}".replace(".", ",")
+    return {"en": f"{head['en']}[{sid}] {short_en} {dir_en} its log-odds by {abs(d):.3f} ({wtxt_en}); the card {verb_en} (relevance {rel:+.2f}).{why['en']}",
+            "fi": f"{head['fi']}[{sid}] {short_fi} {dir_fi} sen log-kerrointa {d_fi} ({wtxt_fi.replace('.', ',')}); kortti {verb_fi} (relevanssi {rel_fi}).{why['fi']}"}
+
+
+class RecommendationAgent:
+    """Listed in the agent table. It runs in code when the state is built (engine/recommend.py), not as a step of the run trace."""
+    name = "Recommendation agent (code)"
+    responsibility = ("Composes the recommended move for the leading scenario: conditional, qualitative moves per decision area, the signals that would trigger "
+                      "each, its cost if wrong, a hedge for the runner-up and a next action. Written by code from templates, with no quantities or order timing. "
+                      "The planner decides.")
+
+
 class ScenarioAgent:
     name = "Scenario agent"
     responsibility = "Maintains the four scenarios and recomputes their probabilities from the weighted signals."
@@ -503,6 +584,12 @@ class ScenarioAgent:
         ctx.weights = compute_weights(ctx.signals, ctx.evidence, ctx.today)
         ctx.after = select_scenarios(ctx.scenario_config["archetypes"], ctx.signals, ctx.weights, k)
         deltas = probability_delta(ctx.before, ctx.after)
+        by_id = {x["id"]: x for x in ctx.after["scenarios"]}
+        new_id = (ctx.new_signal or {}).get("id")
+        for row in deltas:
+            sc = by_id[row["id"]]
+            row["name_fi"] = _t(sc["name"], "fi")
+            row["per_scenario"] = explain_scenario_move(row, sc, ctx.before, ctx.signals, new_id)
         moved = sorted(deltas, key=lambda d: -abs(d["delta"] or 0))
         top = moved[0] if moved and moved[0]["delta"] is not None else None
         names = ", ".join(_t(x["name"]) for x in ctx.after["scenarios"])
@@ -670,7 +757,7 @@ class Pipeline:
 
     def describe(self) -> list[dict[str, str]]:
         return [{"name": a.name, "responsibility": a.responsibility} for a in
-                (self.collector, self.demand, self.supply, self.bullwhip, self.counter, self.scenario, self.interpret, self.explain)]
+                (self.collector, self.demand, self.supply, self.bullwhip, self.counter, self.scenario, self.interpret, self.explain, RecommendationAgent)]
 
     def run(self, ctx: Context, full: bool = True) -> Context:
         """full=False skips the interpretation and explainer agents (used for scouted items)."""

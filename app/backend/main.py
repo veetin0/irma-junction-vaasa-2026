@@ -37,6 +37,8 @@ from agents.pipeline import Context, Pipeline, _next_analysis_step, _t, build_br
 from agents.scout import SKIP_REASONS, build_prompt, known_urls, post_gate, pre_gate, reason as scout_reason, scout_settings
 from engine.archetypes import axis_scores, plain_summary, select_scenarios
 from engine.bullwhip import compute_bullwhip
+from engine.changes import compute_changes, initial_baseline, negative_signals, signal_changes, snapshot
+from engine.recommend import build_recommendation, load_templates
 from engine.weights import compute_weights
 from agents.web import DEFAULT_SCOUT_SETTINGS, DEFAULT_WEB_SETTINGS, THEMES, extract_json, host_of, norm_url
 
@@ -117,6 +119,7 @@ class Store:
         self.llm = LLMClient()
         self.pipeline = Pipeline()
         self.replay = load_replay(str(DATA / "replay.json"))
+        self.reco_templates = load_templates(DATA / "recommendations.json")
         self.settings = self.load_settings()
         self.world = 1
         self.llm.blocked_domains = set((self.settings.get("web_search") or {}).get("blocked_domains") or [])
@@ -182,6 +185,9 @@ class Store:
         self.runs_completed = 0
         self.next_run = now() + timedelta(minutes=self.settings["run_interval_minutes"])
         self.history: list[dict[str, Any]] = self.seed_history()
+        # Signal changes (C4): the weights of the last cycle, and the baseline they are compared with.
+        self.last_weights: dict[str, Any] | None = None
+        self.baseline: dict[str, Any] = initial_baseline(self.signals, self.evidence, today())
         self.cycle("startup")
 
     def weights(self) -> dict[str, Any]:
@@ -233,8 +239,15 @@ class Store:
         with self.lock:
             return self._cycle(reason)
 
+    # Cycles that follow a change in the data move the baseline at once; the others (hourly, manual, lock)
+    # only when the calendar day has changed, so a change stays visible for the rest of the day.
+    DATA_CYCLES = {"new_information", "scout", "annotation"}
+
     def _cycle(self, reason: str) -> list[dict[str, Any]]:
         w = self.weights()
+        if self.last_weights is not None and (reason in self.DATA_CYCLES or self.last_weights["date"] != today().isoformat()):
+            self.baseline = self.last_weights
+        self.last_weights = snapshot(self.signals, w, today())
         sc = self.scenarios(w)
         prev = self.previous_day()
         point = self.snapshot_today(sc)
@@ -331,6 +344,9 @@ class Store:
         for s in sc["scenarios"]:
             p0 = prev["probs"].get(s["id"]) if prev else None
             s["delta_pp"] = round((s["probability"] - p0) * 100, 2) if p0 is not None else None
+        changes = compute_changes(self.signals, w, self.baseline, today())
+        for sig in signals:
+            sig["change"] = changes[sig["id"]]
         return {
             "meta": {"app": "Irma", "today": today().isoformat(), "llm_mode": self.llm.mode, "model": os.environ.get("ABB_MODEL", "claude-opus-5-5"),
                      "horizon_months": [12, 36], "agents": self.pipeline.describe(), "source_classes": SOURCE_CLASSES,
@@ -352,6 +368,9 @@ class Store:
             "unread": sum(1 for x in self.notifications if not x["read"]),
             "runs": [{"id": r["id"], "title": r["title"], "ran_at": r["ran_at"]} for r in self.runs],
             "scout": self.scout_public(),
+            "signal_changes": signal_changes(self.signals, changes),
+            "negative_signals": negative_signals(self.signals, self.evidence, w),
+            "recommendation": build_recommendation(sc, self.signals, w, today(), self.reco_templates),
         }
 
 
@@ -468,6 +487,13 @@ class Store:
             record = {"id": run_id, "title": item.get("title"), "ran_at": now().isoformat(timespec="seconds"), "trace": [t.as_dict() for t in ctx.trace],
                       "new_signal_id": final_id, "scenarios_before": ctx.before, "scenarios_after": ctx.after,
                       "interpretation": ctx.interpretation, "brief": brief, "bullwhip": ctx.bullwhip}
+            if final_id and final_id != old_id:
+                # The pipeline ran on a copy under a provisional id; point the explanations at the committed card.
+                for step in record["trace"]:
+                    for row in (step.get("output") or {}).get("deltas", []) if isinstance(step.get("output"), dict) else []:
+                        if "per_scenario" in row:
+                            row["per_scenario"] = {k: v.replace(f"[{old_id}]", f"[{final_id}]") for k, v in row["per_scenario"].items()}
+            record["scenario_deltas"] = next((step["output"]["deltas"] for step in record["trace"] if step["agent"] == "Scenario agent"), [])
             self.runs.append(record)
             self._sync_blocked_domains()
             created = self._cycle("new_information")
@@ -1007,7 +1033,7 @@ def method() -> dict[str, Any]:
         "candidates": [{"id": a["id"], "name": a["name"], "profile": a["profile"], "prior": a["prior"]} for a in STORE.scenario_config["archetypes"]],
         "llm_mode": STORE.llm.mode, "model": os.environ.get("ABB_MODEL", "claude-opus-5-5"), "agents": STORE.pipeline.describe(),
         "web_search": {**STORE.settings.get("web_search", {}), "pricing": "Web search USD 10 per 1,000 searches plus tokens; web fetch has no fee, fetched page text counts as input tokens (capped at 8,000 tokens per page)."},
-        "principle": "Language models read and classify; code computes every number. The four scenarios shown are the most likely of nine candidate situations given the current signals. No agent produces a purchase recommendation; a deterministic guardrail removes recommendation language from generated text.",
+        "principle": "Language models read and classify; code computes every number. The four scenarios shown are the most likely of nine candidate situations given the current signals. The recommended move is composed by code from templates and the leading scenario: conditional moves with the signals that would trigger them, their cost if wrong and a next action, with no quantities or order timing. The planner decides. A deterministic guardrail still removes purchase, quantity and order-timing language from model-generated text.",
     }
 
 

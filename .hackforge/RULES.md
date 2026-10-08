@@ -120,3 +120,10 @@ How a conditional, non-quantity recommendation can satisfy the brief:
 - Never include quantities, order points, prices or order dates; keep those three pattern families in the guardrail.
 - Implementation: generate the move in code from scenario state and archetype data (deterministic, testable), and run it through a separate path or an allow-list so the "should" phrasing is not stripped; keep the quantity/timing patterns. Add a Recommendation agent to the agent table and trace, so the chain reads detect -> review -> scenario -> recommend -> next action.
 - Then update README principle 2, SOLUTION.md §0, §3.6, §5.2, §6 pitch and Q3 answer, the "none of them recommends" UI string, the assistant disclaimer (`app/backend/main.py:895`), and the tests in `app/tests/test_engine.py` (guardrail tests at lines 81-90).
+
+## Compliance re-audit (2026-10-08, after M1–M3 and verifier run)
+Supersedes the 2026-10-07 snapshot above for these items:
+- R7 and R10 are now **compliant**. The Import chain ends in a code-generated "Recommended move" (4 moves, no-regret or contingent, trigger signal ids, cost if wrong, hedge) and a "Next action" with owner and due date. The move is also on the Overview (30% column) and in the run trace as "Recommendation agent (code)". There are no quantities or order timing; the guardrail is kept.
+- The card counts in the docs now match the data: 37 in world 1 (36 + 1 scout addition), 24 in world 2.
+- T1–T7 are compliant. The segment filter is still a labelled preview.
+- Verifier (clean clone): R1–R11 compliant. R6/D6 partial by design (the sixth area is the pitch). D1–D5 present.

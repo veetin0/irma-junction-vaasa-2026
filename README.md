@@ -34,11 +34,11 @@ cash. The planner decides.
 | `docs/SOLUTION.md` | The full solution document: market insight, signal portfolio, problem definition, AI concept (including the recommended move), prototype walkthrough, pitch, self-score, open questions for ABB |
 | `DEMO.md` | The 3-minute demo script ordered by judging weight, a 30-second version and the likely judge questions with honest answers |
 | `app/backend/engine/` | Deterministic computation: ensemble signal weights and horizon fit, scenario probabilities, the recommended move (`recommend.py`), signal changes and the negative list (`changes.py`), bullwhip metrics |
-| `app/backend/agents/` | Eight agents (collector, demand, supply, bullwhip, counter-evidence, scenario, interpretation, explainer), the scout, and the guardrail that strips purchase, quantity and order-timing language from model text |
+| `app/backend/agents/` | Nine agents (collector, demand, supply, bullwhip, counter-evidence, scenario, recommendation (code), interpretation, explainer), the scout, and the guardrail that strips purchase, quantity and order-timing language from model text |
 | `app/backend/data/` | Nine candidate situations (`scenario_archetypes.json`, priors sum to 1), recommendation templates (`recommendations.json`), two mock worlds (`worlds/1` public data, 37 cards with the scout-found one; `worlds/2` constructed downturn, 24 cards), replayed agent outputs. Every value is labelled SOURCE, DEMODATA or ASSUMPTION |
 | `app/backend/main.py` | FastAPI API, hourly update scheduler (configurable), notifications, daily history, settings, static front end |
 | `app/frontend/` | Irma interface: overview (70/30: current situation with horizon chips and region filter, and the recommended move; signal list, scenario charts, assistant), signals (changes, negative list, import), signal pages with weight attribution, scenarios, notifications, settings. ABB red/white theme with the IRMA logo |
-| `app/tests/` | 82 tests: weights, scenarios, recommendation, changes, scout, web verification, API |
+| `app/tests/` | 83 tests: weights, scenarios, recommendation, changes, scout, web verification, API |
 
 ## Run
 

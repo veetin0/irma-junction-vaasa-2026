@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import re
 import time
+from pathlib import Path
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 from typing import Any, Optional
@@ -20,6 +21,7 @@ from typing import Any, Optional
 from pydantic import BaseModel, Field
 
 from engine.bullwhip import compute_bullwhip
+from engine.recommend import build_recommendation, load_templates
 from engine.archetypes import select_scenarios
 from engine.scenarios import probability_delta
 from engine.weights import compute_weights
@@ -107,6 +109,7 @@ class Context:
     new_evidence: list[dict[str, Any]] = field(default_factory=list)
     before: dict[str, Any] | None = None
     after: dict[str, Any] | None = None
+    recommendation: dict[str, Any] | None = None
     weights: dict[str, Any] = field(default_factory=dict)
     bullwhip: dict[str, Any] | None = None
     interpretation: dict[str, Any] | None = None
@@ -567,11 +570,26 @@ def explain_scenario_move(row: dict[str, Any], scenario: dict[str, Any], before:
 
 
 class RecommendationAgent:
-    """Listed in the agent table. It runs in code when the state is built (engine/recommend.py), not as a step of the run trace."""
+    """Runs in code (engine/recommend.py) after the scenario agent, and again whenever the state is built."""
     name = "Recommendation agent (code)"
     responsibility = ("Composes the recommended move for the leading scenario: conditional, qualitative moves per decision area, the signals that would trigger "
                       "each, its cost if wrong, a hedge for the runner-up and a next action. Written by code from templates, with no quantities or order timing. "
                       "The planner decides.")
+    TEMPLATES = Path(__file__).resolve().parents[1] / "data" / "recommendations.json"
+
+    @_timed
+    def run(self, ctx: Context) -> TraceStep:
+        rec = build_recommendation(ctx.after, ctx.signals, ctx.weights, ctx.today, load_templates(self.TEMPLATES))
+        ctx.recommendation = rec
+        if not rec:
+            return TraceStep(self.name, "degraded", "code", "No template for the leading scenario; no move composed.", {})
+        triggers = sorted({sid for m in rec["moves"] for sid in m.get("trigger_signals", [])})
+        before_lead = (ctx.before or {}).get("scenarios", [{}])[0].get("id")
+        same = "unchanged" if before_lead == rec["scenario_id"] else f"changed from {before_lead}"
+        summary = (f"Leader {_t(rec['scenario_name'])} ({rec['probability']:.0%}, {same}); confidence {rec['confidence']}; "
+                   f"{len(rec['moves'])} moves ({sum(m['type'] == 'no_regret' for m in rec['moves'])} no-regret); triggers {', '.join(triggers)}; "
+                   f"next action due {rec['next_action']['due']}.")
+        return TraceStep(self.name, "ok", "code", summary, rec)
 
 
 class ScenarioAgent:
@@ -754,10 +772,11 @@ class Pipeline:
         self.scenario = ScenarioAgent()
         self.interpret = InterpretationAgent()
         self.explain = ExplainerAgent()
+        self.recommend = RecommendationAgent()
 
     def describe(self) -> list[dict[str, str]]:
         return [{"name": a.name, "responsibility": a.responsibility} for a in
-                (self.collector, self.demand, self.supply, self.bullwhip, self.counter, self.scenario, self.interpret, self.explain, RecommendationAgent)]
+                (self.collector, self.demand, self.supply, self.bullwhip, self.counter, self.scenario, self.recommend, self.interpret, self.explain)]
 
     def run(self, ctx: Context, full: bool = True) -> Context:
         """full=False skips the interpretation and explainer agents (used for scouted items)."""
@@ -770,6 +789,7 @@ class Pipeline:
         self.bullwhip.run(ctx)
         self.scenario.run(ctx)
         if full:
+            self.recommend.run(ctx)
             self.interpret.run(ctx)
             self.explain.run(ctx)
         return ctx

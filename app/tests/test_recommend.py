@@ -330,3 +330,15 @@ def test_import_run_returns_recommended_move_and_next_action():
     rec = r.get("recommendation") or r.get("run", {}).get("recommendation")
     assert rec and rec["moves"] and rec["next_action"]["due"]
     assert c.get("/api/method").json()["weight_formula"].startswith("w = min(1,")
+
+
+def test_assistant_procurement_answer_cites_the_recommended_move():
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    c.post("/api/reset")
+    st = c.get("/api/state").json()
+    for lang in ("en", "fi"):
+        a = c.post("/api/ask", json={"question": "What is the logical next move for procurement", "lang": lang}).json()
+        assert st["recommendation"]["next_action"]["due"] in a["answer"]
+        assert ("Irma does not recommend order quantities" in a["answer"]) or ("Irma ei suosittele" in a["answer"])

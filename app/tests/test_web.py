@@ -196,4 +196,4 @@ def test_api_error_falls_back_without_breaking_the_run():
     step = next(t for t in ctx.trace if t.agent == "Demand signal agent")
     assert step.mode == "live" and any("Web verification unavailable" in n for n in step.notes)
     assert "verification" not in ctx.new_signal and ctx.new_signal["reliability"] == "B"
-    assert len(ctx.trace) == 7
+    assert len(ctx.trace) == 8  # + recommendation agent (code)

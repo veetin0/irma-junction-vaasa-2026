@@ -7,7 +7,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 ## Before you go on
 
 1. Start in replay mode with the frozen clock: `DEMO_TODAY=2026-10-03 AGENT_MODE=replay PORT=8765 ./app/run.sh`, then open http://localhost:8765 (or the Vercel link).
-2. Settings → **Reset demonstration state**. Make sure the world is the public one (Overview shows "Public signals, October 2026") and the language is EN.
+2. Settings → **Reset demonstration state**. Make sure the world is the public one (Overview shows "Public signals as of October 2026: growth with scarce components.") and the language is EN.
 3. Overview must read: leading situation **Growth continues, components stay scarce, 50%**, runner-up **Investment concentrates in the Nordics, 37%**, recommended move confidence **medium**. Do not import the demonstration item before the demo: a second import would add the item again and the numbers below would no longer match.
 4. Keep a second tab on `docs/how-irma-weighs-evidence.html` in case a judge asks how a weight is made.
 
@@ -20,7 +20,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 1. Say: "ABB orders memory and microcontrollers 18 months ahead but sees orders ten weeks ahead. Irma reads open signals and ends in a move for the planner."
 2. Point at the **Recommended move** card (30% of the top row). Read the bold lead move: "Prepare a second-source qualification for memory-dependent relay boards, so the next commitment window can be extended if the tight-supply reading holds."
 3. Point at the pills: **medium** confidence and the **ASSUMPTION** label. Say: "It is conditional and it says how sure it is."
-4. Open the disclosure **Trigger · cost if wrong** on the first move. Read the trigger signals (SIG-007, SIG-018, SIG-015, SIG-009) and the cost if wrong: "If supply eases, the qualification has little short-term use, but a second source stays in the portfolio."
+4. Open the disclosure **Trigger · cost if wrong** on the first move. Read the trigger signals (SIG-007, SIG-018, SIG-015, SIG-009) and the cost if wrong: "If supply eases instead, the qualification effort has little short-term use, but a second source stays in the portfolio at modest cost."
 5. Point at **Next action**: put it on the next S&OP agenda; owner the component procurement lead with the S&OP owner; due **2026-10-17**; revisit **2026-10-31**.
 6. Open **If the runner-up wins**: "A hedge: what changes if the Nordic situation overtakes."
 7. Say: "No quantities and no order dates. The order book lags the market by 18 months or more and ABB's contracts and cash are not in open data, so a quantity from here would be false authority. The planner decides."
@@ -58,10 +58,11 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 1. Scroll to **Your assessment**, type "GW is not relays for our mix", click **Dispute**. The weight halves (**0.17 → 0.09**) and the dispute is logged with name and reason.
 2. Click **Overview**: the probabilities move again (50.0%, 36.2%, 10.2%, 3.6%) and the recommended move holds. Say: "The user is the component procurement lead preparing the 18-month commitment. Misread hoarding as demand and ABB carries inventory at peak prices; misread a delay as a turn and it under-orders. Both costs are on the screen next to the move."
+3. Under **Evidence set**, click **World situation 2** (a constructed downturn, labelled DEMODATA). The recommended move changes to "Compare the frame-order book with end-customer consumption before any further commitment is extended", now at low confidence. Say: "Different evidence, a different move, and Irma says how sure it is." Click **Current world situation** to switch back.
 
 ### 2:55–3:00 Close
 
-"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 82 tests pass, and it runs without a key."
+"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 83 tests pass, and it runs without a key."
 
 ## Timing notes
 
@@ -85,7 +86,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 **What stops the language model from hallucinating?** It never produces a number that enters the arithmetic. It quotes a sentence and assigns grades; weights, probabilities and the recommendation are computed by tested code from stored fields. Each card shows its quote beside its source link, a dispute halves a card's weight, and a regex guardrail removes purchase, quantity and order-timing language from any model-written text, with a test.
 
-**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 82 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
+**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 83 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
 
 **How much of the data is demo data?** 35 of 37 cards are sourced public items. One is a DEMODATA placeholder (the memory spot spread) and one is an internal placeholder for ABB's SAP frame-order coverage. But three of the five bullwhip indicators take DEMODATA inputs, the push-out metric is not connected, and most card time series are DEMODATA except the sourced anchor points. Every one is labelled; replacing one changes the label, not the engine.
 

@@ -926,15 +926,24 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
         comp = _t(lead["abb_interpretation"]["components"], lang)
         watch = "; ".join(f"[{x['signal_id']}] {short(by_id[x['signal_id']])}" for x in ns["watch"][:4] if x["signal_id"] in by_id)
         refute = "; ".join(f"{_t(f['text'], lang)} [{f['signal_id']}]" for f in lead["falsifiers"][:2])
+        rec = build_recommendation(sc, STORE.signals, w, today(), STORE.reco_templates)
+        move = next((m for m in (rec or {}).get("moves", []) if m["area"] == "procurement"), None) or ((rec or {}).get("moves") or [None])[0]
+        rec_ids = list(dict.fromkeys((move or {}).get("trigger_signals", [])))[:4]
         if fi:
-            text = ("Irma ei suosittele tilausmääriä tai ajoitusta; ne riippuvat sopimuksista, allokaatiosopimuksista ja kassatilanteesta, jotka eivät ole datassa. "
-                    f"Seuraava analyyttinen askel, jota Irma tukee: (1) seuraa nykyistä kuvaa kantavia signaaleja: {watch}; (2) arvioi uudelleen {ns['reevaluate_on']} yhdessä: {', '.join(ns['review_with'])}; "
-                    f"(3) testaa johtavaa skenaariota sen kumoavilla merkeillä: {refute}. Johtavan skenaarion ehdollinen tulkinta komponenteista: {comp}")
+            text = ((f"Suositeltu siirto hankinnalle (luottamus {({'low': 'matala', 'medium': 'kohtalainen', 'high': 'korkea'}).get(rec['confidence'], rec['confidence'])}, '{_t(rec['scenario_name'], 'fi')}' {rec['probability']:.0%}): {_t(move['text'], 'fi')} "
+                     f"Laukaisija: {_t(move['trigger'], 'fi')} Jos väärin: {_t(move['cost_if_wrong'], 'fi')} "
+                     f"Seuraava toimi: {_t(rec['next_action']['text'], 'fi')} ({_t(rec['next_action']['owner'], 'fi')}, {rec['next_action']['due']}). "
+                     f"Jos kakkonen voittaa: {_t(rec['hedge'], 'fi')} ") if rec and move else "") + (
+                    "Irma ei suosittele tilausmääriä tai ajoitusta; ne riippuvat sopimuksista, allokaatiosopimuksista ja kassatilanteesta, jotka eivät ole datassa, joten päätös on suunnittelijan. "
+                    f"Seurattavat signaalit: {watch}; arvioi uudelleen {ns['reevaluate_on']}. Kumoavat merkit: {refute}.")
         else:
-            text = ("Irma does not recommend order quantities or timing; those depend on contracts, allocation agreements and cash position that are not in the data. "
-                    f"The next analytical move it supports: (1) follow the signals carrying the current picture: {watch}; (2) re-evaluate on {ns['reevaluate_on']} with the {', '.join(ns['review_with'])}; "
-                    f"(3) test the leading scenario against its refuting indications: {refute}. Conditional reading of the leading scenario for components: {comp}")
-        return text, cite([x["signal_id"] for x in ns["watch"][:4]])
+            text = ((f"Recommended move for procurement ({rec['confidence']} confidence, '{_t(rec['scenario_name'])}' at {rec['probability']:.0%}): {_t(move['text'])} "
+                     f"Trigger: {_t(move['trigger'])} If wrong: {_t(move['cost_if_wrong'])} "
+                     f"Next action: {_t(rec['next_action']['text'])} ({_t(rec['next_action']['owner'])}, due {rec['next_action']['due']}). "
+                     f"If the runner-up wins: {_t(rec['hedge'])} ") if rec and move else "") + (
+                    "Irma does not recommend order quantities or timing; those depend on contracts, allocation agreements and cash position that are not in the data, so the planner decides. "
+                    f"Signals to watch: {watch}; re-evaluate on {ns['reevaluate_on']}. Refuting indications: {refute}.")
+        return text, cite(list(dict.fromkeys(rec_ids + [x["signal_id"] for x in ns["watch"][:4]])))
 
     if intent == "components":
         supply = sorted([s for s in STORE.signals if s.get("source_class") == "price" or s.get("category") in ("supply", "bullwhip")], key=lambda s: -w[s["id"]]["weight"])[:4]

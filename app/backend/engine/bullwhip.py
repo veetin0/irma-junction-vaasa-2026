@@ -49,7 +49,8 @@ def momentum(series: list[float], threshold: float) -> dict[str, Any]:
     else:
         status = "real_demand"
         reading = f"Price increments negative ({last_increment:+.0f}% QoQ); the hoarding phase is over."
-    return {"value": round(second, 1), "unit": "pp (2nd diff)", "status": status, "reading": reading}
+    # The shown value is the latest change of the QoQ increment, the same number the reading quotes.
+    return {"value": round(d1[-1], 1), "unit": "pp", "second_difference": round(second, 1), "status": status, "reading": reading}
 
 
 def double_order_index(lead_time_change_pct: float, inventory_days_change_pct: float, threshold: float) -> dict[str, Any]:

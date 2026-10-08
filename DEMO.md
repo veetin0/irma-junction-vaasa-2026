@@ -32,7 +32,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 1. Click the horizon chips **1 y → 2 y → 3 y**. The "Leader at this horizon" line changes: 12 months Growth continues (47%), 24 months a near tie (41% against 40%), 36 months **Investment concentrates in the Nordics** (42%) with a "differs from headline" pill. Say: "Capex reaches the Nordics one to two years after the US, and the picture shifts toward Finland as the horizon lengthens. The later horizons are near ties and depend on one assumption, the timing width; we show that, we do not hide it."
 2. Open the **Region** filter and pick **Finland**, then **North America**: the signal list changes with it. Say: "Same megatrend, different timing: Finnish connection agreements against US projects slipping."
 3. Click **Signals**. Point at **Negative signals and counter-evidence**: "Seven cards point against growth, from Denmark, Ireland, the Netherlands and the US grid queue, plus the counter-evidence behind the growth cards. Growth and reversal evidence side by side."
-4. Click **Scenarios**, scroll to **Demand quality**: "The bullwhip check reads mixed, turning: hoarding indicators still elevated, two urgency measures already fading." (Do not open the five-indicator list unless asked; see the BW-2 note below.)
+4. Click **Scenarios**, scroll to **Demand quality**: "The bullwhip check reads mixed, turning: hoarding indicators still elevated, two urgency measures already fading."
 
 ### 1:20–2:15 AI solution logic: the full chain on new data (20%, prototype 10%)
 
@@ -101,4 +101,4 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 **Why not do this in Excel?** Excel can hold the weights. It cannot read dozens of sources, quote the supporting sentence, search for the counter-case on every strong card, and keep an audit trail of who disputed what. The arithmetic is kept simple enough for Excel so that the planner can check it.
 
-**Is there anything in the app that does not add up?** One known thing: on Scenarios, in the five demand-quality indicators, BW-2 (memory price momentum) shows a second-difference value of 42.0 pp next to a reading that says the latest increment change is −3 pp. The reading and the status (hoarding ending) are what the analysis rests on; the value field should be reconciled. Also the segment filter is a labelled preview and does not filter yet; the region filter does.
+**Is there anything in the app that does not add up?** One known thing: the segment filter is a labelled preview and does not filter yet; the region filter does.

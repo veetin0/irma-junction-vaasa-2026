@@ -176,7 +176,7 @@
   function disc(title, body, open) { return h("details", { class: "disc", open: open ? "" : null }, h("summary", null, title), h("div", { class: "disc-body" }, body)); }
   const nTitle = (n) => (LANG === "fi" ? (n.title_fi || n.title) : n.title);
   const nText = (n) => (LANG === "fi" ? (n.text_fi || n.text) : n.text);
-  function monthLabel(m) { const d = new Date(STATE.meta.today + "T00:00:00"); d.setMonth(d.getMonth() + m); return `${d.toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { month: "short" }).replace(".", "")} ${String(d.getFullYear()).slice(2)}`; }
+  function monthLabel(m) { const d = new Date(STATE.meta.today + "T00:00:00"); d.setMonth(d.getMonth() + m); return `${d.toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { month: "short" }).replace(".", "")} ${d.getFullYear()}`; }
 
   // ---------- filters: region is real (filters signal lists), segment is a preview ----------
   function filterBar(onRegion) {
@@ -299,7 +299,7 @@
     const dates = p.months.slice(0, n).map(monthLabel);
     const series = [{ name: t("supplyIdx"), values: p.supply.slice(0, n), color: GRAY, dash: true }, { name: t("demandIdx"), values: p.demand.slice(0, n), color: RED, emph: true, end: String(Math.round(p.demand[n - 1])) }];
     const lo = Math.min(...p.lower.slice(0, n), ...p.supply.slice(0, n)), hi = Math.max(...p.upper.slice(0, n), ...p.supply.slice(0, n));
-    return lineChart(dates, series, { yMin: Math.floor((lo - 5) / 10) * 10, yMax: Math.ceil((hi + 5) / 10) * 10, fmt: (v) => Math.round(v), yLabel: t("idxLabel"), band: { lower: p.lower.slice(0, n), upper: p.upper.slice(0, n), color: RED }, label: "Scenario path", height });
+    return lineChart(dates, series, { yMin: Math.floor((lo - 5) / 20) * 20, yMax: Math.floor((lo - 5) / 20) * 20 + Math.ceil((hi + 5 - Math.floor((lo - 5) / 20) * 20) / 40) * 40, fmt: (v) => Math.round(v), yLabel: t("idxLabel"), band: { lower: p.lower.slice(0, n), upper: p.upper.slice(0, n), color: RED }, label: "Scenario path", height });
   }
   function historyChart(selId, height) {
     const pts = RANGE ? STATE.history.points.slice(-RANGE) : STATE.history.points;

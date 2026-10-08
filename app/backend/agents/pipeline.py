@@ -729,7 +729,7 @@ class ExplainerAgent:
         if removed:
             notes.append(f"Guardrail removed {len(removed)} sentence(s) with recommendation language.")
         ctx.brief = {"text": clean, "next_step": next_step, "generated_on": ctx.today.isoformat(), "mode": mode}
-        return TraceStep(self.name, "ok", mode, "Situation brief and next analysis step produced; guardrail applied.", ctx.brief, notes=notes)
+        return TraceStep(self.name, "ok", mode, "Situation brief and signals to watch produced; guardrail applied.", ctx.brief, notes=notes)
 
 
 def build_brief(ctx: Context) -> str:

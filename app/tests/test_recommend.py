@@ -355,3 +355,12 @@ def test_import_keeps_the_replaced_source_as_an_earlier_version():
     prev = after["previous_versions"][0]
     assert prev["source"]["name"] == before["source"]["name"] and prev["data_label"] == before["data_label"] == "SOURCE"
     assert after["data_label"] == "DEMODATA"
+
+
+def test_assistant_routes_recommendation_questions_to_the_move():
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    c.post("/api/reset")
+    for q, lang in (("What do you recommend?", "en"), ("What should ABB do next?", "en"), ("Mitä suosittelet?", "fi")):
+        assert c.post("/api/ask", json={"question": q, "lang": lang}).json()["intent"] == "procurement", q

@@ -38,7 +38,7 @@ cash. The planner decides.
 | `app/backend/data/` | Nine candidate situations (`scenario_archetypes.json`, priors sum to 1), recommendation templates (`recommendations.json`), two mock worlds (`worlds/1` public data, 37 cards with the scout-found one; `worlds/2` constructed downturn, 24 cards), replayed agent outputs. Every value is labelled SOURCE, DEMODATA or ASSUMPTION |
 | `app/backend/main.py` | FastAPI API, hourly update scheduler (configurable), notifications, daily history, settings, static front end |
 | `app/frontend/` | Irma interface: overview (70/30: current situation with horizon chips and region filter, and the recommended move; signal list, scenario charts, assistant), signals (changes, negative list, import), signal pages with weight attribution, scenarios, notifications, settings. ABB red/white theme with the IRMA logo |
-| `app/tests/` | 84 tests: weights, scenarios, recommendation, changes, scout, web verification, API |
+| `app/tests/` | 85 tests: weights, scenarios, recommendation, changes, scout, web verification, API |
 
 ## Run
 

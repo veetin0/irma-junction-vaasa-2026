@@ -887,7 +887,8 @@ def _intent(q: str) -> str:
     ql = q.lower()
     if any(k in ql for k in ("summar", "key change", "what changed", "changes", "overview", "happened", "tiivist", "muutok", "yhteenveto")):
         return "summary"
-    if any(k in ql for k in ("procure", "next move", "next step", "purchas", "buy", "order", "hankin", "seuraava", "tilau", "osta")):
+    if any(k in ql for k in ("procure", "next move", "next step", "purchas", "buy", "order", "recommend", "should abb", "what should", "should we", "what to do", "next action",
+                             "hankin", "seuraava", "tilau", "osta", "suosit", "pitäisi", "toimenpi", "siirto")):
         return "procurement"
     if any(k in ql for k in ("component", "supply", "parts", "memory", "dram", "mcu", "lead time", "lead-time", "semiconductor", "komponent", "saatavuu", "muisti", "toimitusai")):
         return "components"
@@ -936,14 +937,14 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
             text = ((f"Suositeltu siirto hankinnalle (luottamus {({'low': 'matala', 'medium': 'kohtalainen', 'high': 'korkea'}).get(rec['confidence'], rec['confidence'])}, '{_t(rec['scenario_name'], 'fi')}' {rec['probability']:.0%}): {_t(move['text'], 'fi')} "
                      f"Laukaisija: {_t(move['trigger'], 'fi')} Hinta, jos väärin: {_t(move['cost_if_wrong'], 'fi')} "
                      f"Seuraava toimi: {_t(rec['next_action']['text'], 'fi')} ({_t(rec['next_action']['owner'], 'fi')}, {rec['next_action']['due']}). "
-                     f"Jos kakkonen voittaa: {_t(rec['hedge'], 'fi')} ") if rec and move else "") + (
+                     f"{_t(rec['hedge'], 'fi')} ") if rec and move else "") + (
                     "Irma ei suosittele tilausmääriä tai ajoitusta; ne riippuvat sopimuksista, allokaatiosopimuksista ja kassatilanteesta, jotka eivät ole datassa, joten päätös on suunnittelijan. "
                     f"Seurattavat signaalit: {watch}; arvioi uudelleen {ns['reevaluate_on']}. Kumoavat merkit: {refute}.")
         else:
             text = ((f"Recommended move for procurement ({rec['confidence']} confidence, '{_t(rec['scenario_name'])}' at {rec['probability']:.0%}): {_t(move['text'])} "
                      f"Trigger: {_t(move['trigger'])} Cost if wrong: {_t(move['cost_if_wrong'])} "
                      f"Next action: {_t(rec['next_action']['text'])} ({_t(rec['next_action']['owner'])}, due {rec['next_action']['due']}). "
-                     f"If the runner-up wins: {_t(rec['hedge'])} ") if rec and move else "") + (
+                     f"{_t(rec['hedge'])} ") if rec and move else "") + (
                     "Irma does not recommend order quantities or timing; those depend on contracts, allocation agreements and cash position that are not in the data, so the planner decides. "
                     f"Signals to watch: {watch}; re-evaluate on {ns['reevaluate_on']}. Refuting indications: {refute}.")
         return text, cite(list(dict.fromkeys(rec_ids + [x["signal_id"] for x in ns["watch"][:4]])))

@@ -58,11 +58,11 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 1. Scroll to **Your assessment**, type "GW is not relays for our mix", click **Dispute**. The weight halves (**0.17 → 0.09**) and the dispute is logged with name and reason.
 2. Click **Overview**: the probabilities move again (50.0%, 36.2%, 10.2%, 3.6%) and the recommended move holds. Say: "The user is the component procurement lead preparing the 18-month commitment. Misread hoarding as demand and ABB carries inventory at peak prices; misread a delay as a turn and it under-orders. Both costs are on the screen next to the move."
-3. Under **Evidence set**, click **World situation 2** (a constructed downturn, labelled DEMODATA). The recommended move changes to "Compare the frame-order book with end-customer consumption before any further commitment is extended", now at low confidence. Say: "Different evidence, a different move, and Irma says how sure it is." Click **Current world situation** to switch back.
+3. Under **Evidence set**, click **World situation 2** (a constructed downturn, labelled DEMODATA). The recommended move changes to "Compare the frame-order book with end-customer consumption before any further commitment is extended", now at low confidence. Say: "Different evidence, a different move, and Irma says how sure it is." Click **Current world situation** to switch back. Switching worlds resets the demonstration state, so do this step after the import, or import again afterwards.
 
 ### 2:55–3:00 Close
 
-"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 84 tests pass, and it runs without a key."
+"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 85 tests pass, and it runs without a key."
 
 ## Timing notes
 
@@ -86,7 +86,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 **What stops the language model from hallucinating?** It never produces a number that enters the arithmetic. It quotes a sentence and assigns grades; weights, probabilities and the recommendation are computed by tested code from stored fields. Each card shows its quote beside its source link, a dispute halves a card's weight, and a regex guardrail removes purchase, quantity and order-timing language from any model-written text, with a test.
 
-**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 84 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
+**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 85 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
 
 **How much of the data is demo data?** 35 of 37 cards are sourced public items. One is a DEMODATA placeholder (the memory spot spread) and one is an internal placeholder for ABB's SAP frame-order coverage. But three of the five bullwhip indicators take DEMODATA inputs, the push-out metric is not connected, and most card time series are DEMODATA except the sourced anchor points. Every one is labelled; replacing one changes the label, not the engine.
 

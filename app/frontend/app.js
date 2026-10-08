@@ -118,6 +118,8 @@
   }
   const pct = (x) => (x == null ? "—" : `${Math.round(x * 100)}%`);
   const pp = (x) => (x == null ? "" : `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)} pp`);
+  const pct1 = (x) => (x == null ? "—" : `${(x * 100).toFixed(1)}%`);
+  const pp2 = (x) => (x == null ? "" : Math.abs(x) < 0.005 ? "±0.00 pp" : `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(2)} pp`);
   const f2 = (x) => (x == null ? "—" : Number(x).toFixed(2));
   const num = (x, unit) => (x == null ? "—" : Number(x).toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { maximumFractionDigits: 1, useGrouping: !(/year|vuosi/i.test(unit || "") || (Number.isInteger(Number(x)) && x >= 1900 && x <= 2100)) }));
   const timeOf = (iso) => (iso ? iso.slice(11, 16) : "—");
@@ -174,7 +176,7 @@
   function disc(title, body, open) { return h("details", { class: "disc", open: open ? "" : null }, h("summary", null, title), h("div", { class: "disc-body" }, body)); }
   const nTitle = (n) => (LANG === "fi" ? (n.title_fi || n.title) : n.title);
   const nText = (n) => (LANG === "fi" ? (n.text_fi || n.text) : n.text);
-  function monthLabel(m) { const d = new Date(STATE.meta.today + "T00:00:00"); d.setMonth(d.getMonth() + m); return `${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getFullYear()).slice(2)}`; }
+  function monthLabel(m) { const d = new Date(STATE.meta.today + "T00:00:00"); d.setMonth(d.getMonth() + m); return `${d.toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { month: "short" }).replace(".", "")} ${String(d.getFullYear()).slice(2)}`; }
 
   // ---------- filters: region is real (filters signal lists), segment is a preview ----------
   function filterBar(onRegion) {
@@ -213,15 +215,18 @@
   const confClass = (c) => (c === "high" ? "ok" : c === "medium" ? "warn" : "");
   // The backend headline starts with "Recommended move (confidence, 'X' at N%): ..."; the pills already show that, so the card leads with the move itself.
   function moveSentence(txt) { const m = /^[^()]*\([^)]*\)\s*:\s*([\s\S]+)$/.exec(txt || ""); const r = m ? m[1] : (txt || ""); return r.charAt(0).toUpperCase() + r.slice(1); }
-  function recommendationCard(R) {
+  function recommendationCard(R, hedgeOpen) {
     const norm = (x) => String(x || "").toLowerCase().replace(/[^a-zåäö]+/g, " ").trim();
-    const leadInList = (R.moves || []).some((m) => norm(L(m.text)) === norm(moveSentence(L(R.headline))));
+    // The headline repeats one move in slightly different words; treat a move as the lead when most of its words match.
+    const words = (x) => new Set(norm(x).split(" ").filter((w) => w.length > 2));
+    const sameMove = (a, b) => { const A = words(a), B = words(b); const inter = [...A].filter((w) => B.has(w)).length; return inter / Math.max(1, Math.min(A.size, B.size)) >= 0.8; };
+    const leadInList = (R.moves || []).some((m) => sameMove(L(m.text), moveSentence(L(R.headline))));
     const lead = h("div", { class: "rec-lead" }, h("span", { class: "rec-lead-name" }, dot(R.scenario_id), L(R.scenario_name)), h("span", { class: "rec-lead-p tnum" }, pct(R.probability)));
     const move = (m) => {
       const mentioned = new Set(L(m.trigger).match(/SIG-\d{3}/g) || []);
       const extra = (m.trigger_signals || []).filter((id) => !mentioned.has(id));
       // Compact: area, type and the move itself stay visible; trigger, horizon and cost if wrong sit behind one disclosure.
-      const isLead = norm(L(m.text)) === norm(moveSentence(L(R.headline)));
+      const isLead = sameMove(L(m.text), moveSentence(L(R.headline)));
       return h("li", { class: `rec-move ${isLead ? "lead" : ""}` },
         h("div", { class: "rec-move-head" }, h("span", { class: "rec-area" }, t(`area_${m.area}`)), pill(m.type === "no_regret" ? t("noRegret") : t("contingent"), m.type === "no_regret" ? "ok" : "warn")),
         h("div", { class: "rec-move-text" }, L(m.text)),
@@ -237,7 +242,7 @@
       h("ul", { class: "rec-moves" }, ...(R.moves || []).map(move)),
       h("div", { class: "rec-next" }, h("div", { class: "rec-k" }, t("nextAction")), h("div", { class: "small" }, L(na.text)),
         h("dl", { class: "kv small" }, h("dt", null, t("ownerWord")), h("dd", null, L(na.owner)), h("dt", null, t("dueWord")), h("dd", { class: "tnum" }, na.due || "—"), h("dt", null, t("revisitOn")), h("dd", { class: "tnum" }, R.revisit_on || "—"))),
-      R.hedge ? disc(t("hedgeTitle"), h("div", { class: "small" }, R.runner_up ? h("div", { style: { marginBottom: "6px" } }, h("strong", null, L(R.runner_up.name)), ` · ${pct(R.runner_up.probability)}`) : null, h("div", null, L(R.hedge)))) : null,
+      R.hedge ? disc(t("hedgeTitle"), h("div", { class: "small" }, R.runner_up ? h("div", { style: { marginBottom: "6px" } }, h("strong", null, L(R.runner_up.name)), ` · ${pct(R.runner_up.probability)}`) : null, h("div", null, L(R.hedge))), hedgeOpen) : null,
       h("div", { class: "rec-foot" }, h("div", { class: "tiny" }, L(R.disclaimer)), h("div", { class: "tiny" }, t("genByCode"))));
   }
 
@@ -433,7 +438,7 @@
       h("div", { style: { marginTop: "10px" } }, h("a", { class: "link small", href: "#/notifications" }, `${t("allNotifications")} →`)));
     const main = h("div", { class: "gf-main" }, section);
     // Top row 70/30: the current situation (with the horizon controls and market summary) on the left, the recommended move on the right.
-    const topRow = h("div", { class: "top-row" }, h("div", { class: "top-left" }, summary, h("div", { class: "card controls-card" }, controls), market), S.recommendation ? recommendationCard(S.recommendation) : null);
+    const topRow = h("div", { class: "top-row" }, h("div", { class: "top-left" }, summary, h("div", { class: "card controls-card" }, controls), market), S.recommendation ? recommendationCard(S.recommendation, !!(hz && hz.leader !== sc[0].id)) : null);
     return h("div", { style: { display: "grid", gap: "20px" } }, topRow, h("div", { class: "gf" }, left, main, h("aside", { class: "gf-right" }, assistantPanel())));
   }
 
@@ -628,7 +633,8 @@
     const source = h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("source"))), h("div", { class: "quote" }, s.excerpt),
       s.why_signal ? h("p", { class: "small", style: { marginTop: "10px" } }, h("strong", null, `${t("whySignal")}: `), s.why_signal) : null,
       h("dl", { class: "kv", style: { marginTop: "10px" } }, h("dt", null, t("source")), h("dd", null, s.source.url ? h("a", { class: "link", href: s.source.url, target: "_blank", rel: "noopener" }, s.source.name) : s.source.name), h("dt", null, t("date")), h("dd", null, s.source.date || "—"), h("dt", null, t("access")), h("dd", null, s.source.access || "—")),
-      s.needs_review ? h("div", { class: "note warn", style: { marginTop: "10px" } }, "Classified by a heuristic or replayed output, not a live model. A reviewer should confirm reliability and strength.") : null);
+      s.needs_review ? h("div", { class: "note warn", style: { marginTop: "10px" } }, "Classified by a heuristic or replayed output, not a live model. A reviewer should confirm reliability and strength.") : null,
+      (s.previous_versions || []).length ? disc(`${LANG === "fi" ? "Kortin aiemmat versiot" : "Earlier versions of this card"} (${s.previous_versions.length})`, h("ul", { class: "bullets sources" }, ...s.previous_versions.map((v) => h("li", null, h("div", null, v.source && v.source.url ? h("a", { class: "link", href: v.source.url, target: "_blank", rel: "noopener" }, v.source.name) : (v.source || {}).name, h("div", { class: "src-meta" }, `${(v.source || {}).date || v.observed_at || "—"} · ${t("reliability")} ${v.reliability} · ${v.value && v.value.number != null ? `${num(v.value.number, v.value.unit)} ${v.value.unit || ""}` : ""}`), v.excerpt ? h("div", { class: "tiny" }, v.excerpt) : null), h("div", { class: "src-val" }, labelPill(v.data_label))))), true) : null);
     const details = h("div", { class: "card" },
       disc(t("why"), h("div", null, h("p", null, h("strong", null, s.classification), ": ", s.classification_rationale), h("p", { class: "small muted" }, s.lead_months_rationale))),
       disc(t("howWeight"), weightExplanation(s, c), true),
@@ -662,9 +668,9 @@
       out.replaceChildren(
         h("div", { class: "note ok" }, `${r.title} → `, h("a", { class: "link", href: `#/signal/${r.new_signal_id}` }, r.new_signal_id)),
         h("div", { class: "grid-2" },
-          h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("scenarios"))), h("div", { class: "rank" }, ...deltas.map((d) => h("div", { class: "rank-row delta-row" }, h("div", null, h("div", { class: "name" }, LANG === "fi" ? (d.name_fi || d.name) : d.name), d.per_scenario ? h("div", { class: "small muted per-sc" }, cites(L(d.per_scenario))) : null), h("div", { class: "num tnum" }, pct(d.after), h("small", null, d.before == null ? "new" : `${pct(d.before)} (${pp(d.delta == null ? null : d.delta * 100)})`)))))),
+          h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("scenarios"))), h("div", { class: "rank" }, ...deltas.map((d) => h("div", { class: "rank-row delta-row" }, h("div", null, h("div", { class: "name" }, LANG === "fi" ? (d.name_fi || d.name) : d.name), d.per_scenario ? h("div", { class: "small muted per-sc" }, cites(L(d.per_scenario))) : null), h("div", { class: "num tnum" }, pct1(d.after), h("small", null, d.before == null ? "new" : `${pct1(d.before)} (${pp2(d.delta == null ? null : d.delta * 100)})`)))))),
           recStep ? recommendationCard(recStep) : null),
-        h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("nextStep"))), h("ul", { class: "bullets" }, ...ns.watch.map((w) => { const sig = STATE.signals.find((q) => q.id === w.signal_id); return h("li", null, h("span", { class: "dot" }), h("span", null, h("a", { class: "link", href: `#/signal/${w.signal_id}` }, sig ? sShort(sig) : w.short), sig ? h("span", { class: "tiny tnum" }, ` · ${t("weight")} ${f2(sig.computed.weight)} · ${t("freshness")} ${f2(sig.computed.components.freshness)} · ${sig.source.date || "—"}`) : null)); })), h("dl", { class: "kv", style: { marginTop: "10px" } }, h("dt", null, t("revisitOn")), h("dd", null, ns.reevaluate_on), h("dt", null, LANG === "fi" ? "Käy läpi" : "Review with"), h("dd", null, ns.review_with.join(" · ")))),
+        h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("nextStep"))), h("ul", { class: "bullets" }, ...ns.watch.map((w) => { const sig = STATE.signals.find((q) => q.id === w.signal_id); return h("li", null, h("span", { class: "dot" }), h("span", null, h("a", { class: "link", href: `#/signal/${w.signal_id}` }, sig ? sShort(sig) : w.short), sig ? h("span", { class: "tiny tnum" }, ` · ${t("weight")} ${f2(sig.computed.weight)} · ${t("freshness")} ${f2(sig.computed.components.freshness)} · ${sig.source.date || "—"}`) : null)); })), h("dl", { class: "kv", style: { marginTop: "10px" } }, h("dt", null, LANG === "fi" ? "Käy läpi" : "Review with"), h("dd", null, ns.review_with.join(" · ")))),
         h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("brief")), h("span", { class: "small muted" }, `mode: ${r.brief.mode}`)), h("p", null, cites(r.brief.text)),
           disc(t("implications"), h("div", { style: { display: "grid", gap: "10px" } }, ...Object.entries(r.interpretation || {}).map(([sid, txt]) => h("div", { class: "quote" }, h("strong", null, sid === "ALL" ? "All" : L((scById(sid) || (STATE.scenarios.candidates || []).find((c) => c.id === sid) || {}).name) || sid.replace(/_/g, " ")), h("div", null, txt))))),
           disc(t("steps"), h("div", { class: "trace" }, ...r.trace.map((x, i) => h("div", { class: "trace-step" }, h("div", { class: "idx" }, i + 1), h("div", null, h("div", null, h("strong", null, x.agent), " ", pill(x.mode, x.mode.startsWith("live") ? "ok" : x.mode === "code" ? "accent" : "warn"), x.status !== "ok" && x.mode.startsWith("replay") ? null : [" ", pill(x.status, x.status === "ok" ? "ok" : "warn")]), h("div", { class: "small muted" }, x.summary), x.notes?.length ? h("div", { class: "tiny" }, x.notes.join(" ")) : null, h("details", null, h("summary", { class: "tiny" }, "output"), h("pre", null, JSON.stringify(x.output, null, 2))))))))));

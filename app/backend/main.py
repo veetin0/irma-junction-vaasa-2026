@@ -470,6 +470,9 @@ class Store:
         if live is not None:
             for k in ("annotations", "locked", "tracking"):
                 sig[k] = live.get(k, sig.get(k))
+            # Keep the provenance the update replaced, so a SOURCE card overwritten by a DEMODATA item still shows where it came from.
+            prior = {k: copy.deepcopy(live.get(k)) for k in ("source", "data_label", "reliability", "excerpt", "observed_at", "value")}
+            sig["previous_versions"] = [prior] + list(live.get("previous_versions", []))
             self.signals[self.signals.index(live)] = sig
             final_id = old_id
         else:
@@ -931,14 +934,14 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
         rec_ids = list(dict.fromkeys((move or {}).get("trigger_signals", [])))[:4]
         if fi:
             text = ((f"Suositeltu siirto hankinnalle (luottamus {({'low': 'matala', 'medium': 'kohtalainen', 'high': 'korkea'}).get(rec['confidence'], rec['confidence'])}, '{_t(rec['scenario_name'], 'fi')}' {rec['probability']:.0%}): {_t(move['text'], 'fi')} "
-                     f"Laukaisija: {_t(move['trigger'], 'fi')} Jos väärin: {_t(move['cost_if_wrong'], 'fi')} "
+                     f"Laukaisija: {_t(move['trigger'], 'fi')} Hinta, jos väärin: {_t(move['cost_if_wrong'], 'fi')} "
                      f"Seuraava toimi: {_t(rec['next_action']['text'], 'fi')} ({_t(rec['next_action']['owner'], 'fi')}, {rec['next_action']['due']}). "
                      f"Jos kakkonen voittaa: {_t(rec['hedge'], 'fi')} ") if rec and move else "") + (
                     "Irma ei suosittele tilausmääriä tai ajoitusta; ne riippuvat sopimuksista, allokaatiosopimuksista ja kassatilanteesta, jotka eivät ole datassa, joten päätös on suunnittelijan. "
                     f"Seurattavat signaalit: {watch}; arvioi uudelleen {ns['reevaluate_on']}. Kumoavat merkit: {refute}.")
         else:
             text = ((f"Recommended move for procurement ({rec['confidence']} confidence, '{_t(rec['scenario_name'])}' at {rec['probability']:.0%}): {_t(move['text'])} "
-                     f"Trigger: {_t(move['trigger'])} If wrong: {_t(move['cost_if_wrong'])} "
+                     f"Trigger: {_t(move['trigger'])} Cost if wrong: {_t(move['cost_if_wrong'])} "
                      f"Next action: {_t(rec['next_action']['text'])} ({_t(rec['next_action']['owner'])}, due {rec['next_action']['due']}). "
                      f"If the runner-up wins: {_t(rec['hedge'])} ") if rec and move else "") + (
                     "Irma does not recommend order quantities or timing; those depend on contracts, allocation agreements and cash position that are not in the data, so the planner decides. "

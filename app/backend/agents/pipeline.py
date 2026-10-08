@@ -613,7 +613,7 @@ class ScenarioAgent:
         names = ", ".join(_t(x["name"]) for x in ctx.after["scenarios"])
         summary = (
             f"Selected the 4 most likely of {len(ctx.scenario_config['archetypes'])} candidate situations: {names}. Entropy {ctx.after['entropy']:.2f}. "
-            + (f"Largest move: {top['name']} {top['before']:.0%} -> {top['after']:.0%}." if (top and top['before'] is not None) else "")
+            + (f"Largest move: {top['name']} {top['before']:.1%} -> {top['after']:.1%}." if (top and top['before'] is not None) else "")
         )
         return TraceStep(self.name, "ok", "code", summary, {"deltas": deltas, "entropy": ctx.after["entropy"], "k": k, "candidates": ctx.after["candidates"]})
 

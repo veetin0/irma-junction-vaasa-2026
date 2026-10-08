@@ -342,3 +342,16 @@ def test_assistant_procurement_answer_cites_the_recommended_move():
         a = c.post("/api/ask", json={"question": "What is the logical next move for procurement", "lang": lang}).json()
         assert st["recommendation"]["next_action"]["due"] in a["answer"]
         assert ("Irma does not recommend order quantities" in a["answer"]) or ("Irma ei suosittele" in a["answer"])
+
+
+def test_import_keeps_the_replaced_source_as_an_earlier_version():
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    c.post("/api/reset")
+    before = c.get("/api/signals/SIG-001").json()
+    c.post("/api/run", json={"preset": "demo_fingrid_q3"})
+    after = c.get("/api/signals/SIG-001").json()
+    prev = after["previous_versions"][0]
+    assert prev["source"]["name"] == before["source"]["name"] and prev["data_label"] == before["data_label"] == "SOURCE"
+    assert after["data_label"] == "DEMODATA"

@@ -47,9 +47,9 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 ### 2:15–2:35 Data and signal chain (15%)
 
-*Screen: SIG-001 page.*
+*Screen: SIG-001 page, then SIG-003.*
 
-1. Point at the source quote and link, reliability grade A, the lead time (30 months) and the label pills. Say: "Every card has a named source, a dated quote, a grade, a lead time and a label: SOURCE, DEMODATA or ASSUMPTION. 37 cards, 35 sourced. Where data is licensed or ABB's own, such as SAP order history, we show a labelled placeholder rather than an invented series."
+1. On SIG-001, point at **Earlier versions of this card**: the demonstration import replaced the source with a DEMODATA item, and the card says so and keeps the original grade-A Fingrid half-year report underneath. Then open **SIG-003** (Google FI investment) and point at the source quote and link, reliability grade A, the lead time and the label pills. Say: "Every card has a named source, a dated quote, a grade, a lead time and a label: SOURCE, DEMODATA or ASSUMPTION. 37 cards, 35 sourced before the demonstration import. Where data is licensed or ABB's own, such as SAP order history, we show a labelled placeholder rather than an invented series."
 2. Back on **Signals**, point at the **Latest changes** box: "SIG-001 is up 0.02 since the last cycle."
 
 ### 2:35–2:55 Problem definition and the human (15%)
@@ -62,7 +62,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 ### 2:55–3:00 Close
 
-"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 83 tests pass, and it runs without a key."
+"The best forecast used to be history. Irma gives ABB the earliest evidence with its doubts attached, and a conditional move to prepare, before the order book knows. 84 tests pass, and it runs without a key."
 
 ## Timing notes
 
@@ -86,7 +86,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 **What stops the language model from hallucinating?** It never produces a number that enters the arithmetic. It quotes a sentence and assigns grades; weights, probabilities and the recommendation are computed by tested code from stored fields. Each card shows its quote beside its source link, a dispute halves a card's weight, and a regex guardrail removes purchase, quantity and order-timing language from any model-written text, with a test.
 
-**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 83 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
+**What is real and what is replayed?** Real: all arithmetic, the weights, the scenario update, the recommendation, the changes and the negative list, and the 84 tests. Replayed without a key: the language-model steps for the demonstration item (classification, counter-evidence, interpretation, brief), marked `replay` in the trace. Simulated: the daily probability history before today, labelled DEMODATA. The public Vercel deployment never uses a key.
 
 **How much of the data is demo data?** 35 of 37 cards are sourced public items. One is a DEMODATA placeholder (the memory spot spread) and one is an internal placeholder for ABB's SAP frame-order coverage. But three of the five bullwhip indicators take DEMODATA inputs, the push-out metric is not connected, and most card time series are DEMODATA except the sourced anchor points. Every one is labelled; replacing one changes the label, not the engine.
 

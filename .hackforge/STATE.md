@@ -8,3 +8,10 @@
 - Best metric vs baseline: tests 33/33 · Latest mock score: 7.2 (baseline)
 - Escalations / de-escalations: kickoff scaled down. There is an existing entry and concrete directives, so the improvement options are designed inline instead of by 3 architect agents.; builder A on opus (hardest math)
 - Risks & open questions: recommendation directive vs the no-recommendation guardrail (see DIRECTIVES note); 2026-10-07 ~23:00 all 3 M1 builders hit the session rate limit with nothing committed, relaunched 23:33 on new branch names (old empty branches hf/m1-data, hf/m1-reco, worktree-agent-* left for the user to delete)
+- Loop backlog (from M2 screenshots):
+  - The recommendation card is too tall: about 300 px gap under the left column at 1440. Compact the moves (one line each, details behind a disclosure).
+  - The market summary repeats "New information processed" notifications; dedupe.
+  - "Latest changes" is empty after a demo import or scout: show what the import changed.
+  - /api/run has no recommendation step.
+  - /api/method weight_formula is stale.
+  - CE short_fi is English.

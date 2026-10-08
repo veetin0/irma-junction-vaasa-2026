@@ -669,7 +669,7 @@ class InterpretationAgent:
 # 8. Explainer agent
 # ----------------------------------------------------------------------------------
 EXPLAIN_SYSTEM = """You write a short situation brief for a procurement/S&OP planner at ABB Distribution Solutions.
-Cite signal ids in brackets like [SIG-001]. State uncertainty explicitly. End with 'Next analysis step' listing:
+Cite signal ids in brackets like [SIG-001]. State uncertainty explicitly. End with 'Signals to watch' listing:
 which signals to watch, when to re-evaluate, and who to review with. Never recommend purchases or quantities."""
 
 

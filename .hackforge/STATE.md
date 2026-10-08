@@ -1,11 +1,11 @@
 # State
-- Phase: 8 loop — iteration 1 judged
+- Phase: 8 loop stopped (plateau at 8.1) — ready for the user
 - Profile: standard (auto: 10 h, team of 1, existing entry being improved) · Models: research sonnet / architect opus / judge opus / build sonnet / craft sonnet / verify sonnet
 - Deadline: none set · Time budget 10 h
 - Current milestone / wave: —
 - Done: init, inventory, directives, brief, RULES.md, baseline judge 7.2, weighting research, OPTIONS, DECISION (pending)
-- Next: verify + mock judge → perfect loop
-- Best metric vs baseline: tests 33/33 · Latest mock score: 7.8 (post-build), re-judging after loop #1
+- Next: user review; optional items in LOOP.md
+- Best metric vs baseline: tests 33/33 · Latest mock score: 8.1 (7.2 before build)
 - Escalations / de-escalations: kickoff scaled down. There is an existing entry and concrete directives, so the improvement options are designed inline instead of by 3 architect agents.; builder A on opus (hardest math)
 - Risks & open questions: recommendation directive vs the no-recommendation guardrail (see DIRECTIVES note); 2026-10-07 ~23:00 all 3 M1 builders hit the session rate limit with nothing committed, relaunched 23:33 on new branch names (old empty branches hf/m1-data, hf/m1-reco, worktree-agent-* left for the user to delete)
 - Loop backlog (from M2 screenshots):

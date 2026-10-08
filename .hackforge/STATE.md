@@ -1,11 +1,11 @@
 # State
-- Phase: 6–7 pitch / verify — M1–M3 green (gate milestone 3, 82 tests)
+- Phase: 8 loop — iteration 1 judged
 - Profile: standard (auto: 10 h, team of 1, existing entry being improved) · Models: research sonnet / architect opus / judge opus / build sonnet / craft sonnet / verify sonnet
 - Deadline: none set · Time budget 10 h
 - Current milestone / wave: —
 - Done: init, inventory, directives, brief, RULES.md, baseline judge 7.2, weighting research, OPTIONS, DECISION (pending)
 - Next: verify + mock judge → perfect loop
-- Best metric vs baseline: tests 33/33 · Latest mock score: 7.2 (baseline)
+- Best metric vs baseline: tests 33/33 · Latest mock score: 7.8 (post-build), re-judging after loop #1
 - Escalations / de-escalations: kickoff scaled down. There is an existing entry and concrete directives, so the improvement options are designed inline instead of by 3 architect agents.; builder A on opus (hardest math)
 - Risks & open questions: recommendation directive vs the no-recommendation guardrail (see DIRECTIVES note); 2026-10-07 ~23:00 all 3 M1 builders hit the session rate limit with nothing committed, relaunched 23:33 on new branch names (old empty branches hf/m1-data, hf/m1-reco, worktree-agent-* left for the user to delete)
 - Loop backlog (from M2 screenshots):
@@ -15,3 +15,4 @@
   - /api/run has no recommendation step.
   - /api/method weight_formula is stale.
   - CE short_fi is English.
+- Questions for the user: add a LICENSE (which one)? The verifier flagged that none exists. docs/VOICEOVER.md describes the old 6:33 video from the original folder; keep it, update it or drop it?

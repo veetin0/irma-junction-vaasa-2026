@@ -1,0 +1,38 @@
+{
+ "milestone": "M6",
+ "goal": "Language, docs, gate",
+ "covers": [
+  "R7",
+  "R10",
+  "J1",
+  "J3",
+  "J5"
+ ],
+ "status": "todo",
+ "tasks": [
+  {
+   "id": "M6.1",
+   "role": "full-stack",
+   "owner": "agent",
+   "owned": [
+    "docs/",
+    "README.md",
+    "DEMO.md",
+    "app/tests/",
+    "app/frontend/app.js",
+    ".hackforge/gate.sh"
+   ],
+   "dod": [
+    "I18N keys identical in en and fi",
+    "gate green at MILESTONE 6",
+    "Vercel-mode check green",
+    "docs match app"
+   ],
+   "validation_commands": [
+    ".hackforge/gate.sh"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  }
+ ]
+}

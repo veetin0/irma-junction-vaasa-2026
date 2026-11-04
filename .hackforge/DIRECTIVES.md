@@ -13,5 +13,6 @@ Directives override HackForge defaults, never an official rule.
 | 8 | Modalities: suggest (propose at the decision checkpoint) | hackforge.yaml |
 | 9 | Standing project constraints (from memory of the original build): no invented numbers (SOURCE / DEMODATA / ASSUMPTION labels), balanced counter-evidence, structural vs cyclical separated, the human decides, "LLM reads and classifies, code computes", no filler language, keep the llm.py guardrail | user memory |
 | 10 | Don't push anywhere or add the original GitHub remote; this is the v2 copy (preview port 8766) | user memory |
+| 11 | Prioritise the changes in prompts/01-team.md (M4 data and engine, M5 frontend, M6 language/docs/gate) ahead of all other work; list its four readings at the decision checkpoint and wait for the answer (added 2026-11-04 09:00) | prompts/90-live.md |
 
 Note on 2 vs 9: the old rule "never recommend purchases or quantities" meets the brief, which asks for a "decision recommendation for ABB → next action". Resolution: recommendations are conditional, qualitative decision moves (what to prepare, review, watch, or with whom to talk), each tied to scenario probability and its triggers, with no order quantities or timing. The guardrail stays.

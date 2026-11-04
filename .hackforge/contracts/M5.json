@@ -1,0 +1,72 @@
+{
+ "milestone": "M5",
+ "goal": "Frontend",
+ "covers": [
+  "R7",
+  "R10",
+  "J1",
+  "J3",
+  "J5"
+ ],
+ "status": "todo",
+ "tasks": [
+  {
+   "id": "M5.1",
+   "role": "frontend",
+   "owner": "agent",
+   "owned": [
+    "app/frontend/app.js",
+    "app/frontend/index.html",
+    "app/frontend/styles.css"
+   ],
+   "dod": [
+    "Chart and assistant inside viewport at 1440x900 and 1280x720",
+    "Segment filter shows only Data centres, Oil and gas, All",
+    "Historical panel renders from /api/historical",
+    "node --check passes"
+   ],
+   "validation_commands": [
+    "node --check app/frontend/app.js"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  },
+  {
+   "id": "M5.2",
+   "role": "frontend",
+   "owner": "agent",
+   "owned": [
+    "app/frontend/map.js",
+    "app/frontend/map.css"
+   ],
+   "dod": [
+    "Scatter with quadrants, midline, halo, aria-labels, table view",
+    "Detail panel with Approve/Edit/Reject posting annotations",
+    "Horizon chips move the dots"
+   ],
+   "validation_commands": [
+    "node --check app/frontend/map.js"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  },
+  {
+   "id": "M5.3",
+   "role": "backend",
+   "owner": "agent",
+   "owned": [
+    "app/backend/data/recommendations.json",
+    "app/backend/data/segments/oilgas/recommendations.json"
+   ],
+   "dod": [
+    "No internal terms in any text",
+    "recommend tests green"
+   ],
+   "validation_commands": [
+    "cd app && python3 -m pytest tests/test_recommend.py -q"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  }
+ ]
+}

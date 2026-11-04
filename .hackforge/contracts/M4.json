@@ -1,0 +1,95 @@
+{
+ "milestone": "M4",
+ "goal": "Data and engine",
+ "covers": [
+  "R7",
+  "R10",
+  "J1",
+  "J3",
+  "J5"
+ ],
+ "status": "todo",
+ "tasks": [
+  {
+   "id": "M4.1",
+   "role": "backend",
+   "owner": "agent",
+   "owned": [
+    "app/backend/engine/impact.py",
+    "app/backend/main.py",
+    "app/tests/test_impact.py",
+    "app/tests/test_segments.py"
+   ],
+   "dod": [
+    "Every state signal has impact in [-100,100] with sign rule documented",
+    "POST /api/segment works for datacenter/all and 400 for unknown",
+    "meta.segments lists exactly datacenter and oilgas",
+    "ensemble relation test passes",
+    "existing 33+ tests green"
+   ],
+   "validation_commands": [
+    "cd app && python3 -m pytest tests -q"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  },
+  {
+   "id": "M4.2",
+   "role": "data-ml",
+   "owner": "agent",
+   "owned": [
+    "app/backend/data/segments/oilgas/",
+    "app/tests/test_oilgas.py"
+   ],
+   "dod": [
+    "8-12 sourced cards each with counter-evidence and six axes",
+    "archetypes priors sum 1.0, templates cover all ids",
+    "no card without source unless data_label DEMODATA"
+   ],
+   "validation_commands": [
+    "cd app && python3 -m pytest tests/test_oilgas.py -q"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  },
+  {
+   "id": "M4.3",
+   "role": "data-ml",
+   "owner": "agent",
+   "owned": [
+    "app/backend/data/historical/",
+    "app/backend/engine/historical.py",
+    "app/tests/test_historical.py"
+   ],
+   "dod": [
+    "as-of rule test passes",
+    "every point sourced or DEMODATA",
+    "outcomes carry sources"
+   ],
+   "validation_commands": [
+    "cd app && python3 -m pytest tests/test_historical.py -q"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  },
+  {
+   "id": "M4.4",
+   "role": "backend",
+   "owner": "agent",
+   "owned": [
+    "app/backend/main.py",
+    "app/backend/data/worlds/2/"
+   ],
+   "dod": [
+    "World 2 labelled Historical data/Vanha data and loads the historical dataset as-of",
+    "GET /api/historical returns rows with label",
+    "gate.sh green"
+   ],
+   "validation_commands": [
+    ".hackforge/gate.sh"
+   ],
+   "max_iterations": 3,
+   "risk": []
+  }
+ ]
+}

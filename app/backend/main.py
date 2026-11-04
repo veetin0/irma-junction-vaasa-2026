@@ -38,6 +38,7 @@ from agents.scout import SKIP_REASONS, build_prompt, known_urls, post_gate, pre_
 from engine.archetypes import axis_scores, plain_summary, select_scenarios
 from engine.bullwhip import compute_bullwhip
 from engine.changes import compute_changes, initial_baseline, negative_signals, signal_changes, snapshot
+from engine.impact import compute_impact, impact_meta
 from engine.recommend import build_recommendation, load_templates
 from engine.weights import HORIZONS, compute_weights, horizon_weights
 from agents.web import DEFAULT_SCOUT_SETTINGS, DEFAULT_WEB_SETTINGS, THEMES, extract_json, host_of, norm_url
@@ -87,6 +88,16 @@ WORLDS = {
     2: {"id": 2, "label": {"en": "World situation 2", "fi": "Maailmantilanne 2"},
         "note": {"en": "Constructed stress dataset (DEMODATA): investment cuts, cancellations, falling prices and easing supply.", "fi": "Rakennettu stressiaineisto (DEMODATA): investointileikkauksia, peruutuksia, laskevia hintoja ja helpottuvaa saatavuutta."}},
 }
+# Segments (contract C9). The shipped data-centre data is the default; oil and gas arrives as files under
+# data/segments/oilgas/ and is offered only when every required file is there (has_data).
+DEFAULT_SEGMENT = "datacenter"
+SEGMENT_IDS = ("datacenter", "oilgas", "all")
+SEGMENTS = [
+    {"id": "datacenter", "label": {"en": "Data centres", "fi": "Datakeskukset"}},
+    {"id": "oilgas", "label": {"en": "Oil and gas", "fi": "Öljy ja kaasu"}},
+]
+SEGMENT_FILES = {"datacenter": (), "oilgas": ("signals.json", "evidence.json", "scenario_archetypes.json", "recommendations.json")}
+SEGMENT_SKIP = {"en": "Automatic search runs only for the data-centre segment.", "fi": "Automaattinen haku toimii vain datakeskussegmentille."}
 SUGGESTED_PROMPTS = {
     "en": ["Summarize key changes in the data-centre segment", "What is the logical next move for procurement", "Tell about the situation of components in our products"],
     "fi": ["Tiivistä datakeskussegmentin keskeiset muutokset", "Mikä on hankinnan looginen seuraava askel", "Kerro komponenttien tilanteesta tuotteissamme"],
@@ -96,6 +107,17 @@ SUGGESTED_PROMPTS = {
 def today() -> date:
     override = os.environ.get("DEMO_TODAY")
     return datetime.strptime(override, "%Y-%m-%d").date() if override else date.today()
+
+
+def segment_dir(segment: str) -> Path:
+    return DATA / "segments" / segment
+
+
+def segment_has_data(segment: str) -> bool:
+    """Data-centre data ships with the app; another segment needs every required file in its folder."""
+    if segment not in SEGMENT_FILES:
+        return False
+    return all((segment_dir(segment) / name).is_file() for name in SEGMENT_FILES[segment])
 
 
 def now() -> datetime:
@@ -122,6 +144,8 @@ class Store:
         self.reco_templates = load_templates(DATA / "recommendations.json")
         self.settings = self.load_settings()
         self.world = 1
+        self.segment = DEFAULT_SEGMENT
+        self.carry: dict[str, dict[str, Any]] = {}      # planner annotations and locks, kept across segment switches
         self.llm.blocked_domains = set((self.settings.get("web_search") or {}).get("blocked_domains") or [])
         self.lock = threading.RLock()
         self.scout_state: dict[str, Any] = {"running": False, "runs": [], "started_at": None}
@@ -164,18 +188,48 @@ class Store:
         return self.settings
 
     # ---- state ----------------------------------------------------------------
-    def reset(self, world: int | None = None) -> None:
+    def reset(self, world: int | None = None, segment: str = DEFAULT_SEGMENT) -> None:
+        """Reload the data. A world switch or a plain reset returns to the default segment."""
         with self.lock:
-            self._reset(world)
+            self.carry = {}
+            self._reset(world, segment)
 
-    def _reset(self, world: int | None = None) -> None:
+    def set_segment(self, segment: str) -> None:
+        """Switch segment and reload its data. The planner's annotations and locks are kept by card id until the next reset."""
+        with self.lock:
+            for s in self.signals:
+                self.carry[s["id"]] = {k: copy.deepcopy(s[k]) for k in ("annotations", "locked", "tracking") if k in s}
+            self._reset(None, segment, self.carry)
+
+    def _reset(self, world: int | None = None, segment: str | None = None, carry: dict[str, dict[str, Any]] | None = None) -> None:
         if world is not None:
             self.world = int(world)
+        if segment is not None:
+            self.segment = segment
         wdir = DATA / "worlds" / str(self.world)
-        self.scenario_config: dict[str, Any] = _load(DATA / "scenario_archetypes.json")
-        self.signals: list[dict[str, Any]] = _load(wdir / "signals.json")
-        self.evidence: list[dict[str, Any]] = _load(wdir / "evidence.json")
-        self.bullwhip_config: dict[str, Any] = _load(wdir / "bullwhip.json")
+        seg = self.segment
+        with_dc = seg in ("datacenter", "all")
+        with_og = seg in ("oilgas", "all") and self.world == 1 and segment_has_data("oilgas")
+        self.signals: list[dict[str, Any]] = []
+        self.evidence: list[dict[str, Any]] = []
+        self.bullwhip_config: dict[str, Any] = {}
+        if with_dc:
+            self.signals += [{"market": "datacenter", **c} for c in _load(wdir / "signals.json")]
+            self.evidence += _load(wdir / "evidence.json")
+            self.bullwhip_config = _load(wdir / "bullwhip.json")
+        if with_og:
+            odir = segment_dir("oilgas")
+            self.signals += [{"market": "oilgas", **c} for c in _load(odir / "signals.json")]
+            self.evidence += _load(odir / "evidence.json")
+            if seg == "oilgas" and (odir / "bullwhip.json").is_file():
+                self.bullwhip_config = _load(odir / "bullwhip.json")
+        # A segment has its own scenario pool and recommendation templates; `all` falls back to the data-centre ones.
+        own = seg == "oilgas" and with_og
+        self.scenario_config: dict[str, Any] = _load(segment_dir("oilgas") / "scenario_archetypes.json" if own else DATA / "scenario_archetypes.json")
+        self.reco_templates = load_templates(segment_dir("oilgas") / "recommendations.json" if own else DATA / "recommendations.json")
+        for sig in self.signals:
+            for k, v in ((carry or {}).get(sig["id"]) or {}).items():
+                sig[k] = v
         self._load_additions()
         self.runs: list[dict[str, Any]] = []
         self.brief: dict[str, Any] | None = None
@@ -193,23 +247,29 @@ class Store:
     def weights(self) -> dict[str, Any]:
         return compute_weights(self.signals, self.evidence, today())
 
+    def scenario_signals(self) -> list[dict[str, Any]]:
+        """Cards that feed scenarios and the recommendation: the segment's own, or the data-centre ones when the view is `all`."""
+        if self.segment == "all":
+            return [s for s in self.signals if s.get("market", "datacenter") == "datacenter"]
+        return self.signals
+
     def scenarios(self, weights: dict[str, Any] | None = None) -> dict[str, Any]:
         w = weights or self.weights()
-        return select_scenarios(self.scenario_config["archetypes"], self.signals, w, float(self.scenario_config.get("scaling_k", 1.5)))
+        return select_scenarios(self.scenario_config["archetypes"], self.scenario_signals(), w, float(self.scenario_config.get("scaling_k", 1.5)))
 
     def scenarios_by_horizon(self, weights: dict[str, Any]) -> dict[str, Any]:
         """C2: the scenario selection re-run on w_h = w × T(h) for each horizon. May pick a different four."""
         out: dict[str, Any] = {}
         for h in HORIZONS:
-            res = select_scenarios(self.scenario_config["archetypes"], self.signals, horizon_weights(weights, h), float(self.scenario_config.get("scaling_k", 1.5)))
+            res = select_scenarios(self.scenario_config["archetypes"], self.scenario_signals(), horizon_weights(weights, h), float(self.scenario_config.get("scaling_k", 1.5)))
             ranked = sorted(res["scenarios"], key=lambda s: -s["probability"])
             out[str(h)] = {"scenarios": [{"id": s["id"], "name": s["name"], "probability": s["probability"], "rank": i + 1} for i, s in enumerate(ranked)],
                            "entropy": res["entropy"], "leader": ranked[0]["id"]}
         return out
 
     def _context(self, item: dict[str, Any] | None = None) -> Context:
-        return Context(today=today(), signals=self.signals, evidence=self.evidence, scenario_config=self.scenario_config,
-                       bullwhip_config=self.bullwhip_config, replay=self.replay, llm=self.llm, item=item,
+        return Context(today=today(), signals=self.scenario_signals(), evidence=self.evidence, scenario_config=self.scenario_config,
+                       bullwhip_config=self.bullwhip_config, replay=self.replay if self.segment != "oilgas" else {}, llm=self.llm, item=item,
                        web=self.settings.get("web_search"))
 
     # ---- daily history (keyed by scenario id) -------------------------------------
@@ -345,7 +405,8 @@ class Store:
         for s in self.signals:
             weight = w[s["id"]]["weight"]
             cls = "inactive" if weight <= 0 else ("strong" if weight >= strong else "weak")
-            signals.append({**s, "computed": w[s["id"]], "strength_class": cls, "source_class_label": SOURCE_CLASSES.get(s.get("source_class", "news"), SOURCE_CLASSES["news"])})
+            signals.append({**s, "market": s.get("market", "datacenter"), "computed": w[s["id"]], "impact": compute_impact(s, w[s["id"]]), "strength_class": cls,
+                            "source_class_label": SOURCE_CLASSES.get(s.get("source_class", "news"), SOURCE_CLASSES["news"])})
         if self.brief is None:
             ctx = self._context(); ctx.weights, ctx.after = w, sc
             ctx.bullwhip = compute_bullwhip(self.bullwhip_config)
@@ -360,12 +421,14 @@ class Store:
         return {
             "meta": {"app": "Irma", "today": today().isoformat(), "llm_mode": self.llm.mode, "model": os.environ.get("ABB_MODEL", "claude-opus-5-5"),
                      "horizon_months": list(HORIZONS), "agents": self.pipeline.describe(), "source_classes": SOURCE_CLASSES,
-                     "suggested_prompts": SUGGESTED_PROMPTS, "world": self.world, "worlds": list(WORLDS.values()), "languages": ["en", "fi"]},
+                     "suggested_prompts": SUGGESTED_PROMPTS, "world": self.world, "worlds": list(WORLDS.values()), "languages": ["en", "fi"],
+                     "segment": self.segment, "segments": [{**seg, "has_data": segment_has_data(seg["id"])} for seg in SEGMENTS],
+                     "scenario_segment_required": self.segment == "all", "impact": impact_meta()},
             "scheduler": {"interval_minutes": self.settings["run_interval_minutes"], "last_run": self.last_run.isoformat(timespec="minutes") if self.last_run else None,
                           "next_run": self.next_run.isoformat(timespec="minutes") if self.next_run else None, "runs_completed": self.runs_completed},
             "settings": self.settings,
-            "summary": {"en": plain_summary(sc, self.signals, w, "en"), "fi": plain_summary(sc, self.signals, w, "fi")},
-            "axis_scores": axis_scores(self.signals, w),
+            "summary": {"en": plain_summary(sc, self.scenario_signals(), w, "en"), "fi": plain_summary(sc, self.scenario_signals(), w, "fi")},
+            "axis_scores": axis_scores(self.scenario_signals(), w),
             "signals": signals,
             "evidence": self.evidence,
             "scenarios": sc,
@@ -381,7 +444,7 @@ class Store:
             "scout": self.scout_public(),
             "signal_changes": signal_changes(self.signals, changes),
             "negative_signals": negative_signals(self.signals, self.evidence, w),
-            "recommendation": build_recommendation(sc, self.signals, w, today(), self.reco_templates),
+            "recommendation": build_recommendation(sc, self.scenario_signals(), w, today(), self.reco_templates),
         }
 
 
@@ -389,7 +452,7 @@ class Store:
     def _load_additions(self) -> None:
         self.additions = {"signals": {}, "evidence": {}}
         self.seen = {}
-        if self.world != 1 or not self.additions_path.exists():
+        if self.world != 1 or self.segment == "oilgas" or not self.additions_path.exists():
             return
         try:
             data = json.loads(self.additions_path.read_text(encoding="utf-8"))
@@ -414,7 +477,7 @@ class Store:
             self.scout_state["runs"] = list(data.get("runs") or [])[-20:]
 
     def _save_additions(self) -> None:
-        if self.world != 1:
+        if self.world != 1 or self.segment == "oilgas":
             return
         self.additions_path.parent.mkdir(parents=True, exist_ok=True)
         payload = {"note": "Signals and counter-evidence added by the automatic web search (scout). Delete this file to remove them.",
@@ -446,9 +509,11 @@ class Store:
     # ---- run the pipeline on a copy, commit the result ------------------------------------
     def _work_context(self, item: dict[str, Any], replay: dict[str, Any] | None = None) -> Context:
         with self.lock:
-            return Context(today=today(), signals=copy.deepcopy(self.signals), evidence=copy.deepcopy(self.evidence),
+            # The replayed texts are keyed by the data-centre scenario ids, so another segment runs without them.
+            default_replay = self.replay if self.segment != "oilgas" else {}
+            return Context(today=today(), signals=copy.deepcopy(self.scenario_signals()), evidence=copy.deepcopy(self.evidence),
                            scenario_config=self.scenario_config, bullwhip_config=self.bullwhip_config,
-                           replay=self.replay if replay is None else replay, llm=self.llm, item=item,
+                           replay=default_replay if replay is None else replay, llm=self.llm, item=item,
                            web=copy.deepcopy(self.settings.get("web_search")))
 
     def _commit(self, ctx: Context, origin: str, extra: dict[str, Any] | None = None) -> tuple[str, str]:
@@ -464,6 +529,7 @@ class Store:
             self.evidence.append(c2)
             new_ces.append(c2)
         sig["counter_evidence"] = [ce_map.get(x, x) for x in sig.get("counter_evidence", [])]
+        sig.setdefault("market", "oilgas" if self.segment == "oilgas" else "datacenter")
         if extra:
             sig.update(extra)
         live = next((s for s in self.signals if s["id"] == old_id), None) if ctx.is_update else None
@@ -512,7 +578,7 @@ class Store:
             self._sync_blocked_domains()
             created = self._cycle("new_information")
             w_after = self.weights()
-            record["recommendation"] = build_recommendation(self.scenarios(w_after), self.signals, w_after, today(), self.reco_templates)
+            record["recommendation"] = build_recommendation(self.scenarios(w_after), self.scenario_signals(), w_after, today(), self.reco_templates)
             if final_id:
                 card = next(s for s in self.signals if s["id"] == final_id)
                 wgt = self.weights()[final_id]["weight"]
@@ -527,6 +593,8 @@ class Store:
         ws = self.settings.get("web_search") or {}
         if self.world != 1:
             return False, "world"
+        if self.segment != "datacenter":
+            return False, "segment"
         if self.llm.mode != "live":
             return False, "no_key"
         if not ws.get("enabled"):
@@ -538,7 +606,7 @@ class Store:
     def scout_public(self) -> dict[str, Any]:
         ok, why = self.scout_eligibility()
         return {"running": self.scout_state["running"], "started_at": self.scout_state["started_at"], "eligible": ok,
-                "skip": SKIP_REASONS.get(why) if not ok else None, "runs": list(reversed(self.scout_state["runs"][-10:])),
+                "skip": (SEGMENT_SKIP if why == "segment" else SKIP_REASONS.get(why)) if not ok else None, "runs": list(reversed(self.scout_state["runs"][-10:])),
                 "found": len(self.additions["signals"]), "settings": scout_settings(self.settings.get("web_search")), "themes": THEMES}
 
     def start_scout(self, why: str) -> str:
@@ -716,6 +784,10 @@ class WorldBody(BaseModel):
     world: int
 
 
+class SegmentBody(BaseModel):
+    segment: str
+
+
 class RunBody(BaseModel):
     preset: Optional[str] = None
     title: Optional[str] = None
@@ -751,6 +823,19 @@ def set_world(body: WorldBody) -> dict[str, Any]:
     return {"world": STORE.world, "state": STORE.state()}
 
 
+@app.post("/api/segment")
+def set_segment(body: SegmentBody) -> dict[str, Any]:
+    """Switch the market segment (datacenter | oilgas | all). Unknown id, a segment without data, or a segment the world cannot show: 400."""
+    if body.segment not in SEGMENT_IDS:
+        raise HTTPException(400, "unknown segment")
+    if body.segment == "oilgas" and not segment_has_data("oilgas"):
+        raise HTTPException(400, "segment has no data")
+    if body.segment != DEFAULT_SEGMENT and STORE.world != 1:
+        raise HTTPException(400, "only the data-centre segment is available in this world")
+    STORE.set_segment(body.segment)
+    return {"segment": STORE.segment, "state": STORE.state()}
+
+
 @app.get("/api/signals/{signal_id}")
 def get_signal(signal_id: str) -> dict[str, Any]:
     with STORE.lock:
@@ -766,7 +851,8 @@ def _get_signal(signal_id: str) -> dict[str, Any]:
     strong = float(STORE.settings.get("strong_signal_weight", 0.25))
     weight = w[signal_id]["weight"]
     contributions = {s["id"]: next((c for c in s["contributions"] if c["signal_id"] == signal_id), None) for s in sc["scenarios"]}
-    return {**sig, "computed": w[signal_id], "strength_class": "inactive" if weight <= 0 else ("strong" if weight >= strong else "weak"),
+    return {**sig, "market": sig.get("market", "datacenter"), "computed": w[signal_id], "impact": compute_impact(sig, w[signal_id]),
+            "strength_class": "inactive" if weight <= 0 else ("strong" if weight >= strong else "weak"),
             "source_class_label": SOURCE_CLASSES.get(sig.get("source_class", "news"), SOURCE_CLASSES["news"]),
             "counter_cards": [e for e in STORE.evidence if e["against"] == signal_id], "contributions": contributions,
             "scenario_names": {s["id"]: s["name"] for s in sc["scenarios"]}}
@@ -930,7 +1016,7 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
         comp = _t(lead["abb_interpretation"]["components"], lang)
         watch = "; ".join(f"[{x['signal_id']}] {short(by_id[x['signal_id']])}" for x in ns["watch"][:4] if x["signal_id"] in by_id)
         refute = "; ".join(f"{_t(f['text'], lang)} [{f['signal_id']}]" for f in lead["falsifiers"][:2])
-        rec = build_recommendation(sc, STORE.signals, w, today(), STORE.reco_templates)
+        rec = build_recommendation(sc, STORE.scenario_signals(), w, today(), STORE.reco_templates)
         move = next((m for m in (rec or {}).get("moves", []) if m["area"] == "procurement"), None) or ((rec or {}).get("moves") or [None])[0]
         rec_ids = list(dict.fromkeys((move or {}).get("trigger_signals", [])))[:4]
         if fi:
@@ -1053,6 +1139,7 @@ def method() -> dict[str, Any]:
     from engine.weights import COUNTER_CAP, HALF_LIFE_DAYS, HUMAN_MULTIPLIERS, RELIABILITY, UNCHALLENGED_CAP
     return {
         "weight_formula": "w = min(1, Bel × F × M × H); w_h = w × T(h)",
+        "impact": impact_meta(),
         "reliability": RELIABILITY, "half_life_days": HALF_LIFE_DAYS, "counter_cap": COUNTER_CAP, "unchallenged_cap": UNCHALLENGED_CAP, "human_multipliers": HUMAN_MULTIPLIERS,
         "scenario_formula": "r = Σ_a axes_a × profile_a / Σ_a |profile_a|;  L_s = ln(prior_s) + k × Σ_i (w_i × r_is);  the 4 highest L are shown, p = softmax over the 4",
         "k": STORE.scenario_config.get("scaling_k"), "k_note": STORE.scenario_config.get("scaling_note"),

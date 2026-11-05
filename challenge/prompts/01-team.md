@@ -10,11 +10,11 @@ The reference screenshot for the signal map is `challenge/assets/signal-map-refe
 - Counter-evidence on every signal. Structural and cyclical stay separate. The human decides.
 - Vercel mode must keep working (VERCEL=1, read-only code, no API key, demo mode). Run `.hackforge/gate.sh` and a Vercel-mode check before finishing.
 
-## My readings of the team's notes: list them at the decision checkpoint and wait for my answer before building
+## Decisions confirmed by the team (do not ask again)
 1. Overview order, top to bottom: major-signal banner, Current situation (short market review, at most 3 lines), sub-menu (segment, region, horizon), chart and Irma assistant side by side, Recommended move, then the full Market summary. Chart and assistant are both visible without scrolling at 1440x900 when the page opens.
-2. "World situation 2: old data compared to the weight factors" means replacing the constructed downturn with a Historical data set (the 2021 to 2023 chip cycle) plus a panel that shows how the weight formula and scenario shares behave on that past cycle.
-3. "Second new segment, oil and gas" means the segment filter becomes real with exactly two segments that have data: Data centres and Oil and gas. Remove the preview-only entries from the menu and list them in the docs as later work. Propose what "All segments" does (suggested: signals and map combined, scenario chart and recommendation ask for one segment).
-4. "Several formulas and their average" already exists in `engine/weights.py` (the ensemble). Verify it, do not duplicate it. Show each formula's value and the average (the value used) on the signal page and in the map detail panel, and use the average as the map's weight axis.
+2. World situation 2 is replaced by a Historical data set (the 2021 to 2023 chip cycle) plus a panel that shows how the weight formula and scenario shares behave on that past cycle.
+3. Segments: Data centres and Oil and gas become real segments with data. Keep the other segment entries in the menu as they are now (preview, not connected). "All segments": signals and map combined; the scenario chart and recommendation ask for one segment.
+4. Do not change the weight formulas or the ensemble in `engine/weights.py`. The map's weight axis uses the existing weight as it is.
 
 ## Changes
 **A. Overview layout** as in reading 1. Check: headless screenshot at 1440x900 and 1280x720 shows chart and assistant inside the viewport on load.

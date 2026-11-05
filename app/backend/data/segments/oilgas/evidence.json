@@ -1,0 +1,132 @@
+[
+ {
+  "id": "OG-CE-001",
+  "against": "OG-001",
+  "claim": "ABB reports that its own oil and gas customers are active: sentiment in the oil and gas segment is 'solid' in Q2 2026. Falling oil capex does not translate one-for-one into lower relay orders.",
+  "source": {
+   "name": "ABB Q2 2026 results, press release",
+   "url": "https://new.abb.com/news/detail/137496/q2-2026-results",
+   "date": "2026-07-16"
+  },
+  "reliability": "A",
+  "strength": 0.4,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-002",
+  "against": "OG-002",
+  "claim": "The EIA itself notes ongoing withdrawals of oil inventories globally and continued volatility in physical flows. The 2027 fall to USD 84 depends on Middle East production and exports increasing; a renewed disruption would hold prices higher.",
+  "source": {
+   "name": "U.S. Energy Information Administration, Short-Term Energy Outlook, October 2026",
+   "url": "https://www.eia.gov/outlooks/steo/",
+   "date": "2026-10-06"
+  },
+  "reliability": "A",
+  "strength": 0.4,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-003",
+  "against": "OG-003",
+  "claim": "The same survey revised both years up: 2026 from NOK 266 bn to 275 bn and 2027 from NOK 207 bn to 227 bn, driven largely by production drilling. The 2027 step down is smaller than the earlier survey implied.",
+  "source": {
+   "name": "Offshore Energy Digital, Offshore Norway: 2026 investment outlook perks up",
+   "url": "https://www.oedigital.com/news/542082-offshore-norway-2026-investment-outlook-perks-up",
+   "date": "2026-08-13"
+  },
+  "reliability": "B",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-004",
+  "against": "OG-004",
+  "claim": "The EIA expects the Brent price to fall to an average of USD 84 per barrel in 2027 from USD 105 in 4Q26. A lower price would reduce drilling and with it the electrical orders that follow the rig count.",
+  "source": {
+   "name": "U.S. Energy Information Administration, Short-Term Energy Outlook, October 2026",
+   "url": "https://www.eia.gov/outlooks/steo/",
+   "date": "2026-10-06"
+  },
+  "reliability": "A",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-005",
+  "against": "OG-005",
+  "claim": "ABB reports that orders in the Automation business area declined 13% (14% comparable) in Q2 2026 against a very high comparable, so 'solid sentiment' is not yet shown as order growth.",
+  "source": {
+   "name": "ABB Q2 2026 results, press release (PDF)",
+   "url": "https://resources.news.e.abb.com/attachments/published/137496/en-US/9123465FF532/ABB_Q2_2026_Press_release_English.pdf",
+   "date": "2026-07-16"
+  },
+  "reliability": "A",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-006",
+  "against": "OG-006",
+  "claim": "ABB reports a well-functioning supply chain that supports deliveries from the order backlog, and plans to invest about USD 200 million in medium-voltage manufacturing capacity in Europe over three years, which eases the supply risk on ABB's side.",
+  "source": {
+   "name": "ABB Q2 2026 results, press release (PDF)",
+   "url": "https://resources.news.e.abb.com/attachments/published/137496/en-US/9123465FF532/ABB_Q2_2026_Press_release_English.pdf",
+   "date": "2026-07-16"
+  },
+  "reliability": "A",
+  "strength": 0.4,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-007",
+  "against": "OG-007",
+  "claim": "The Parliament vote is a position, not final law. The European Commission has separately proposed only that member states not apply penalties for a period, leaving the monitoring and reporting duties in place. The outcome of the negotiation is open.",
+  "source": {
+   "name": "World Oil, EU moves to delay methane rule penalties for oil and gas imports",
+   "url": "https://worldoil.com/news/2026/7/14/eu-moves-to-delay-methane-rule-penalties-for-oil-and-gas-imports/",
+   "date": "2026-07-14"
+  },
+  "reliability": "B",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-008",
+  "against": "OG-008",
+  "claim": "The partial electrification completed in 2024 already cut Troll emissions by about 330,000 tonnes of CO2 per year, about 75% of the 440,000 tonnes originally planned, so most of the electrification scope is delivered and operating.",
+  "source": {
+   "name": "Pipeline & Gas Journal, Equinor scales back Troll electrification",
+   "url": "https://www.pgjonline.com/news/2026/october/equinor-scales-back-troll-electrification-drops-second-electric-export-compressor-to-protect-gas-output",
+   "date": "2026-10-22"
+  },
+  "reliability": "B",
+  "strength": 0.4,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-009",
+  "against": "OG-009",
+  "claim": "ABB's Q2 2026 report says customer activity in the oil and gas segment is solid, with softness linked to the Middle East conflict remaining contained to the local market. The EIA also expects regional production and exports to increase through the forecast period.",
+  "source": {
+   "name": "ABB Q2 2026 results, press release (PDF)",
+   "url": "https://resources.news.e.abb.com/attachments/published/137496/en-US/9123465FF532/ABB_Q2_2026_Press_release_English.pdf",
+   "date": "2026-07-16"
+  },
+  "reliability": "A",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ },
+ {
+  "id": "OG-CE-010",
+  "against": "OG-010",
+  "claim": "Wood Mackenzie expects the supply wave to push spot LNG prices below oil price parity in 2026. Lower LNG prices can weaken the case for the next round of project sanctions beyond the 225 Mtpa already under construction.",
+  "source": {
+   "name": "Wood Mackenzie via LNG Industry",
+   "url": "https://www.lngindustry.com/special-reports/21012026/wood-mackenzie-five-global-gas-and-lng-themes-to-look-out-for-in-2026",
+   "date": "2026-01-21"
+  },
+  "reliability": "B",
+  "strength": 0.5,
+  "data_label": "SOURCE"
+ }
+]

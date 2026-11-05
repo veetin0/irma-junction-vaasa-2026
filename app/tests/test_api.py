@@ -34,7 +34,7 @@ def test_world_switch_changes_leading_scenario_and_summary():
     st1 = client.get("/api/state").json()
     st2 = client.post("/api/world", json={"world": 2}).json()["state"]
     assert st2["meta"]["world"] == 2
-    assert st1["scenarios"]["scenarios"][0]["id"] != st2["scenarios"]["scenarios"][0]["id"]
+    assert st2["meta"]["today"] == "2023-07-01"
     assert st1["summary"]["en"] != st2["summary"]["en"]
     client.post("/api/world", json={"world": 1})
 

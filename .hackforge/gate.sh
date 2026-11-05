@@ -44,6 +44,14 @@ if M >= 3:
     sol = open("../docs/SOLUTION.md").read(); n = len(json.load(open("backend/data/worlds/1/signals.json")))
     assert "17 cards" not in sol and "11 of 17" not in sol
     assert __import__("os").path.exists("../DEMO.md")
+if M >= 4:
+    import sys; sys.path.insert(0, "backend")
+    from engine import historical
+    d = "backend/data/"
+    og = json.load(open(d + "segments/oilgas/signals.json")); assert 8 <= len(og) <= 12, "oil and gas cards"
+    arch = json.load(open(d + "segments/oilgas/scenario_archetypes.json"))["archetypes"]
+    assert abs(sum(a["prior"] for a in arch) - 1.0) < 1e-9, "oil and gas priors"
+    hist = json.load(open(d + "historical/chipcycle.json")); assert historical.validate(hist) == [], "historical dataset"
 print("contracts OK (milestone", M, ")")
 PY
 echo "GATE GREEN"

@@ -1,5 +1,6 @@
 # State
 - Phase: build M4–M6 (directive 11) in progress. M4.1 merged on main (c869321). Rate limit hit 2026-11-05 ~12:50, resets 13:50; the 4 data/engine builders (M4.2a oil and gas cards, M4.2b oil and gas scenarios, M4.3a chip-cycle data, M4.3b historical engine) wrote nothing and must be relaunched, then M4.4 wiring, M5, M6
+M4 done and merged (gate green, 216 tests, MILESTONE 4). Next: M5 (M5.1 UI, M5.2 map, M5.3 reco wording), then M6.
 - Profile: standard (auto: 10 h, team of 1, existing entry being improved) · Models: research sonnet / architect opus / judge opus / build sonnet / craft sonnet / verify sonnet
 - Deadline: none set · Time budget 10 h
 - Current milestone / wave: —

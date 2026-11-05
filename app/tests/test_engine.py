@@ -57,11 +57,11 @@ def test_world1_selects_four_and_sums_to_one():
 def test_world2_selects_a_different_picture():
     cfg = load("scenario_archetypes.json")
     r1 = select_scenarios(cfg["archetypes"], load("worlds/1/signals.json"), compute_weights(load("worlds/1/signals.json"), load("worlds/1/evidence.json"), TODAY), cfg["scaling_k"])
-    r2 = select_scenarios(cfg["archetypes"], load("worlds/2/signals.json"), compute_weights(load("worlds/2/signals.json"), load("worlds/2/evidence.json"), TODAY), cfg["scaling_k"])
+    r2 = select_scenarios(cfg["archetypes"], load("worlds/stress/signals.json"), compute_weights(load("worlds/stress/signals.json"), load("worlds/stress/evidence.json"), TODAY), cfg["scaling_k"])
     assert r1["scenarios"][0]["id"] != r2["scenarios"][0]["id"]
     assert r2["scenarios"][0]["id"] in ("contraction_surplus", "inventory_correction", "grid_baseline")
     s1 = plain_summary(r1, load("worlds/1/signals.json"), compute_weights(load("worlds/1/signals.json"), load("worlds/1/evidence.json"), TODAY), "en")
-    s2 = plain_summary(r2, load("worlds/2/signals.json"), compute_weights(load("worlds/2/signals.json"), load("worlds/2/evidence.json"), TODAY), "fi")
+    s2 = plain_summary(r2, load("worlds/stress/signals.json"), compute_weights(load("worlds/stress/signals.json"), load("worlds/stress/evidence.json"), TODAY), "fi")
     assert "growing" in s1 and "Todennäköisin" in s2
 
 
@@ -75,7 +75,7 @@ def test_bullwhip_metrics():
     assert momentum([25, 95.5, 60.5, 15.5], -20)["status"] == "hoarding_ending"
     assert spot_contract_spread([12, 28, 22, 14, 9, 6], 10)["status"] == "hoarding_ending"
     assert compute_bullwhip(load("worlds/1/bullwhip.json"))["overall"] == "mixed_turning"
-    assert compute_bullwhip(load("worlds/2/bullwhip.json"))["overall"] == "real_demand"
+    assert compute_bullwhip(load("worlds/stress/bullwhip.json"))["overall"] == "real_demand"
 
 
 def test_guardrail_keeps_disclaimers_and_leaves_no_marker():

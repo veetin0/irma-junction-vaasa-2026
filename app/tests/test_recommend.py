@@ -47,7 +47,7 @@ def _move_text(r: dict) -> list[str]:
     out = []
     for m in r["moves"]:
         for key in ("text", "trigger", "cost_if_wrong"):
-            out += [re.sub(r"\[SIG-[0-9, SIG-]*\]", "", v) for v in m[key].values()]
+            out += [re.sub(r"\[(?:SIG|HS|OG)-[0-9, A-Z-]*\]", "", v) for v in m[key].values()]
     out += list(r["next_action"]["text"].values()) + list(r["next_action"]["owner"].values()) + list(r["disclaimer"].values())
     return out
 
@@ -103,9 +103,9 @@ def test_confidence_rule():
 
 
 def test_both_worlds_give_a_grounded_recommendation():
-    today = date.fromisoformat(os.environ["DEMO_TODAY"])
     heads = {}
     for world, st in _both_worlds():
+        today = date.fromisoformat(st["meta"]["today"])   # world 2 is pinned to its reference date
         r = st["recommendation"]
         ids = {s["id"] for s in st["signals"]}
         lead, runner = sorted(st["scenarios"]["scenarios"], key=lambda s: -s["probability"])[:2]

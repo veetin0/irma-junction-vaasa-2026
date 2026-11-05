@@ -38,9 +38,10 @@ from agents.scout import SKIP_REASONS, build_prompt, known_urls, post_gate, pre_
 from engine.archetypes import axis_scores, plain_summary, select_scenarios
 from engine.bullwhip import compute_bullwhip
 from engine.changes import compute_changes, initial_baseline, negative_signals, signal_changes, snapshot
+from engine.historical import compare as historical_compare, signals_as_of
 from engine.impact import compute_impact, impact_meta
 from engine.recommend import build_recommendation, load_templates
-from engine.weights import HORIZONS, compute_weights, horizon_weights
+from engine.weights import HORIZONS, compute_weights, horizon_weights, parse_date
 from agents.web import DEFAULT_SCOUT_SETTINGS, DEFAULT_WEB_SETTINGS, THEMES, extract_json, host_of, norm_url
 
 BASE = Path(__file__).resolve().parent
@@ -85,8 +86,8 @@ SOURCE_CLASSES = {
 WORLDS = {
     1: {"id": 1, "label": {"en": "Current world situation", "fi": "Nykyinen maailmantilanne"},
         "note": {"en": "Public signals as of October 2026: growth with scarce components.", "fi": "Julkiset signaalit lokakuussa 2026: kasvua ja niukkoja komponentteja."}},
-    2: {"id": 2, "label": {"en": "World situation 2", "fi": "Maailmantilanne 2"},
-        "note": {"en": "Constructed stress dataset (DEMODATA): investment cuts, cancellations, falling prices and easing supply.", "fi": "Rakennettu stressiaineisto (DEMODATA): investointileikkauksia, peruutuksia, laskevia hintoja ja helpottuvaa saatavuutta."}},
+    2: {"id": 2, "label": {"en": "Historical data", "fi": "Vanha data"},
+        "note": {"en": "The 2021-2023 chip cycle, shown as it was known on 1 July 2023 (no later information).", "fi": "Vuosien 2021-2023 piirisykli sellaisena kuin se tunnettiin 1.7.2023 (ei myöhempää tietoa)."}},
 }
 # Segments (contract C9). The shipped data-centre data is the default; oil and gas arrives as files under
 # data/segments/oilgas/ and is offered only when every required file is there (has_data).
@@ -104,7 +105,13 @@ SUGGESTED_PROMPTS = {
 }
 
 
+HIST_FILE = DATA / "historical" / "chipcycle.json"
+_REF: dict[str, date | None] = {"date": None}  # world 2 pins "today" to the dataset's reference date
+
+
 def today() -> date:
+    if _REF["date"] is not None:
+        return _REF["date"]
     override = os.environ.get("DEMO_TODAY")
     return datetime.strptime(override, "%Y-%m-%d").date() if override else date.today()
 
@@ -207,13 +214,22 @@ class Store:
         if segment is not None:
             self.segment = segment
         wdir = DATA / "worlds" / str(self.world)
+        if self.world == 2:
+            self.segment = "datacenter"
         seg = self.segment
+        hist = _load(HIST_FILE) if self.world == 2 else None
+        _REF["date"] = parse_date(hist["meta"]["reference_date"]) if hist else None
         with_dc = seg in ("datacenter", "all")
         with_og = seg in ("oilgas", "all") and self.world == 1 and segment_has_data("oilgas")
         self.signals: list[dict[str, Any]] = []
         self.evidence: list[dict[str, Any]] = []
         self.bullwhip_config: dict[str, Any] = {}
-        if with_dc:
+        if hist:
+            known = signals_as_of(hist, _REF["date"])
+            self.signals += [{"market": "datacenter", **c} for c in known["signals"]]
+            self.evidence += known["evidence"]
+            self.bullwhip_config = _load(wdir / "bullwhip.json")
+        elif with_dc:
             self.signals += [{"market": "datacenter", **c} for c in _load(wdir / "signals.json")]
             self.evidence += _load(wdir / "evidence.json")
             self.bullwhip_config = _load(wdir / "bullwhip.json")
@@ -821,6 +837,26 @@ def set_world(body: WorldBody) -> dict[str, Any]:
         raise HTTPException(400, "unknown world")
     STORE.reset(body.world)
     return {"world": STORE.world, "state": STORE.state()}
+
+
+@app.get("/api/historical")
+def get_historical() -> dict[str, Any]:
+    """Historical data: the chip-cycle snapshots, each computed from what was known on its date, next to what happened.
+    `today` is the current (world 1) datacenter picture for the same comparison, built without switching worlds."""
+    hist = _load(HIST_FILE)
+    with STORE.lock:
+        current = None
+        if STORE.world == 1 and STORE.segment in ("datacenter", "all"):
+            w = STORE.weights()
+            sc = STORE.scenarios(w)
+            lead = max(sc["scenarios"], key=lambda s: s["probability"])
+            top = sorted(((s, w[s["id"]]["weight"]) for s in STORE.scenario_signals()), key=lambda x: -x[1])[:5]
+            current = {"as_of": today().isoformat(), "leader": {"id": lead["id"], "name": lead["name"], "probability": lead["probability"]},
+                       "top_weights": [{"id": s["id"], "short": s.get("short"), "weight": wt} for s, wt in top]}
+    out = historical_compare(hist, current)
+    out["reference_date"] = hist["meta"]["reference_date"]
+    out["data_label"] = hist["meta"].get("label")
+    return out
 
 
 @app.post("/api/segment")

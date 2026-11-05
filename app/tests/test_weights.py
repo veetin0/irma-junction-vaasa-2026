@@ -68,7 +68,8 @@ def base_card(**kw):
 
 
 def world(n):
-    signals, evidence = load(f"worlds/{n}/signals.json"), load(f"worlds/{n}/evidence.json")
+    d = "stress" if str(n) == "2" else n  # world 2 is now the historical dataset; the old stress fixture keeps the second weight check
+    signals, evidence = load(f"worlds/{d}/signals.json"), load(f"worlds/{d}/evidence.json")
     return signals, evidence, compute_weights(signals, evidence, TODAY)
 
 

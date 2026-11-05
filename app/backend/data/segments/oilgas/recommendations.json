@@ -3,7 +3,7 @@
  "label": "ASSUMPTION",
  "confidence_rules": {
   "label": "ASSUMPTION",
-  "note": "[ASSUMPTION: confidence comes from the probability margin between the leading scenario and the runner-up and from the normalised entropy across the four shown scenarios. High needs a clear margin and low entropy; low is the default. Thresholds are untested and meant to be tuned with ABB.]",
+  "note": "[ASSUMPTION: confidence comes from the probability margin between the leading scenario and the runner-up and from how spread out the probabilities are across the four shown scenarios. High needs a clear margin and a narrow spread; low is the default. Thresholds are untested and meant to be tuned with ABB.]",
   "high": {
    "min_margin": 0.2,
    "max_entropy": 0.7
@@ -38,12 +38,12 @@
   "fi": "Suositeltu siirto (luottamus {confidence}, '{name}' {probability}): {move}."
  },
  "hedge_template": {
-  "en": "If '{runner}' ({runner_p}) overtakes '{lead}', {shift} Moves that pay off in any case stay in place; the conditional ones would be read again.",
-  "fi": "Jos skenaario '{runner}' ({runner_p}) ohittaa skenaarion '{lead}', {shift} Siirrot, jotka kannattavat joka tapauksessa, pysyvät voimassa; ehdolliset arvioitaisiin uudelleen."
+  "en": "If '{runner}' ({runner_p}) overtakes '{lead}', {shift} Moves that help in every scenario stay in place. Conditional moves are checked again.",
+  "fi": "Jos skenaario '{runner}' ({runner_p}) ohittaa skenaarion '{lead}', {shift} Siirrot, jotka auttavat kaikissa skenaarioissa, pysyvät voimassa. Ehdolliset siirrot arvioidaan uudelleen."
  },
  "disclaimer": {
-  "en": "The planner decides. Irma has no contract, allocation or cash data, so this gives conditional moves only: no quantities and no order timing.",
-  "fi": "Päätöksen tekee suunnittelija. Irmalla ei ole sopimus-, allokaatio- tai kassadataa, joten se antaa vain ehdollisia siirtoja: ei määriä eikä tilausten ajoitusta."
+  "en": "The planner decides. Irma has no contract, allocation or cash data. It gives conditional moves only: no quantities and no order timing.",
+  "fi": "Päätöksen tekee suunnittelija. Irmalla ei ole sopimus-, toimituskiintiö- tai kassadataa. Se antaa vain ehdollisia siirtoja: ei määriä eikä tilausten ajoitusta."
  },
  "themes": {
   "oil_price": {
@@ -183,17 +183,17 @@
  "archetypes": {
   "og_capex_tight": {
    "headline_move": {
-    "en": "ask the key suppliers for a written delivery status on the parts used in oil and gas relays, so longer supply agreements can be discussed early if tight supply continues",
-    "fi": "pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne öljy- ja kaasureleiden osista, jotta pidempiä toimitussopimuksia voidaan käsitellä ajoissa, jos niukkuus jatkuu"
+    "en": "ask key suppliers for a written delivery status on oil and gas relay parts",
+    "fi": "pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne öljy- ja kaasureleiden osista"
    },
    "if_leading": {
-    "en": "the emphasis would move to securing parts and sequencing gas and LNG project deliveries.",
-    "fi": "painopiste siirtyisi osien saatavuuden varmistamiseen ja kaasu- ja LNG-hankkeiden toimitusten järjestykseen."
+    "en": "the focus would move to securing parts and sequencing gas and LNG deliveries.",
+    "fi": "painopiste siirtyisi osien varmistamiseen ja kaasu- ja LNG-toimitusten järjestämiseen."
    },
    "next_action": {
     "text": {
-     "en": "Put the supplier delivery status for oil and gas relay parts on the agenda of the next S&OP review, and agree which signals decide whether longer supply agreements are discussed.",
-     "fi": "Tuo toimittajien toimitustilanne öljy- ja kaasureleiden osista seuraavan S&OP-katselmuksen esityslistalle ja sovi, mitkä signaalit ratkaisevat, käsitelläänkö pidempiä toimitussopimuksia."
+     "en": "Put the supplier delivery status for oil and gas relay parts on the agenda of the next S&OP review. Agree which signals decide whether longer supply agreements are discussed.",
+     "fi": "Tuo toimittajien toimitustilanne öljy- ja kaasureleiden osista seuraavan S&OP-katselmuksen esityslistalle. Sovi, mitkä signaalit ratkaisevat, käsitelläänkö pidempiä toimitussopimuksia."
     },
     "owner": {
      "en": "Component procurement lead with the S&OP owner",
@@ -215,12 +215,12 @@
       "fi": "Pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne öljy- ja kaasureleiden osista. Toista se jokaisessa katselmuksessa."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
-      "en": "If supply eases, the cost is some review time.",
-      "fi": "Jos saatavuus helpottuu, kustannus on katselmusaikaa."
+      "en": "If supply eases, it only costs some review time.",
+      "fi": "Jos saatavuus helpottuu, siitä aiheutuu vain vähän katselmusaikaa."
      }
     },
     {
@@ -232,12 +232,12 @@
       "abb_order_book"
      ],
      "text": {
-      "en": "List the relay variants for gas and LNG projects that depend on the longest-lead parts. Agree which of them get assembly slots first.",
+      "en": "List the relay types for gas and LNG projects that depend on the parts with the longest lead times. Agree which of them get assembly slots first.",
       "fi": "Listaa kaasu- ja LNG-hankkeiden releversiot, jotka riippuvat pisimmän toimitusajan osista. Sovi, mitkä niistä saavat kokoonpanovuoron ensin."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If projects slip, the reserved slots sit idle for a while.",
@@ -253,16 +253,16 @@
       "nordic_shelf"
      ],
      "text": {
-      "en": "Talk with the switchgear builders who use ABB relays about how project deliveries are sequenced if parts stay scarce.",
-      "fi": "Keskustele ABB:n releitä käyttävien kojeistovalmistajien kanssa siitä, missä järjestyksessä hankkeiden toimitukset tehdään, jos osat pysyvät niukkoina."
+      "en": "Talk with the switchgear builders who use ABB relays. Ask how project deliveries are sequenced if parts stay scarce.",
+      "fi": "Keskustele ABB:n releitä käyttävien kojeistovalmistajien kanssa. Kysy, missä järjestyksessä hankkeiden toimitukset tehdään, jos osat pysyvät niukkoina."
      },
      "trigger": {
-      "en": "Activates when these move together: {themes}.",
-      "fi": "Aktivoituu, kun nämä liikkuvat yhdessä: {themes}."
+      "en": "Applies when these move together: {themes}.",
+      "fi": "Koskee tilannetta, jossa nämä liikkuvat yhdessä: {themes}."
      },
      "cost_if_wrong": {
-      "en": "If demand softens, the talks were not needed, but the contacts stay useful.",
-      "fi": "Jos kysyntä pehmenee, keskusteluja ei tarvittu, mutta yhteydet säilyvät hyödyllisinä."
+      "en": "If demand softens, the talks were not needed. The contacts stay useful.",
+      "fi": "Jos kysyntä pehmenee, keskusteluja ei tarvittu. Yhteydet säilyvät silti hyödyllisinä."
      }
     },
     {
@@ -277,29 +277,29 @@
       "fi": "Tarkista, mitkä relesarjat käyttävät samoja osia kuin muut ABB:n segmentit. Merkitse, missä segmentit kilpailevat samoista osista."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is analysis time.",
-      "fi": "Kustannus on analyysiaikaa."
+      "en": "It only costs analysis time.",
+      "fi": "Siitä aiheutuu vain analyysiaikaa."
      }
     }
    ]
   },
   "og_capex_easing": {
    "headline_move": {
-    "en": "review which supply agreements for oil and gas relay parts were made under scarcity, and ask suppliers what they can now offer",
-    "fi": "selvitä, mitkä öljy- ja kaasureleiden osien toimitussopimukset tehtiin niukkuuden aikana, ja kysy toimittajilta, mitä ne voivat nyt tarjota"
+    "en": "review which supply agreements for oil and gas relay parts were made under scarcity",
+    "fi": "selvitä, mitkä öljy- ja kaasureleiden osien toimitussopimukset tehtiin niukkuuden aikana"
    },
    "if_leading": {
-    "en": "the emphasis would move to using easier supply to shorten delivery times for project customers.",
+    "en": "the focus would move to using easier supply to shorten delivery times for project customers.",
     "fi": "painopiste siirtyisi helpomman saatavuuden käyttämiseen projektiasiakkaiden toimitusaikojen lyhentämiseen."
    },
    "next_action": {
     "text": {
-     "en": "Add a review of the supply agreements for oil and gas relay parts to the next S&OP meeting, and agree which signals show that supply is easing for good.",
-     "fi": "Lisää öljy- ja kaasureleiden osien toimitussopimusten tarkastelu seuraavaan S&OP-kokoukseen ja sovi, mitkä signaalit osoittavat saatavuuden helpottuneen pysyvästi."
+     "en": "Add a review of the supply agreements for oil and gas relay parts to the next S&OP review. Agree which signals show that supply is easing for good.",
+     "fi": "Lisää öljy- ja kaasureleiden osien toimitussopimusten tarkastelu seuraavaan S&OP-katselmukseen. Sovi, mitkä signaalit osoittavat saatavuuden helpottuneen pysyvästi."
     },
     "owner": {
      "en": "Component procurement lead",
@@ -316,12 +316,12 @@
       "parts_supply"
      ],
      "text": {
-      "en": "Review the supply agreements for oil and gas relay parts and note which ones were made under scarcity.",
-      "fi": "Tarkista öljy- ja kaasureleiden osien toimitussopimukset ja merkitse, mitkä tehtiin niukkuuden aikana."
+      "en": "Review the supply agreements for oil and gas relay parts. Note which ones were made under scarcity.",
+      "fi": "Tarkista öljy- ja kaasureleiden osien toimitussopimukset. Merkitse, mitkä tehtiin niukkuuden aikana."
      },
      "trigger": {
-      "en": "Activates while these keep showing easier supply: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä osoittavat saatavuuden helpottuvan: {themes}."
+      "en": "Applies while these keep showing easier supply: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä osoittavat saatavuuden helpottuvan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If supply tightens again, the review shows where the agreements still help.",
@@ -341,12 +341,12 @@
       "fi": "Tarkista, että öljy- ja kaasureleiden kokoonpanokapasiteetti pystyy seuraamaan hanketyötä ilman osien odotusta."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is a short review.",
-      "fi": "Kustannus on lyhyt tarkastelu."
+      "en": "It only needs a short review.",
+      "fi": "Se vaatii vain lyhyen tarkastelun."
      }
     },
     {
@@ -362,12 +362,12 @@
       "fi": "Sovi suunnittelutoimistojen kanssa, miten aiempia toimituspäiviä voidaan tarjota, jos osat saapuvat nopeammin."
      },
      "trigger": {
-      "en": "Activates when these move together: {themes}.",
-      "fi": "Aktivoituu, kun nämä liikkuvat yhdessä: {themes}."
+      "en": "Applies when these move together: {themes}.",
+      "fi": "Koskee tilannetta, jossa nämä liikkuvat yhdessä: {themes}."
      },
      "cost_if_wrong": {
-      "en": "If parts stay slow, the earlier dates are not offered and nothing is lost.",
-      "fi": "Jos osat pysyvät hitaina, aiempia päiviä ei tarjota eikä mitään menetetä."
+      "en": "If parts stay slow, the earlier dates are not offered. Nothing is lost.",
+      "fi": "Jos osat pysyvät hitaina, aiempia päiviä ei tarjota. Mitään ei menetetä."
      }
     },
     {
@@ -378,24 +378,24 @@
       "parts_supply"
      ],
      "text": {
-      "en": "Keep asking key suppliers for a written delivery status, so a turn back to scarcity is seen early.",
-      "fi": "Jatka kirjallisen toimitustilanteen pyytämistä keskeisiltä toimittajilta, jotta paluu niukkuuteen huomataan ajoissa."
+      "en": "Keep asking key suppliers for a written delivery status. Then a return to scarcity is seen early.",
+      "fi": "Pyydä keskeisiltä toimittajilta edelleen kirjallinen toimitustilanne. Silloin paluu niukkuuteen huomataan ajoissa."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is review time.",
-      "fi": "Kustannus on katselmusaikaa."
+      "en": "It only costs review time.",
+      "fi": "Siitä aiheutuu vain katselmusaikaa."
      }
     }
    ]
   },
   "og_price_downturn": {
    "headline_move": {
-    "en": "talk with the largest oil and gas customers about which project deliveries they plan to move, before the order book shows it",
-    "fi": "keskustele suurimpien öljy- ja kaasuasiakkaiden kanssa siitä, mitä hanketoimituksia ne aikovat siirtää, ennen kuin tilauskanta sen näyttää"
+    "en": "talk with the largest oil and gas customers about which project deliveries they plan to move",
+    "fi": "keskustele suurimpien öljy- ja kaasuasiakkaiden kanssa siitä, mitä hanketoimituksia ne aikovat siirtää"
    },
    "if_leading": {
     "en": "the emphasis would move to protecting the order book and keeping assembly work busy.",
@@ -403,8 +403,8 @@
    },
    "next_action": {
     "text": {
-     "en": "Ask the account managers of the largest oil and gas customers which project deliveries are being moved, and bring the answers to the next S&OP review.",
-     "fi": "Pyydä suurimpien öljy- ja kaasuasiakkaiden asiakasvastaavilta tieto siitä, mitä hanketoimituksia siirretään, ja tuo vastaukset seuraavaan S&OP-katselmukseen."
+     "en": "Ask the account managers of the largest oil and gas customers which project deliveries are being moved. Bring the answers to the next S&OP review.",
+     "fi": "Pyydä suurimpien öljy- ja kaasuasiakkaiden asiakasvastaavilta tieto siitä, mitä hanketoimituksia siirretään. Tuo vastaukset seuraavaan S&OP-katselmukseen."
     },
     "owner": {
      "en": "Sales lead for oil and gas with the S&OP owner",
@@ -422,11 +422,11 @@
       "capex_global"
      ],
      "text": {
-      "en": "Talk with the largest oil and gas customers about which deliveries they plan to move. Note their answers next to the signals.",
-      "fi": "Keskustele suurimpien öljy- ja kaasuasiakkaiden kanssa siitä, mitä toimituksia ne aikovat siirtää. Kirjaa vastaukset signaalien viereen."
+      "en": "Talk with the largest oil and gas customers about which deliveries they plan to move. Do this before the order book shows it. Note their answers next to the signals.",
+      "fi": "Keskustele suurimpien öljy- ja kaasuasiakkaiden kanssa siitä, mitä toimituksia ne aikovat siirtää. Tee se ennen kuin tilauskanta sen näyttää. Kirjaa vastaukset signaalien viereen."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
@@ -447,8 +447,8 @@
       "fi": "Tarkista avoimet öljy- ja kaasureleiden osien toimitussopimukset. Merkitse, mitkä voitaisiin siirtää, jos hanketilaukset viivästyvät."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If orders hold up, the review costs time only.",
@@ -468,12 +468,12 @@
       "fi": "Valmistele suunnitelma kokoonpanotyön siirtämisestä öljy- ja kaasureleistä muihin segmentteihin, jos tilaukset viivästyvät."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
-      "en": "If orders hold, the plan stays unused, but it is ready for later.",
-      "fi": "Jos tilaukset pitävät, suunnitelma jää käyttämättä, mutta on valmiina myöhempää varten."
+      "en": "If orders hold, the plan stays unused. It is ready for later.",
+      "fi": "Jos tilaukset pitävät, suunnitelma jää käyttämättä. Se on silti valmiina myöhempää varten."
      }
     },
     {
@@ -489,29 +489,29 @@
       "fi": "Sovi, mitkä hinta- ja investointisignaalit vahvistaisivat tai hylkäisivät laskutulkinnan."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is a short discussion.",
-      "fi": "Kustannus on lyhyt keskustelu."
+      "en": "It only costs a short discussion.",
+      "fi": "Siitä aiheutuu vain lyhyt keskustelu."
      }
     }
    ]
   },
   "og_electrification_push": {
    "headline_move": {
-    "en": "list the Nordic electrification projects at oil and gas sites that are close to a decision, and the relay variants each one would need",
-    "fi": "listaa Pohjoismaiden öljy- ja kaasukohteiden sähköistyshankkeet, jotka ovat lähellä päätöstä, sekä kunkin tarvitsemat releversiot"
+    "en": "list the Nordic electrification projects at oil and gas sites that are close to a decision",
+    "fi": "listaa Pohjoismaiden öljy- ja kaasukohteiden sähköistyshankkeet, jotka ovat lähellä päätöstä"
    },
    "if_leading": {
-    "en": "the emphasis would move to power-system relay variants and the Nordic project pipeline.",
+    "en": "the focus would move to power-system relay types and the Nordic project pipeline.",
     "fi": "painopiste siirtyisi sähköjärjestelmän releversioihin ja Pohjoismaiden hankevirtaan."
    },
    "next_action": {
     "text": {
-     "en": "Ask the Nordic sales team for a short list of electrification projects close to a decision, and bring it to the next S&OP review.",
-     "fi": "Pyydä Pohjoismaiden myyntitiimiltä lyhyt lista päätöstä lähellä olevista sähköistyshankkeista ja tuo se seuraavaan S&OP-katselmukseen."
+     "en": "Ask the Nordic sales team for a short list of electrification projects close to a decision. Bring it to the next S&OP review.",
+     "fi": "Pyydä Pohjoismaiden myyntitiimiltä lyhyt lista päätöstä lähellä olevista sähköistyshankkeista. Tuo se seuraavaan S&OP-katselmukseen."
     },
     "owner": {
      "en": "Nordic sales lead with the S&OP owner",
@@ -529,11 +529,11 @@
       "nordic_shelf"
      ],
      "text": {
-      "en": "List the electrification projects at Nordic oil and gas sites that are close to a decision. Note the relay variants each would need.",
+      "en": "List the electrification projects at Nordic oil and gas sites that are close to a decision. Note the relay types each would need.",
       "fi": "Listaa Pohjoismaiden öljy- ja kaasukohteiden sähköistyshankkeet, jotka ovat lähellä päätöstä. Merkitse kunkin tarvitsemat releversiot."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
@@ -550,12 +550,12 @@
       "parts_supply"
      ],
      "text": {
-      "en": "Ask suppliers which parts for power-system relay variants have the longest delivery times. Note where they compete with the needs of other segments.",
+      "en": "Ask suppliers which parts for power-system relay types have the longest delivery times. Note where they compete with the needs of other segments.",
       "fi": "Kysy toimittajilta, millä sähköjärjestelmän releversioiden osilla on pisimmät toimitusajat. Merkitse, missä ne kilpailevat muiden segmenttien tarpeiden kanssa."
      },
      "trigger": {
-      "en": "Activates when these move together: {themes}.",
-      "fi": "Aktivoituu, kun nämä liikkuvat yhdessä: {themes}."
+      "en": "Applies when these move together: {themes}.",
+      "fi": "Koskee tilannetta, jossa nämä liikkuvat yhdessä: {themes}."
      },
      "cost_if_wrong": {
       "en": "If electrification slows, the answers still inform other segments.",
@@ -571,12 +571,12 @@
       "abb_order_book"
      ],
      "text": {
-      "en": "Prepare assembly and testing capacity for power-system relay variants in case electrification orders start to arrive.",
+      "en": "Prepare assembly and test capacity for power-system relay types in case electrification orders start to arrive.",
       "fi": "Valmistele kokoonpano- ja testauskapasiteettia sähköjärjestelmän releversioille siltä varalta, että sähköistystilaukset alkavat saapua."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If orders do not arrive, the preparation sits unused for a while.",
@@ -595,20 +595,20 @@
       "fi": "Seuraa öljy- ja kaasukohteiden päästösääntöjä ja verkkoliityntäpäätöksiä. Kirjaa jokainen muutos signaalikorttien viereen."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is review time.",
-      "fi": "Kustannus on katselmusaikaa."
+      "en": "It only costs review time.",
+      "fi": "Siitä aiheutuu vain katselmusaikaa."
      }
     }
    ]
   },
   "og_steady_brownfield": {
    "headline_move": {
-    "en": "keep the current plan and check that replacement and service demand for installed relays is visible in the planning",
-    "fi": "pidä nykyinen suunnitelma ja tarkista, että asennettujen releiden uusinta- ja huoltokysyntä näkyy suunnittelussa"
+    "en": "keep the current plan and check that replacement and service demand is visible in planning",
+    "fi": "pidä nykyinen suunnitelma ja tarkista, että uusinta- ja huoltokysyntä näkyy suunnittelussa"
    },
    "if_leading": {
     "en": "the emphasis would move to replacement cycles and service work.",
@@ -616,8 +616,8 @@
    },
    "next_action": {
     "text": {
-     "en": "Ask the service team for the list of installed oil and gas relays that reach the end of their service life, and compare it with the planning.",
-     "fi": "Pyydä huoltotiimiltä lista asennetuista öljy- ja kaasureleistä, jotka lähestyvät käyttöikänsä loppua, ja vertaa sitä suunnitteluun."
+     "en": "Ask the service team for the list of installed oil and gas relays that reach the end of their service life. Compare it with the planning.",
+     "fi": "Pyydä huoltotiimiltä lista asennetuista öljy- ja kaasureleistä, jotka lähestyvät käyttöikänsä loppua. Vertaa sitä suunnitteluun."
     },
     "owner": {
      "en": "Service lead with the S&OP owner",
@@ -639,12 +639,12 @@
       "fi": "Tarkista, että asennettujen öljy- ja kaasureleiden uusinta- ja huoltokysyntä näkyy suunnittelussa."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
-      "en": "The cost is a short review.",
-      "fi": "Kustannus on lyhyt tarkastelu."
+      "en": "It only needs a short review.",
+      "fi": "Se vaatii vain lyhyen tarkastelun."
      }
     },
     {
@@ -659,12 +659,12 @@
       "fi": "Jatka toimittajien säännöllisiä tilannekatselmuksia. Kirjaa kaikki toimitusaikojen muutokset."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is review time.",
-      "fi": "Kustannus on katselmusaikaa."
+      "en": "It only costs review time.",
+      "fi": "Siitä aiheutuu vain katselmusaikaa."
      }
     },
     {
@@ -680,8 +680,8 @@
       "fi": "Sovi huoltotiimien kanssa, miten uusintatyö ajoitetaan hanketyön ympärille, jos hankekysyntä kasvaa."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If project demand stays flat, the agreement is not needed.",
@@ -700,20 +700,20 @@
       "fi": "Sovi, mitkä öljyn hinnan liikkeet saisivat tiimin arvioimaan tämän suunnitelman uudelleen."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is a short discussion.",
-      "fi": "Kustannus on lyhyt keskustelu."
+      "en": "It only costs a short discussion.",
+      "fi": "Siitä aiheutuu vain lyhyt keskustelu."
      }
     }
    ]
   },
   "og_transition_shift": {
    "headline_move": {
-    "en": "list which relay families sold to oil and gas are also used in grid and industry segments, so planning can move between segments",
-    "fi": "listaa, mitkä öljylle ja kaasulle myydyt relesarjat ovat käytössä myös verkko- ja teollisuussegmenteissä, jotta suunnittelu voi siirtyä segmentistä toiseen"
+    "en": "list the relay families used in both oil and gas and the grid or industry segments",
+    "fi": "listaa relesarjat, joita käytetään sekä öljy- ja kaasusegmentissä että verkko- tai teollisuussegmenteissä"
    },
    "if_leading": {
     "en": "the emphasis would move to sharing planning across oil and gas, grid and industry segments.",
@@ -721,8 +721,8 @@
    },
    "next_action": {
     "text": {
-     "en": "Ask product management for a list of relay families shared between oil and gas and the grid and industry segments, and bring it to the next S&OP review.",
-     "fi": "Pyydä tuotehallinnolta lista relesarjoista, jotka ovat yhteisiä öljy- ja kaasu- sekä verkko- ja teollisuussegmenteille, ja tuo se seuraavaan S&OP-katselmukseen."
+     "en": "Ask product management for a list of relay families shared between oil and gas and the grid and industry segments. Bring it to the next S&OP review.",
+     "fi": "Pyydä tuotehallinnolta lista relesarjoista, jotka ovat yhteisiä öljy- ja kaasu- sekä verkko- ja teollisuussegmenteille. Tuo se seuraavaan S&OP-katselmukseen."
     },
     "owner": {
      "en": "Product management lead with the S&OP owner",
@@ -744,12 +744,12 @@
       "fi": "Listaa, mitkä öljylle ja kaasulle myydyt relesarjat ovat käytössä myös verkko- ja teollisuussegmenteissä."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
-      "en": "The cost is analysis time.",
-      "fi": "Kustannus on analyysiaikaa."
+      "en": "It only costs analysis time.",
+      "fi": "Siitä aiheutuu vain analyysiaikaa."
      }
     },
     {
@@ -765,8 +765,8 @@
       "fi": "Tarkista osat, jotka on varattu vain öljy- ja kaasuversioille. Merkitse, mitkä voisivat palvella muita segmenttejä."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If oil and gas demand holds, the review still shows where parts are tied up.",
@@ -782,12 +782,12 @@
       "electrification"
      ],
      "text": {
-      "en": "Talk with the segment owners for grid and industry about shared planning, in case oil and gas orders keep falling.",
-      "fi": "Keskustele verkko- ja teollisuussegmenttien vastaavien kanssa yhteisestä suunnittelusta siltä varalta, että öljyn ja kaasun tilaukset jatkavat laskuaan."
+      "en": "Talk with the segment owners for grid and industry about shared planning. Do this in case oil and gas orders keep falling.",
+      "fi": "Keskustele verkko- ja teollisuussegmenttien vastaavien kanssa yhteisestä suunnittelusta. Tee se siltä varalta, että öljyn ja kaasun tilaukset jatkavat laskuaan."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If oil and gas orders hold, the talks were early but not wasted.",
@@ -806,20 +806,20 @@
       "fi": "Seuraa investointien jakautumista fossiilisen ja puhtaan energian kesken. Kirjaa muutokset signaalikorttien viereen."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is review time.",
-      "fi": "Kustannus on katselmusaikaa."
+      "en": "It only costs review time.",
+      "fi": "Siitä aiheutuu vain katselmusaikaa."
      }
     }
    ]
   },
   "og_shock_rush": {
    "headline_move": {
-    "en": "check how much of the recent order growth comes from customers ordering ahead of need, before supply plans are built on it",
-    "fi": "tarkista, kuinka suuri osa viimeaikaisesta tilauskasvusta tulee asiakkailta, jotka tilaavat tarpeen edelle, ennen kuin toimitussuunnitelmia rakennetaan sen varaan"
+    "en": "check how much of the recent order growth comes from customers ordering ahead of need",
+    "fi": "tarkista, kuinka suuri osa viimeaikaisesta tilauskasvusta tulee asiakkailta, jotka tilaavat tarpeen edelle"
    },
    "if_leading": {
     "en": "the emphasis would move to separating real end demand from precautionary orders.",
@@ -827,8 +827,8 @@
    },
    "next_action": {
     "text": {
-     "en": "Ask sales operations for the changes and cancellations of frame orders in oil and gas, and bring them to the next S&OP review.",
-     "fi": "Pyydä myynnin operatiiviselta tiimiltä öljyn ja kaasun puitetilausten muutokset ja peruutukset ja tuo ne seuraavaan S&OP-katselmukseen."
+     "en": "Ask sales operations for the changes and cancellations of frame orders in oil and gas. Bring them to the next S&OP review.",
+     "fi": "Pyydä myynnin operatiiviselta tiimiltä öljyn ja kaasun puitetilausten muutokset ja peruutukset. Tuo ne seuraavaan S&OP-katselmukseen."
     },
     "owner": {
      "en": "Sales operations lead with the S&OP owner",
@@ -850,12 +850,12 @@
       "fi": "Tarkista, kuinka suuri osa viimeaikaisesta tilauskasvusta tulee asiakkailta, jotka tilaavat tarpeen edelle. Käytä näyttönä tilausmuutoksia ja peruutuksia."
      },
      "trigger": {
-      "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
-      "fi": "Koskee kaikkia skenaarioita; tarkistettavaa ohjaavat nämä signaalit: {themes}."
+      "en": "Applies in every scenario. Signals to check: {themes}.",
+      "fi": "Koskee kaikkia skenaarioita. Tarkistettavat signaalit: {themes}."
      },
      "cost_if_wrong": {
-      "en": "The cost is analysis time.",
-      "fi": "Kustannus on analyysiaikaa."
+      "en": "It only costs analysis time.",
+      "fi": "Siitä aiheutuu vain analyysiaikaa."
      }
     },
     {
@@ -867,12 +867,12 @@
       "oil_price"
      ],
      "text": {
-      "en": "Ask key suppliers for a written delivery status. Keep supply plans tied to confirmed end demand while the rush continues.",
-      "fi": "Pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne. Pidä toimitussuunnitelmat sidottuina vahvistettuun loppukysyntään, kunnes ryntäys on ohi."
+      "en": "Ask key suppliers for a written delivery status. Keep supply plans tied to confirmed end demand while the rush lasts.",
+      "fi": "Pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne. Sido toimitussuunnitelmat vahvistettuun loppukysyntään, kunnes ryntäys on ohi."
      },
      "trigger": {
-      "en": "Activates when these move together: {themes}.",
-      "fi": "Aktivoituu, kun nämä liikkuvat yhdessä: {themes}."
+      "en": "Applies when these move together: {themes}.",
+      "fi": "Koskee tilannetta, jossa nämä liikkuvat yhdessä: {themes}."
      },
      "cost_if_wrong": {
       "en": "If the rush fades fast, the plans stay careful a little longer than needed.",
@@ -888,16 +888,16 @@
       "gas_projects"
      ],
      "text": {
-      "en": "Agree which customers and projects get priority if parts stay scarce, before the rush turns it into a dispute.",
-      "fi": "Sovi, mitkä asiakkaat ja hankkeet saavat etusijan, jos osat pysyvät niukkoina, ennen kuin ryntäys tekee siitä kiistan."
+      "en": "Agree which customers and projects get priority if parts stay scarce. Do this before the rush turns it into a dispute.",
+      "fi": "Sovi, mitkä asiakkaat ja hankkeet saavat etusijan, jos osat pysyvät niukkoina. Tee se ennen kuin ryntäys tekee siitä kiistan."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
-      "en": "If parts ease, the priority rule is not needed, but it costs little to keep ready.",
-      "fi": "Jos osat helpottuvat, etusijasääntöä ei tarvita, mutta sen pitäminen valmiina maksaa vähän."
+      "en": "If parts ease, the priority rule is not needed. It costs little to keep ready.",
+      "fi": "Jos osat helpottuvat, etusijasääntöä ei tarvita. Sen pitäminen valmiina maksaa vähän."
      }
     },
     {
@@ -908,24 +908,24 @@
       "abb_order_book"
      ],
      "text": {
-      "en": "Talk with large distributors and engineering firms about their own stock and how firm their orders are.",
-      "fi": "Keskustele suurten jakelijoiden ja suunnittelutoimistojen kanssa niiden omista varastoista ja siitä, kuinka varmoja niiden tilaukset ovat."
+      "en": "Talk with large distributors and engineering firms about their own stock. Ask how firm their orders are.",
+      "fi": "Keskustele suurten jakelijoiden ja suunnittelutoimistojen kanssa niiden omista varastoista. Kysy, kuinka varmoja niiden tilaukset ovat."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
-      "en": "The cost is some customer time, and the answers help in any case.",
-      "fi": "Kustannus on hieman asiakkaiden aikaa, ja vastauksista on hyötyä joka tapauksessa."
+      "en": "It costs some customer time. The answers help in any case.",
+      "fi": "Siitä aiheutuu hieman asiakkaiden aikaa. Vastauksista on hyötyä joka tapauksessa."
      }
     }
    ]
   },
   "og_inventory_correction": {
    "headline_move": {
-    "en": "ask customers and distributors how firm their open orders are, and review supply agreements that were made at the peak",
-    "fi": "kysy asiakkailta ja jakelijoilta, kuinka varmoja niiden avoimet tilaukset ovat, ja tarkista huipulla tehdyt toimitussopimukset"
+    "en": "ask customers and distributors how firm their open orders are",
+    "fi": "kysy asiakkailta ja jakelijoilta, kuinka varmoja niiden avoimet tilaukset ovat"
    },
    "if_leading": {
     "en": "the emphasis would move to protecting the order book and handling surplus parts.",
@@ -933,8 +933,8 @@
    },
    "next_action": {
     "text": {
-     "en": "Ask sales operations and the main distributors which open oil and gas orders are firm, and bring the answers to the next S&OP review.",
-     "fi": "Pyydä myynnin operatiiviselta tiimiltä ja keskeisiltä jakelijoilta tieto siitä, mitkä avoimet öljy- ja kaasutilaukset ovat varmoja, ja tuo vastaukset seuraavaan S&OP-katselmukseen."
+     "en": "Ask sales operations and the main distributors which open oil and gas orders are firm. Bring the answers to the next S&OP review.",
+     "fi": "Pyydä myynnin operatiiviselta tiimiltä ja keskeisiltä jakelijoilta tieto siitä, mitkä avoimet öljy- ja kaasutilaukset ovat varmoja. Tuo vastaukset seuraavaan S&OP-katselmukseen."
     },
     "owner": {
      "en": "Sales operations lead with the S&OP owner",
@@ -956,7 +956,7 @@
       "fi": "Tarkista ryntäyksen aikana tehdyt toimitussopimukset. Merkitse, mitkä jättävät varaa ajoituksen muuttamiseen."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
@@ -976,12 +976,12 @@
       "fi": "Kysy suurilta jakelijoilta ja suunnittelutoimistoilta, kuinka paljon niillä on varastoa ja kuinka varmoja niiden avoimet tilaukset ovat."
      },
      "trigger": {
-      "en": "Stays valid while these keep confirming the reading: {themes}. Read it again if they turn.",
+      "en": "Holds while these keep confirming the reading: {themes}. Review it again if they turn.",
       "fi": "Pätee niin kauan kuin nämä vahvistavat tulkinnan: {themes}. Arvioi uudelleen, jos ne kääntyvät."
      },
      "cost_if_wrong": {
-      "en": "The cost is some customer time.",
-      "fi": "Kustannus on hieman asiakkaiden aikaa."
+      "en": "It only costs some customer time.",
+      "fi": "Siitä aiheutuu vain hieman asiakkaiden aikaa."
      }
     },
     {
@@ -997,8 +997,8 @@
       "fi": "Valmistaudu siirtämään kokoonpanotyötä muille relelinjoille, jos avoimia tilauksia siirretään myöhemmäksi."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If orders hold, the preparation sits unused for a while.",
@@ -1018,8 +1018,8 @@
       "fi": "Sovi myyntitiimien kanssa, miten kysynnän uusi nousu hoidettaisiin sen jälkeen, kun varastot on käytetty."
      },
      "trigger": {
-      "en": "Activates while these keep their direction: {themes}.",
-      "fi": "Aktivoituu niin kauan kuin nämä pysyvät suunnassaan: {themes}."
+      "en": "Applies while these keep their direction: {themes}.",
+      "fi": "Koskee niin kauan kuin nämä pysyvät suunnassaan: {themes}."
      },
      "cost_if_wrong": {
       "en": "If demand stays low, the agreement is not needed.",

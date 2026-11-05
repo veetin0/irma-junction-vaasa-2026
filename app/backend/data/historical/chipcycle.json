@@ -1,0 +1,1430 @@
+{
+ "meta": {
+  "id": "chipcycle",
+  "version": 1,
+  "title": {
+   "en": "Historical data: the 2021-2023 semiconductor cycle",
+   "fi": "Vanha data: puolijohdesykli 2021-2023"
+  },
+  "label": {
+   "en": "Illustrative comparison, not validation and not a forecast.",
+   "fi": "Havainnollistava vertailu, ei validointia eikä ennuste."
+  },
+  "reference_date": "2023-07-01",
+  "reference_date_label": "ASSUMPTION: the latest snapshot date serves as the world's reference date.",
+  "schema": "Each card has the same fields as data/worlds/1/signals.json plus optional excerpt_kind ('quote' or 'paraphrase') and date_note. observed_at is the publication date of the source. Evidence entries carry observed_at (= source.date); a snapshot may use an evidence entry only if observed_at <= as_of. snapshot_index lists, per snapshot, the card and evidence ids known on that date.",
+  "snapshot_choice": "ASSUMPTION: half-yearly snapshots. Each interval holds one phase of the cycle (shortage building, peak sales and first inventory warnings, memory prices turning, destocking, trough) and adds 3-6 cards.",
+  "data_labels": "Every card value is SOURCE (URL given); no DEMODATA or invented number is used. Lead times in months, strength, axes and reliability are ASSUMPTION-labelled judgement, as in world 1."
+ },
+ "snapshots": [
+  "2021-07-01",
+  "2022-01-01",
+  "2022-07-01",
+  "2023-01-01",
+  "2023-07-01"
+ ],
+ "snapshot_index": [
+  {
+   "as_of": "2021-07-01",
+   "card_ids": [
+    "HS-001",
+    "HS-002",
+    "HS-003",
+    "HS-004"
+   ],
+   "evidence_ids": [
+    "HCE-009"
+   ],
+   "note": {
+    "en": "Shortage building: fire at a large automotive microcontroller fab, record lead times, large capacity plans.",
+    "fi": "Pula kasvaa: suuren autoteollisuuden mikrokontrollilaitoksen tulipalo, ennätykselliset toimitusajat ja laajat kapasiteettisuunnitelmat."
+   }
+  },
+  {
+   "as_of": "2022-01-01",
+   "card_ids": [
+    "HS-001",
+    "HS-002",
+    "HS-003",
+    "HS-004",
+    "HS-005",
+    "HS-006",
+    "HS-007",
+    "HS-008"
+   ],
+   "evidence_ids": [
+    "HCE-001",
+    "HCE-002",
+    "HCE-003",
+    "HCE-009"
+   ],
+   "note": {
+    "en": "Peak sales and first inventory warnings at buyers.",
+    "fi": "Myynnin huippu ja ostajien ensimmäiset varastovaroitukset."
+   }
+  },
+  {
+   "as_of": "2022-07-01",
+   "card_ids": [
+    "HS-001",
+    "HS-002",
+    "HS-003",
+    "HS-004",
+    "HS-005",
+    "HS-006",
+    "HS-007",
+    "HS-008",
+    "HS-009",
+    "HS-010",
+    "HS-011"
+   ],
+   "evidence_ids": [
+    "HCE-001",
+    "HCE-002",
+    "HCE-003",
+    "HCE-009",
+    "HCE-010"
+   ],
+   "note": {
+    "en": "Memory prices turn down; policy responses announced.",
+    "fi": "Muistihinnat kääntyvät laskuun; poliittiset vastatoimet julkistettu."
+   }
+  },
+  {
+   "as_of": "2023-01-01",
+   "card_ids": [
+    "HS-001",
+    "HS-002",
+    "HS-003",
+    "HS-004",
+    "HS-005",
+    "HS-006",
+    "HS-007",
+    "HS-008",
+    "HS-009",
+    "HS-010",
+    "HS-011",
+    "HS-012",
+    "HS-013",
+    "HS-014",
+    "HS-015",
+    "HS-016"
+   ],
+   "evidence_ids": [
+    "HCE-001",
+    "HCE-002",
+    "HCE-003",
+    "HCE-004",
+    "HCE-005",
+    "HCE-006",
+    "HCE-009",
+    "HCE-010"
+   ],
+   "note": {
+    "en": "Destocking: prices, lead times and supplier output all falling.",
+    "fi": "Varastojen purku: hinnat, toimitusajat ja toimittajien tuotanto laskevat."
+   }
+  },
+  {
+   "as_of": "2023-07-01",
+   "card_ids": [
+    "HS-001",
+    "HS-002",
+    "HS-003",
+    "HS-004",
+    "HS-005",
+    "HS-006",
+    "HS-007",
+    "HS-008",
+    "HS-009",
+    "HS-010",
+    "HS-011",
+    "HS-012",
+    "HS-013",
+    "HS-014",
+    "HS-015",
+    "HS-016",
+    "HS-017",
+    "HS-018"
+   ],
+   "evidence_ids": [
+    "HCE-001",
+    "HCE-002",
+    "HCE-003",
+    "HCE-004",
+    "HCE-005",
+    "HCE-006",
+    "HCE-007",
+    "HCE-008",
+    "HCE-009",
+    "HCE-010"
+   ],
+   "note": {
+    "en": "Sales trough with AI-driven data-centre demand as the counter-trend.",
+    "fi": "Myynnin pohja, vastavoimana tekoälyn vauhdittama datakeskuskysyntä."
+   }
+  }
+ ],
+ "cards": [
+  {
+   "id": "HS-001",
+   "name": "Renesas Naka plant fire: about 100 days to restart (automotive microcontrollers)",
+   "short": "Renesas Naka fire, 100-day restart",
+   "category": "supply",
+   "measures": "supply_tightness",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: a fab outage reaches customers' lines within one to two quarters through lost output and allocation.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "Embedded Computing Design, Renesas fire worse than anticipated, 3-month restart prompts production cuts at Toyota, Nissan",
+    "url": "https://embeddedcomputing.com/technology/analog-and-power/renesas-fire-worse-than-anticipated-3-month-restart-prompts-production-cuts-at-toyota-nissan",
+    "access": "Public trade press, free",
+    "date": "2021-03-31"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.6,
+   "observed_at": "2021-03-31",
+   "classification": "cyclical",
+   "classification_rationale": "A single-site outage: it shifts delivery dates for a few quarters and does not change long-run demand or capacity.",
+   "value": {
+    "number": 100,
+    "unit": "days",
+    "label": "Renesas' estimate (as of 2021-03-31) to recover the clean room and resume operations after the 2021-03-19 fire at the Naka N3 300 mm line; Renesas holds about 30% of the world's automotive MCU supply"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Fire on 2021-03-19 at Renesas' Naka factory. Renesas projected on 2021-03-31 that about 100 days were needed to recover the clean room and restart. About two thirds of the affected 300 mm line served the automotive market.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public; cite the publisher.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "news",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": 0.7,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.2
+   },
+   "short_fi": "Renesasin Naka-tehtaan tulipalo: noin 100 päivän uudelleenkäynnistys",
+   "date_note": "Date taken from the search summary 'as of March 31, 2021'; the fire itself was on 2021-03-19."
+  },
+  {
+   "id": "HS-002",
+   "name": "TSMC: USD 100 billion over three years for capacity, R&D and advanced technologies",
+   "short": "TSMC USD 100 bn capacity plan",
+   "category": "supply",
+   "measures": "supply_tightness",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "leading",
+   "lead_months": 24,
+   "lead_months_rationale": "[ASSUMPTION: new fab capacity needs about two years from capital commitment to volume output.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "TSMC Form 6-K, 2021-04-01 (US Securities and Exchange Commission filing)",
+    "url": "https://www.sec.gov/Archives/edgar/data/1046179/000156459021017172/tsm-6k_20210401.htm",
+    "access": "Public SEC filing, free",
+    "date": "2021-04-01"
+   },
+   "reliability": "A",
+   "direction": -1,
+   "strength": 0.6,
+   "observed_at": "2021-04-01",
+   "classification": "structural",
+   "classification_rationale": "A multi-year capital commitment by the largest foundry; it eases supply over years, not quarters.",
+   "value": {
+    "number": 100,
+    "unit": "USD bn",
+    "label": "planned investment over the next three years to increase capacity and for advanced-technology R&D, announced 2021-04-01"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "TSMC announced on 2021-04-01 that it would invest USD 100 billion over the next three years to increase capacity and support advanced-technology manufacturing and R&D, citing strong demand from 5G and high-performance computing.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public SEC filing; cite TSMC.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "contract",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.3,
+    "supply": -0.4,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "TSMC: 100 mrd USD kapasiteettiin ja tutkimukseen kolmessa vuodessa"
+  },
+  {
+   "id": "HS-003",
+   "name": "SIA: global semiconductor sales USD 123.1 billion in Q1 2021, up 17.8% on Q1 2020",
+   "short": "SIA global chip sales Q1 2021",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: monthly sales are reported with a lag and follow orders by a few months.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "Semiconductor Industry Association, Q1 global semiconductor sales increase 3.6% over previous quarter",
+    "url": "https://www.semiconductors.org/q1-global-semiconductor-sales-increase-3-6-over-previous-quarter/",
+    "access": "Public press release, free",
+    "date": "2021-05-04"
+   },
+   "reliability": "A",
+   "direction": 1,
+   "strength": 0.6,
+   "observed_at": "2021-05-04",
+   "classification": "cyclical",
+   "classification_rationale": "Industry sales follow the electronics cycle and reverse with inventories and orders.",
+   "value": {
+    "number": 123.1,
+    "unit": "USD bn",
+    "label": "worldwide semiconductor sales in Q1 2021, +3.6% on Q4 2020 and +17.8% on Q1 2020; March 2021 USD 41.0 bn"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Worldwide semiconductor sales totalled USD 123.1 billion in Q1 2021, 3.6% more than the previous quarter and 17.8% more than Q1 2020. March sales were USD 41.0 billion.",
+   "excerpt_kind": "paraphrase",
+   "history": [
+    {
+     "date": "2021-03-31",
+     "value": 123.1
+    }
+   ],
+   "history_label": "SOURCE",
+   "history_note": "Q1 2021 total from the SIA release (same value as the card).",
+   "usage_restrictions": "Public; cite SIA.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "research",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.6,
+    "supply": 0.2,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "SIA: puolijohteiden maailmanmyynti 1. neljänneksellä 2021, 123,1 mrd USD",
+   "date_note": "Date taken from the Digitimes reprint of the SIA release (2021-05-04)."
+  },
+  {
+   "id": "HS-004",
+   "name": "Susquehanna: average chip lead time 17 weeks in April 2021, the longest since its data began in 2017",
+   "short": "Chip lead time 17 weeks (Apr 2021)",
+   "category": "supply",
+   "measures": "supply_tightness",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 4,
+   "lead_months_rationale": "[ASSUMPTION: lead times lengthen first and then trigger advance ordering one to two quarters later.]",
+   "update_frequency": "monthly",
+   "source": {
+    "name": "The Star (Bloomberg), Chip crisis in 'danger zone' as wait times reach new record",
+    "url": "https://www.thestar.com.my/tech/tech-news/2021/05/19/chip-crisis-in-danger-zone-as-wait-times-reach-new-record",
+    "access": "Public news article, free; underlying data is a paid Susquehanna index",
+    "date": "2021-05-18"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.85,
+   "observed_at": "2021-05-18",
+   "classification": "cyclical",
+   "classification_rationale": "Lead times rise and fall with the order cycle; the level does not describe structural demand.",
+   "value": {
+    "number": 17,
+    "unit": "weeks",
+    "label": "average order-to-delivery time for semiconductors in April 2021 (Susquehanna); NXP over 22 weeks, STMicroelectronics over 28 weeks, power management 23.7 weeks"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Susquehanna Financial Group reported on 2021-05-18 that the average lead time from order to delivery was 17 weeks in April 2021, the longest since it began collecting data in 2017. NXP was above 22 weeks and STMicroelectronics above 28 weeks.",
+   "excerpt_kind": "paraphrase",
+   "history": [
+    {
+     "date": "2021-04-30",
+     "value": 17
+    }
+   ],
+   "history_label": "SOURCE",
+   "history_note": "April 2021 average from the cited article; the series continues on HS-013.",
+   "usage_restrictions": "Press summary of a paid index; quote with attribution.",
+   "counter_evidence": [
+    "HCE-009"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "price",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": 0.9,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.3
+   },
+   "short_fi": "Susquehanna: puolijohteiden keskimääräinen toimitusaika 17 viikkoa huhtikuussa 2021"
+  },
+  {
+   "id": "HS-005",
+   "name": "AlixPartners: chip shortage to cost the auto industry USD 210 billion of revenue in 2021, up from USD 110 billion in May",
+   "short": "Auto revenue lost to shortage USD 210 bn",
+   "category": "supply",
+   "measures": "supply_tightness",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: forecast revisions track the shortage as it is felt in production, with little lead.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "AlixPartners press release, shortages related to semiconductors to cost the auto industry USD 210 billion in revenues this year",
+    "url": "https://www.alixpartners.com/media-center/press-releases/press-release-shortages-related-to-semiconductors-to-cost-the-auto-industry-210-billion-in-revenues-this-year-says-new-alixpartners-forecast/",
+    "access": "Public press release, free",
+    "date": "2021-09-23"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.7,
+   "observed_at": "2021-09-23",
+   "classification": "cyclical",
+   "classification_rationale": "A consultancy forecast of lost output during a shortage; it shrinks when supply recovers.",
+   "value": {
+    "number": 210,
+    "unit": "USD bn",
+    "label": "forecast revenue lost by the global auto industry in 2021 due to semiconductor shortages (May forecast USD 110 bn); 7.7 million vehicles lost (May: 3.9 million)"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "AlixPartners forecast on 2021-09-23 that semiconductor shortages would cost the global auto industry USD 210 billion in revenue in 2021, against USD 110 billion in its May forecast, and 7.7 million lost vehicles against 3.9 million.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public press release; cite AlixPartners (a consultancy forecast, not measured data).",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "research",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.3,
+    "supply": 0.8,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.3
+   },
+   "short_fi": "AlixPartners: sirupula maksaa autoteollisuudelle 210 mrd USD liikevaihtoa vuonna 2021"
+  },
+  {
+   "id": "HS-006",
+   "name": "TrendForce: DRAM contract prices to decline 3-8% QoQ in 4Q21 as client inventory rises; cloud providers hold over eight weeks of server DRAM",
+   "short": "DRAM prices down in 4Q21, inventory building",
+   "category": "bullwhip",
+   "measures": "intermediary",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "leading",
+   "lead_months": 6,
+   "lead_months_rationale": "[ASSUMPTION: inventory build at buyers precedes order cuts and price declines by one to three quarters.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "TrendForce, DRAM prices projected to decline by 3-8% QoQ in 4Q21 due to rising level of client inventory",
+    "url": "https://www.trendforce.com/presscenter/news/20210922-10947.html",
+    "access": "Public press release; full price data is a paid subscription",
+    "date": "2021-09-22"
+   },
+   "reliability": "A",
+   "direction": -1,
+   "strength": 0.7,
+   "observed_at": "2021-09-22",
+   "classification": "cyclical",
+   "classification_rationale": "Memory prices and buyer inventories are the most cyclical part of the chain; the second derivative turns before the level does.",
+   "value": {
+    "number": -7.5,
+    "unit": "% QoQ",
+    "label": "PC DRAM contract prices forecast -5 to -10% in 4Q21 (midpoint -7.5); server DRAM 0 to -5%; cloud providers in North America and China hold more than eight weeks of server DRAM inventory"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Cloud service providers in North America and China maintain 'more than eight weeks' worth of server DRAM inventory', with some holding 'more than 10 weeks'; server DRAM is expected to 'undergo a decline for the first time this year in 4Q21'.",
+   "excerpt_kind": "quote",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Press-release figures may be quoted with attribution.",
+   "counter_evidence": [
+    "HCE-003"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "price",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": -0.3,
+    "policy": 0.0,
+    "price": -0.4,
+    "nordic": 0.0,
+    "bullwhip": 0.7
+   },
+   "short_fi": "TrendForce: DRAM-hinnat laskuun 4. neljänneksellä 2021, varastot kasvavat"
+  },
+  {
+   "id": "HS-007",
+   "name": "SIA: global semiconductor sales USD 144.8 billion in Q3 2021, up 27.6% on a year earlier",
+   "short": "SIA global chip sales Q3 2021",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: monthly sales are reported with a lag and follow orders by a few months.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "Semiconductor Industry Association, Q3 global semiconductor sales increase 27.6% year-to-year",
+    "url": "https://www.semiconductors.org/q3-global-semiconductor-sales-increase-27-6-year-to-year/",
+    "access": "Public press release, free",
+    "date": "2021-11-01"
+   },
+   "reliability": "A",
+   "direction": 1,
+   "strength": 0.7,
+   "observed_at": "2021-11-01",
+   "classification": "cyclical",
+   "classification_rationale": "Industry sales follow the electronics cycle and reverse with inventories and orders.",
+   "value": {
+    "number": 144.8,
+    "unit": "USD bn",
+    "label": "worldwide semiconductor sales in Q3 2021, +27.6% on Q3 2020 and +7.4% on Q2 2021; more units shipped than in any earlier quarter"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Worldwide semiconductor sales were USD 144.8 billion in Q3 2021, 27.6% more than a year earlier and 7.4% more than Q2 2021. More units shipped than in any other quarter on record.",
+   "excerpt_kind": "paraphrase",
+   "history": [
+    {
+     "date": "2021-03-31",
+     "value": 123.1
+    },
+    {
+     "date": "2021-09-30",
+     "value": 144.8
+    }
+   ],
+   "history_label": "SOURCE",
+   "history_note": "Q1 2021 from HS-003 and Q3 2021 from this release, both SIA.",
+   "usage_restrictions": "Public; cite SIA.",
+   "counter_evidence": [
+    "HCE-001"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "research",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.7,
+    "supply": 0.2,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "SIA: puolijohteiden maailmanmyynti 3. neljänneksellä 2021, 144,8 mrd USD",
+   "date_note": "Date taken from the Digitimes reprint of the SIA release (2021-11-01)."
+  },
+  {
+   "id": "HS-008",
+   "name": "Dell'Oro: data-centre spending by hyperscale cloud providers forecast to surge 30% in 2022",
+   "short": "Hyperscale data-centre capex +30% in 2022 (forecast)",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "datacenter",
+   "type": "leading",
+   "lead_months": 18,
+   "lead_months_rationale": "[ASSUMPTION: capex forecasts precede the electrical fit-out of new sites by one to two years.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "Dell'Oro Group, Spending for the hyperscale cloud service providers to surge 30 percent in 2022",
+    "url": "https://www.delloro.com/news/spending-for-the-hyperscale-cloud-service-providers-to-surge-30-percent-in-2022/",
+    "access": "Public press release; full report is a paid subscription",
+    "date": "2021-12-14"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.8,
+   "observed_at": "2021-12-14",
+   "classification": "mixed",
+   "classification_rationale": "A multi-year build-out of cloud capacity (structural) delivered through a yearly capex plan that is revised each quarter (cyclical).",
+   "value": {
+    "number": 30,
+    "unit": "% (forecast)",
+    "label": "forecast growth of hyperscale cloud providers' data-centre spending in 2022"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "'data center spending for the hyperscale cloud service providers is forecast to surge by 30 percent in 2022'; 'We also anticipate the supply chain constraints to start easing next year'.",
+   "excerpt_kind": "quote",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Press-release figures may be quoted with attribution.",
+   "counter_evidence": [
+    "HCE-002",
+    "HCE-004"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "research",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.8,
+    "supply": -0.2,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "Dell'Oro: hyperskaalaajien datakeskusinvestoinnit kasvavat 30 % vuonna 2022"
+  },
+  {
+   "id": "HS-009",
+   "name": "European Commission proposes the Chips Act: more than EUR 43 billion of public and private investment",
+   "short": "EU Chips Act proposal, EUR 43 bn",
+   "category": "policy",
+   "measures": "policy",
+   "region": "EU",
+   "segment": "components",
+   "type": "leading",
+   "lead_months": 36,
+   "lead_months_rationale": "[ASSUMPTION: legislation, state-aid approval and fab construction take years before output changes.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "European Commission press release IP/22/729, European Chips Act",
+    "url": "https://ec.europa.eu/commission/presscorner/api/files/document/print/en/ip_22_729/ip_22_729_en.pdf",
+    "access": "Public press release (PDF), free",
+    "date": "2022-02-08"
+   },
+   "reliability": "A",
+   "direction": 1,
+   "strength": 0.5,
+   "observed_at": "2022-02-08",
+   "classification": "structural",
+   "classification_rationale": "A regulatory framework meant to change Europe's semiconductor capacity over a decade.",
+   "value": {
+    "number": 43,
+    "unit": "EUR bn",
+    "label": "public and private investment the proposed Chips Act aims to mobilise, with measures to prevent, prepare for, anticipate and respond to supply-chain disruption"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "On 2022-02-08 the Commission proposed the Chips Act, which aims to mobilise more than EUR 43 billion of public and private investment and sets measures to prevent, prepare, anticipate and swiftly respond to supply-chain disruptions.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public; cite the publisher.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "policy",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": -0.3,
+    "policy": 0.6,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "EU:n komissio ehdottaa sirulakia: yli 43 mrd EUR julkisia ja yksityisiä investointeja"
+  },
+  {
+   "id": "HS-010",
+   "name": "Microsoft announces a new datacenter region in southern Finland (Espoo, Kirkkonummi, Vihti), with waste heat to district heating",
+   "short": "Microsoft datacenter region in southern Finland",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "FI",
+   "segment": "datacenter",
+   "type": "leading",
+   "lead_months": 30,
+   "lead_months_rationale": "[ASSUMPTION: an announced region precedes site construction by one to two years and energisation by two to four years.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "ITPro, Microsoft's new data centre will heat homes and businesses in Finland",
+    "url": "https://www.itpro.com/server-storage/data-centres/367088/microsoft-data-centre-to-heat-homes-and-businesses-in-finland",
+    "access": "Public news article, free",
+    "date": "2022-03-17"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.7,
+   "observed_at": "2022-03-17",
+   "classification": "structural",
+   "classification_rationale": "A multi-year hyperscaler programme with a district-heating partner; timing is uncertain, direction is not.",
+   "value": {
+    "number": 1,
+    "unit": "datacenter region",
+    "label": "new Microsoft datacenter region in southern Finland, announced 2022-03-17 and described as the largest single ICT investment in Finland to date; the cited article gives no amount"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Microsoft announced on 2022-03-17 a datacenter region in southern Finland and a collaboration with Fortum to convert waste heat into district heating for Espoo and Kauniainen; the project was described as the largest single ICT investment in Finland to date.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public; cite the publisher.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "news",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.6,
+    "supply": 0.0,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.8,
+    "bullwhip": 0.0
+   },
+   "short_fi": "Microsoft: uusi datakeskusalue Etelä-Suomeen (Espoo, Kirkkonummi, Vihti)",
+   "date_note": "Announcement date 2022-03-17 from the search summary; the article's own publication date was not checked."
+  },
+  {
+   "id": "HS-011",
+   "name": "TrendForce: DRAM prices to fall 3-8% in 3Q22 as weak demand and rising inventory pressure suppliers",
+   "short": "DRAM prices down in 3Q22",
+   "category": "bullwhip",
+   "measures": "intermediary",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "leading",
+   "lead_months": 6,
+   "lead_months_rationale": "[ASSUMPTION: inventory build at buyers precedes order cuts and price declines by one to three quarters.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "TrendForce, Demand remains weak as inventories continue moving higher, DRAM pricing forecast to drop by 3-8% in 3Q22",
+    "url": "https://trendforce.com/presscenter/news/20220620-11264.html",
+    "access": "Public press release; full price data is a paid subscription",
+    "date": "2022-06-20"
+   },
+   "reliability": "A",
+   "direction": -1,
+   "strength": 0.75,
+   "observed_at": "2022-06-20",
+   "classification": "cyclical",
+   "classification_rationale": "Memory prices and buyer inventories are the most cyclical part of the chain.",
+   "value": {
+    "number": -5.5,
+    "unit": "% QoQ",
+    "label": "PC DRAM contract prices forecast -3 to -8% in 3Q22 (midpoint -5.5); server DRAM 0 to -5%; suppliers under revenue and inventory pressure"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "TrendForce forecast on 2022-06-20 that PC DRAM prices would fall 3-8% and server DRAM 0-5% in 3Q22 on weak demand and rising inventory; suppliers were seeking to settle some orders before the end of June to reduce inventory.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Press-release figures may be quoted with attribution.",
+   "counter_evidence": [
+    "HCE-010"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "price",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": -0.5,
+    "policy": 0.0,
+    "price": -0.6,
+    "nordic": 0.0,
+    "bullwhip": 0.6
+   },
+   "short_fi": "TrendForce: DRAM-hinnat laskuun 3. neljänneksellä 2022"
+  },
+  {
+   "id": "HS-012",
+   "name": "US CHIPS and Science Act signed: USD 52.7 billion for semiconductor research, manufacturing and workforce",
+   "short": "US CHIPS Act, USD 52.7 bn",
+   "category": "policy",
+   "measures": "policy",
+   "region": "US",
+   "segment": "components",
+   "type": "leading",
+   "lead_months": 36,
+   "lead_months_rationale": "[ASSUMPTION: subsidy awards and fab construction take years before output changes.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "White House fact sheet: CHIPS and Science Act will lower costs, create jobs, strengthen supply chains and counter China (reprint)",
+    "url": "https://iconnect007.com/article/132963/fact-sheet-chips-and-science-act-will-lower-costs-create-jobs-strengthen-supply-chains-and-counter-china/132966/flex",
+    "access": "Public fact sheet reprinted by I-Connect007, free",
+    "date": "2022-08-09"
+   },
+   "reliability": "B",
+   "direction": 1,
+   "strength": 0.5,
+   "observed_at": "2022-08-09",
+   "classification": "structural",
+   "classification_rationale": "A law that funds domestic capacity over several years.",
+   "value": {
+    "number": 52.7,
+    "unit": "USD bn",
+    "label": "funding for US semiconductor research, development, manufacturing and workforce in the CHIPS and Science Act, signed 2022-08-09"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "President Biden signed the CHIPS and Science Act on 2022-08-09. It provides USD 52.7 billion for American semiconductor research, development, manufacturing and workforce development.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public; cite the publisher.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "policy",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.1,
+    "supply": -0.3,
+    "policy": 0.6,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.0
+   },
+   "short_fi": "USA: CHIPS and Science Act allekirjoitettu, 52,7 mrd USD puolijohteisiin"
+  },
+  {
+   "id": "HS-013",
+   "name": "Susquehanna: average chip lead time 26.3 weeks in September 2022, down from nearly 27 weeks, the biggest drop in years",
+   "short": "Chip lead time 26.3 weeks (Sep 2022), falling",
+   "category": "supply",
+   "measures": "supply_tightness",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 4,
+   "lead_months_rationale": "[ASSUMPTION: lead times lengthen first and then trigger advance ordering one to two quarters later; the reverse on the way down.]",
+   "update_frequency": "monthly",
+   "source": {
+    "name": "Data Center Knowledge (Bloomberg), Chip delivery times shrink in sign that supply crunch is easing",
+    "url": "https://www.datacenterknowledge.com/data-center-chips/chip-delivery-times-shrink-in-sign-that-supply-crunch-is-easing",
+    "access": "Public news article, free; underlying data is a paid Susquehanna index",
+    "date": "2022-10-17"
+   },
+   "reliability": "B",
+   "direction": -1,
+   "strength": 0.7,
+   "observed_at": "2022-10-17",
+   "classification": "cyclical",
+   "classification_rationale": "Lead times rise and fall with the order cycle; a fall can mean easing supply or weakening demand.",
+   "value": {
+    "number": 26.3,
+    "unit": "weeks",
+    "label": "average chip delivery time in September 2022 (Susquehanna), from nearly 27 weeks in August; the decline affected all key product categories"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Chip delivery times averaged 26.3 weeks in September 2022, down from nearly 27 weeks the month before, the biggest drop in years, with the reduction affecting all key product categories.",
+   "excerpt_kind": "paraphrase",
+   "history": [
+    {
+     "date": "2021-04-30",
+     "value": 17
+    },
+    {
+     "date": "2022-09-30",
+     "value": 26.3
+    }
+   ],
+   "history_label": "SOURCE",
+   "history_note": "April 2021 from HS-004 and September 2022 from this article, both Susquehanna averages as reported by Bloomberg.",
+   "usage_restrictions": "Press summary of a paid index; quote with attribution.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "price",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": -0.2,
+    "supply": -0.5,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.2
+   },
+   "short_fi": "Susquehanna: puolijohteiden toimitusaika 26,3 viikkoa syyskuussa 2022, laskussa"
+  },
+  {
+   "id": "HS-014",
+   "name": "Meta: 2022 capital expenditure outlook USD 32-33 billion (was 30-34); 2023 outlook USD 34-39 billion",
+   "short": "Meta capex outlook 2022 and 2023",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "datacenter",
+   "type": "leading",
+   "lead_months": 18,
+   "lead_months_rationale": "[ASSUMPTION: capex guidance precedes the electrical fit-out of new sites by one to two years.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "Meta Platforms, Form 8-K exhibit 99.1, results for the quarter ended 2022-09-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680122000105/meta09302022-exhibit991.htm",
+    "access": "Public SEC filing, free",
+    "date": "2022-10-26"
+   },
+   "reliability": "A",
+   "direction": 1,
+   "strength": 0.5,
+   "observed_at": "2022-10-26",
+   "classification": "mixed",
+   "classification_rationale": "A hyperscaler's yearly capex plan is revised every quarter (cyclical) on top of a multi-year data-centre build-out (structural).",
+   "value": {
+    "number": 36.5,
+    "unit": "USD bn (midpoint)",
+    "label": "2023 capital expenditure outlook USD 34-39 bn (midpoint 36.5), driven by data centres, servers and network infrastructure; 2022 outlook narrowed to USD 32-33 bn from 30-34 bn"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "On 2022-10-26 Meta set its 2022 capital expenditure outlook at USD 32-33 billion, from USD 30-34 billion, and guided 2023 to USD 34-39 billion, driven by data centres, servers and network infrastructure, with AI capacity behind the growth.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public SEC filing; cite Meta.",
+   "counter_evidence": [
+    "HCE-005"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "contract",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.5,
+    "supply": 0.0,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.1
+   },
+   "short_fi": "Meta: investointiennuste 2022 ja 2023",
+   "date_note": "Figures from the search summary of the Q3 2022 results; the 2023 range was narrowed to 34-37 bn on 2022-11-09 (later, not used here)."
+  },
+  {
+   "id": "HS-015",
+   "name": "TrendForce: 4Q22 DRAM contract price decline expands to 18-23%; spot market also weak",
+   "short": "DRAM prices -18 to -23% in 4Q22",
+   "category": "price",
+   "measures": "price",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 4,
+   "lead_months_rationale": "[ASSUMPTION: contract price moves precede allocation and lead-time changes at EMS partners by one to two quarters.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "TrendForce, 4Q22 DRAM contract price drop expanded to 18-23%, also spot market has no luck to escape from the recession",
+    "url": "https://www.trendforce.com/news/2022/11/09/4q22-dram-contract-price-drop-expanded-to-1823-also-spot-market-has-no-luck-to-escape-from-the-recession/",
+    "access": "Public news article; full price data is a paid subscription",
+    "date": "2022-11-09"
+   },
+   "reliability": "A",
+   "direction": -1,
+   "strength": 0.85,
+   "observed_at": "2022-11-09",
+   "classification": "cyclical",
+   "classification_rationale": "Memory is the most cyclical commodity in electronics; the decline is the destocking phase of the cycle.",
+   "value": {
+    "number": -20.5,
+    "unit": "% QoQ",
+    "label": "overall DRAM average selling price decline in 4Q22 once contracts were finalised, 18-23% (midpoint -20.5); the September forecast had been -13 to -18%"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "TrendForce reported on 2022-11-09 that the quarter-on-quarter fall in the overall DRAM average selling price reached 18-23% once 4Q22 contracts were finalised, wider than its earlier forecast of 13-18%.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Press-release figures may be quoted with attribution.",
+   "counter_evidence": [
+    "HCE-006"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "price",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.0,
+    "supply": -0.7,
+    "policy": 0.0,
+    "price": -0.8,
+    "nordic": 0.0,
+    "bullwhip": -0.4
+   },
+   "short_fi": "TrendForce: DRAM-sopimushintojen lasku laajenee 18-23 prosenttiin 4. neljänneksellä 2022"
+  },
+  {
+   "id": "HS-016",
+   "name": "Micron cuts DRAM and NAND wafer starts by about 20% versus fiscal Q4 2022 and guides 2023 DRAM bit supply growth negative",
+   "short": "Micron cuts wafer starts ~20%",
+   "category": "bullwhip",
+   "measures": "intermediary",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: a supplier's output cut follows inventory build at customers and shows up in supply one to two quarters later.]",
+   "update_frequency": "event",
+   "source": {
+    "name": "TechPowerUp, Micron announces further actions to address market conditions (company press release of 2022-11-16)",
+    "url": "https://techpowerup.com/301157/micron-announces-further-actions-to-address-market-conditions",
+    "access": "Public news article quoting the company release, free",
+    "date": "2022-11-16"
+   },
+   "reliability": "B",
+   "direction": -1,
+   "strength": 0.8,
+   "observed_at": "2022-11-16",
+   "classification": "cyclical",
+   "classification_rationale": "A supplier reacting to inventory and price declines: the overhang phase of the memory cycle.",
+   "value": {
+    "number": 20,
+    "unit": "% (wafer-start cut)",
+    "label": "reduction in DRAM and NAND wafer starts versus fiscal Q4 2022 across all technology nodes with meaningful output; calendar-2023 DRAM bit supply growth expected negative"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Micron said on 2022-11-16 that it was reducing DRAM and NAND wafer starts by about 20% versus fiscal Q4 2022 and taking steps to reduce bit supply growth and limit its inventory; it expected calendar-2023 DRAM bit supply growth to be negative.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Company announcement; cite Micron.",
+   "counter_evidence": [],
+   "ce_searched": false,
+   "annotations": [],
+   "source_class": "news",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": -0.5,
+    "supply": 0.3,
+    "policy": 0.0,
+    "price": -0.4,
+    "nordic": 0.0,
+    "bullwhip": 0.6
+   },
+   "short_fi": "Micron leikkaa DRAM- ja NAND-kiekkoaloituksia noin 20 %"
+  },
+  {
+   "id": "HS-017",
+   "name": "SIA: global semiconductor sales USD 119.5 billion in Q1 2023, down 21.3% on Q1 2022; March sales up month on month for the first time since May 2022",
+   "short": "SIA global chip sales Q1 2023, -21%",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "components",
+   "type": "coincident",
+   "lead_months": 3,
+   "lead_months_rationale": "[ASSUMPTION: monthly sales are reported with a lag and follow orders by a few months.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "Semiconductor Industry Association, Global semiconductor sales decrease 8.7% in first quarter; March sales tick up month to month for first time since May 2022",
+    "url": "https://www.semiconductors.org/global-semiconductor-sales-decrease-8-7-in-first-quarter-march-sales-tick-up-month-to-month-for-first-time-since-may-2022/",
+    "access": "Public press release, free",
+    "date": "2023-05-02"
+   },
+   "reliability": "A",
+   "direction": -1,
+   "strength": 0.7,
+   "observed_at": "2023-05-02",
+   "classification": "cyclical",
+   "classification_rationale": "Industry sales follow the electronics cycle and reverse with inventories and orders.",
+   "value": {
+    "number": 119.5,
+    "unit": "USD bn",
+    "label": "worldwide semiconductor sales in Q1 2023, -8.7% on Q4 2022 and -21.3% on Q1 2022"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "Worldwide semiconductor sales totalled USD 119.5 billion in Q1 2023, 8.7% less than Q4 2022 and 21.3% less than Q1 2022. March was the first month-to-month rise since May 2022.",
+   "excerpt_kind": "paraphrase",
+   "history": [
+    {
+     "date": "2021-03-31",
+     "value": 123.1
+    },
+    {
+     "date": "2021-09-30",
+     "value": 144.8
+    },
+    {
+     "date": "2023-03-31",
+     "value": 119.5
+    }
+   ],
+   "history_label": "SOURCE",
+   "history_note": "Q1 2021 (HS-003), Q3 2021 (HS-007) and Q1 2023 (this release), all SIA.",
+   "usage_restrictions": "Public; cite SIA.",
+   "counter_evidence": [
+    "HCE-007"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "research",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": -0.6,
+    "supply": -0.2,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.2
+   },
+   "short_fi": "SIA: puolijohteiden maailmanmyynti 1. neljänneksellä 2023, 119,5 mrd USD, -21,3 %",
+   "date_note": "Date taken from the Digitimes slug of the release (2023-05-02)."
+  },
+  {
+   "id": "HS-018",
+   "name": "NVIDIA: record data-centre revenue USD 4.28 billion in Q1 fiscal 2024; next-quarter revenue outlook USD 11 billion",
+   "short": "NVIDIA record data-centre revenue",
+   "category": "demand",
+   "measures": "end_demand",
+   "region": "GLOBAL",
+   "segment": "datacenter",
+   "type": "leading",
+   "lead_months": 12,
+   "lead_months_rationale": "[ASSUMPTION: accelerator orders precede server and rack builds by one to three quarters and the electrical fit-out by one to two years.]",
+   "update_frequency": "quarterly",
+   "source": {
+    "name": "NVIDIA, NVIDIA announces financial results for first quarter fiscal 2024",
+    "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2024",
+    "access": "Public press release, free",
+    "date": "2023-05-24"
+   },
+   "reliability": "A",
+   "direction": 1,
+   "strength": 0.8,
+   "observed_at": "2023-05-24",
+   "classification": "mixed",
+   "classification_rationale": "Generative-AI demand is a structural shift in data-centre build-out, but it is concentrated in a few buyers and accelerator supply.",
+   "value": {
+    "number": 4.28,
+    "unit": "USD bn",
+    "label": "record data-centre revenue in Q1 fiscal 2024 (+14% year on year, +18% quarter on quarter); outlook for total Q2 revenue about USD 11 bn"
+   },
+   "data_label": "SOURCE",
+   "excerpt": "NVIDIA reported record data-centre revenue of USD 4.28 billion for the quarter, up 14% from a year earlier and 18% from the previous quarter, and guided to about USD 11 billion of total revenue for the next quarter.",
+   "excerpt_kind": "paraphrase",
+   "history": [],
+   "history_label": "NONE",
+   "history_note": "No earlier points carried on this card; the series continues on later cards.",
+   "usage_restrictions": "Public press release; cite NVIDIA.",
+   "counter_evidence": [
+    "HCE-008"
+   ],
+   "ce_searched": true,
+   "annotations": [],
+   "source_class": "contract",
+   "locked": false,
+   "tracking": {
+    "checks": 0,
+    "last_checked": null
+   },
+   "axes": {
+    "demand": 0.8,
+    "supply": 0.0,
+    "policy": 0.0,
+    "price": 0.0,
+    "nordic": 0.0,
+    "bullwhip": 0.1
+   },
+   "short_fi": "Nvidia: datakeskusliikevaihdon ennätys, 4,28 mrd USD"
+  }
+ ],
+ "evidence": [
+  {
+   "id": "HCE-001",
+   "against": "HS-007",
+   "claim": "Part of the record sales is stocking, not end use. In the same quarter, cloud providers in North America and China held more than eight weeks of server DRAM inventory and some more than ten, built by heavy buying in the previous two quarters.",
+   "source": {
+    "name": "TrendForce, DRAM prices projected to decline by 3-8% QoQ in 4Q21",
+    "url": "https://www.trendforce.com/presscenter/news/20210922-10947.html",
+    "date": "2021-09-22"
+   },
+   "observed_at": "2021-09-22",
+   "reliability": "A",
+   "strength": 0.5,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-002",
+   "against": "HS-008",
+   "claim": "The 30% is a forecast conditional on supply recovering: the same release expects supply-chain constraints to start easing in 2022 and server shipments to return to double-digit growth only as supply constraints ease.",
+   "source": {
+    "name": "Dell'Oro Group, Spending for the hyperscale cloud service providers to surge 30 percent in 2022",
+    "url": "https://www.delloro.com/news/spending-for-the-hyperscale-cloud-service-providers-to-surge-30-percent-in-2022/",
+    "date": "2021-12-14"
+   },
+   "observed_at": "2021-12-14",
+   "reliability": "B",
+   "strength": 0.3,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-003",
+   "against": "HS-006",
+   "claim": "End demand was strong: hyperscale cloud providers' data-centre spending was forecast to rise 30% in 2022, so buyer inventory may be absorbed quickly rather than signal a downturn.",
+   "source": {
+    "name": "Dell'Oro Group, Spending for the hyperscale cloud service providers to surge 30 percent in 2022",
+    "url": "https://www.delloro.com/news/spending-for-the-hyperscale-cloud-service-providers-to-surge-30-percent-in-2022/",
+    "date": "2021-12-14"
+   },
+   "observed_at": "2021-12-14",
+   "reliability": "B",
+   "strength": 0.4,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-004",
+   "against": "HS-008",
+   "claim": "Hyperscaler spending forecasts are revised each quarter. Meta's 2022 capex outlook was narrowed to USD 32-33 bn from 30-34 bn in October 2022, with the upper end lowered.",
+   "source": {
+    "name": "Meta Platforms, Form 8-K exhibit 99.1, Q3 2022",
+    "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680122000105/meta09302022-exhibit991.htm",
+    "date": "2022-10-26"
+   },
+   "observed_at": "2022-10-26",
+   "reliability": "A",
+   "strength": 0.3,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-005",
+   "against": "HS-014",
+   "claim": "The range for 2022 was narrowed and its upper end lowered, but the 2023 outlook (USD 34-39 bn) is higher than 2022 and AI capacity is behind substantially all of the 2023 growth, so the data points to a shift in mix, not a pull-back.",
+   "source": {
+    "name": "Meta Platforms, Form 8-K exhibit 99.1, Q3 2022",
+    "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680122000105/meta09302022-exhibit991.htm",
+    "date": "2022-10-26"
+   },
+   "observed_at": "2022-10-26",
+   "reliability": "A",
+   "strength": 0.5,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-006",
+   "against": "HS-015",
+   "claim": "Supply is being cut: Micron said calendar-2023 DRAM bit supply growth would be negative, which supports prices once inventories clear.",
+   "source": {
+    "name": "TechPowerUp, Micron announces further actions to address market conditions",
+    "url": "https://techpowerup.com/301157/micron-announces-further-actions-to-address-market-conditions",
+    "date": "2022-11-16"
+   },
+   "observed_at": "2022-11-16",
+   "reliability": "B",
+   "strength": 0.4,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-007",
+   "against": "HS-017",
+   "claim": "The decline may be bottoming: March 2023 sales rose month on month for the first time since May 2022, according to the same release.",
+   "source": {
+    "name": "Semiconductor Industry Association, Q1 2023 global sales",
+    "url": "https://www.semiconductors.org/global-semiconductor-sales-decrease-8-7-in-first-quarter-march-sales-tick-up-month-to-month-for-first-time-since-may-2022/",
+    "date": "2023-05-02"
+   },
+   "observed_at": "2023-05-02",
+   "reliability": "A",
+   "strength": 0.5,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-008",
+   "against": "HS-018",
+   "claim": "The strength is narrow: in the same period total semiconductor sales fell 21.3% on a year earlier (USD 119.5 bn in Q1 2023), so one buyer group does not describe the whole chain.",
+   "source": {
+    "name": "Semiconductor Industry Association, Q1 2023 global sales",
+    "url": "https://www.semiconductors.org/global-semiconductor-sales-decrease-8-7-in-first-quarter-march-sales-tick-up-month-to-month-for-first-time-since-may-2022/",
+    "date": "2023-05-02"
+   },
+   "observed_at": "2023-05-02",
+   "reliability": "A",
+   "strength": 0.6,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-009",
+   "against": "HS-004",
+   "claim": "Supply response is coming: TSMC, the largest foundry, committed USD 100 bn over three years to raise capacity on 2021-04-01, which eases lead times over the following years.",
+   "source": {
+    "name": "TSMC Form 6-K, 2021-04-01",
+    "url": "https://www.sec.gov/Archives/edgar/data/1046179/000156459021017172/tsm-6k_20210401.htm",
+    "date": "2021-04-01"
+   },
+   "observed_at": "2021-04-01",
+   "reliability": "A",
+   "strength": 0.3,
+   "data_label": "SOURCE"
+  },
+  {
+   "id": "HCE-010",
+   "against": "HS-011",
+   "claim": "Server and hyperscale demand was still forecast to grow: Dell'Oro projected hyperscale data-centre spending +30% in 2022 and server unit shipments back to double-digit growth.",
+   "source": {
+    "name": "Dell'Oro Group, Spending for the hyperscale cloud service providers to surge 30 percent in 2022",
+    "url": "https://www.delloro.com/news/spending-for-the-hyperscale-cloud-service-providers-to-surge-30-percent-in-2022/",
+    "date": "2021-12-14"
+   },
+   "observed_at": "2021-12-14",
+   "reliability": "B",
+   "strength": 0.3,
+   "data_label": "SOURCE"
+  }
+ ],
+ "outcomes": [
+  {
+   "after": "2021-07-01",
+   "text": {
+    "en": "The shortage deepened: Q3 2021 sales reached USD 144.8 billion, up 27.6% on a year earlier, with more units shipped than in any earlier quarter.",
+    "fi": "Pula syveni: myynti oli kolmannella neljänneksellä 2021 144,8 mrd USD, 27,6 % enemmän kuin vuotta aiemmin, ja toimitettuja yksiköitä oli enemmän kuin missään aiemmassa neljänneksessä."
+   },
+   "source": {
+    "name": "Semiconductor Industry Association, Q3 global semiconductor sales increase 27.6% year-to-year",
+    "url": "https://www.semiconductors.org/q3-global-semiconductor-sales-increase-27-6-year-to-year/",
+    "date": "2021-11-01"
+   }
+  },
+  {
+   "after": "2022-01-01",
+   "text": {
+    "en": "Memory turned first: in June 2022 TrendForce forecast DRAM contract prices down 3-8% for PC and 0-5% for server DRAM in 3Q22, as demand stayed weak and inventories rose.",
+    "fi": "Muisti käänsi ensin: TrendForce ennusti kesäkuussa 2022 DRAM-sopimushintojen laskevan kolmannella neljänneksellä 3-8 % PC-muistille ja 0-5 % palvelinmuistille, kun kysyntä pysyi heikkona ja varastot kasvoivat."
+   },
+   "source": {
+    "name": "TrendForce, DRAM pricing forecast to drop by 3-8% in 3Q22",
+    "url": "https://trendforce.com/presscenter/news/20220620-11264.html",
+    "date": "2022-06-20"
+   }
+  },
+  {
+   "after": "2022-07-01",
+   "text": {
+    "en": "Suppliers cut output: on 2022-11-16 Micron cut DRAM and NAND wafer starts by about 20% versus fiscal Q4 2022 and expected negative DRAM bit supply growth for 2023.",
+    "fi": "Toimittajat leikkasivat tuotantoa: Micron vähensi 16.11.2022 DRAM- ja NAND-kiekkoaloituksia noin 20 % verrattuna tilikauden 2022 neljänteen neljännekseen ja odotti DRAM-bittitarjonnan kasvun jäävän vuonna 2023 negatiiviseksi."
+   },
+   "source": {
+    "name": "TechPowerUp, Micron announces further actions to address market conditions",
+    "url": "https://techpowerup.com/301157/micron-announces-further-actions-to-address-market-conditions",
+    "date": "2022-11-16"
+   }
+  },
+  {
+   "after": "2023-01-01",
+   "text": {
+    "en": "Sales fell to USD 119.5 billion in Q1 2023, 21.3% below Q1 2022, while March was the first month-to-month rise since May 2022.",
+    "fi": "Myynti laski ensimmäisellä neljänneksellä 2023 tasolle 119,5 mrd USD, 21,3 % alle edellisvuoden vastaavan neljänneksen; maaliskuu oli ensimmäinen kuukausittainen nousu toukokuun 2022 jälkeen."
+   },
+   "source": {
+    "name": "Semiconductor Industry Association, Global semiconductor sales decrease 8.7% in first quarter",
+    "url": "https://www.semiconductors.org/global-semiconductor-sales-decrease-8-7-in-first-quarter-march-sales-tick-up-month-to-month-for-first-time-since-may-2022/",
+    "date": "2023-05-02"
+   }
+  },
+  {
+   "after": "2023-07-01",
+   "text": {
+    "en": "2023 sales totalled USD 526.8 billion, 8.2% below 2022 (USD 574.1 billion), and the fourth quarter was 11.6% above Q4 2022: the market rebounded late in the year.",
+    "fi": "Vuoden 2023 myynti oli 526,8 mrd USD, 8,2 % vähemmän kuin vuonna 2022 (574,1 mrd USD), ja neljäs neljännes oli 11,6 % edellisvuoden vastaavaa korkeampi: markkina elpyi vuoden loppua kohti."
+   },
+   "source": {
+    "name": "Semiconductor Industry Association, Global semiconductor sales decrease 8.2% in 2023; market rebounds late in year",
+    "url": "https://www.semiconductors.org/global-semiconductor-sales-decrease-8-2-in-2023-market-rebounds-late-in-year/",
+    "date": "2024-02-05"
+   }
+  }
+ ]
+}

@@ -3,9 +3,10 @@
   "use strict";
   const app = document.getElementById("app");
   const bannerSlot = document.getElementById("banner");
-  let STATE = null, LAST_RUN = null, RANGE = 30, HORIZON = 12, MODE = "projection", SEARCH = "", SELECTED = null;
+  let STATE = null, LAST_RUN = null, RANGE = 30, HORIZON = 12, MODE = "projection", SEARCH = "", SELECTED = null, HIST = null;
+  const AFTER_MOUNT = [];
   const CHAT = [];
-  const MOCK = { region: 0, segment: 0 };
+  const MOCK = { region: 0 };
   // Region codes follow the card `region` field. Selecting a wider region includes the narrower ones inside it.
   const REGIONS = [
     { code: "ALL", include: null, en: "All regions", fi: "Kaikki alueet" },
@@ -18,18 +19,14 @@
   const REGION_OPTS = { en: REGIONS.map((r) => r.en), fi: REGIONS.map((r) => r.fi) };
   const regionOk = (code) => { const inc = REGIONS[MOCK.region].include; return !inc || inc.includes(code); };
   const HORIZONS = [12, 24, 36];
-  const SEGMENT_OPTS = {
-    en: ["All segments", "Data centres", "Energy clusters", "Utility grids", "Renewable generation", "Industry and process", "E-mobility and charging", "Hydrogen and e-fuels", "Buildings"],
-    fi: ["Kaikki segmentit", "Datakeskukset", "Energiaklusterit", "Sähköverkot", "Uusiutuva tuotanto", "Teollisuus ja prosessit", "Sähköinen liikenne ja lataus", "Vety ja e-polttoaineet", "Rakennukset"],
-  };
   const RED = "#ff000f", GRAY = "#b9bfc7";
-  const RANK_COLORS = ["#ff000f", "#2a78d6", "#1baf7a", "#4a3aa7"];
+  const RANK_COLORS = ["#ff000f", "#4b5563", "#8a93a0", "#c3c8cf"];
   let LANG = "en";
   try { LANG = localStorage.getItem("irma_lang") || "en"; } catch (_) { /* storage unavailable */ }
 
   const I18N = {
     en: { overview: "Overview", signals: "Signals", scenarios: "Scenarios", settings: "Settings", search: "Search signals, sources and scenarios",
-      summaryTitle: "Current situation", signalsList: "Signals", regionFilter: "Region", segmentFilter: "Segment", preview: "Preview", previewToast: "Segment filter preview: not connected to the data yet", domainsRemoved: "Removed from the allowlist because Anthropic's search tool cannot access them: {d}", blockedDomains: "Not accessible to the search tool, so excluded automatically: {d}", scoutTitle: "Automatic signal search", scoutRunning: "Searching the web for new signals…", scoutIdle: "Runs on every update. Last run {a}; next update {b}.", scoutNever: "No run yet.", searchNow: "Search now", scoutSummary: "{acc} added · {rej} rejected · {s} searches · about USD {c} · {d} s", scoutCandidates: "Candidates in the last run", scoutEarlier: "Earlier runs", scoutRules: "Rules a source must pass", added: "added", rejectedWord: "rejected", failedWord: "failed", foundAuto: "found automatically", scoutFoundCount: "{n} signal(s) found automatically so far.", whySignal: "Why it is a signal", scoutSettingsTitle: "Automatic search for new signals", scoutEnabled: "Search for new signals on every update", maxCandidates: "Candidates checked per run", discoverySearches: "Searches in the discovery step", maxAge: "Maximum age of a source (days)", minGrade: "Minimum publisher grade", gradeA: "A only: primary sources", gradeAB: "A or B: primary sources and reputable press", minWeight: "Minimum weight to be added", minLoad: "Minimum effect on a scenario theme", clearFound: "Remove automatically found signals", clearConfirm: "Remove all signals added by the automatic search?", scoutCost: "Estimate: about USD 0.10–0.30 per run for discovery, plus about USD 0.20–0.55 for each candidate that reaches the full check. The update frequency sets how many runs happen a day.", scoutStarted: "Automatic search started", scoutBusy: "A search is already running", scoutDone: "Automatic search finished: {acc} added, {rej} rejected", openSignal: "Open signal", rules: ["The link must be a page the search actually returned, and the page must have been read or cited.", "The publisher must be graded {grade} or better: primary sources A, reputable press B.", "The page must show a publication date no older than {days} days.", "The item must belong to a defined theme and state how it moves relay demand or component supply.", "The quoted sentence must be found in the retrieved page text.", "The link and the headline must be new.", "A primary source must corroborate it, and a counter-evidence search is run against it.", "Its weight after counter-evidence and freshness must be at least {w}, and it must move a scenario theme by at least {load}.", "If nothing passes every rule, nothing is added."], webVerification: "Web verification", corroborated: "Corroborated", notCorroborated: "Not corroborated", primarySource: "Primary source", searchesRun: "Searches run", retrievedPages: "Pages retrieved", queries: "Queries", webVerified: "verified on the web", linkRemoved: "link removed: not among retrieved pages", counterSearch: "Counter-evidence search", foundNothing: "nothing contradicting found", webSearch: "Web search", webEnabled: "Agents may search and read the web", maxSearches: "Searches per agent call", maxFetches: "Page fetches per agent call", allowedDomains: "Allowed domains (one per line)", primaryDomains: "Primary-source domains, graded A (one per line)", webPricing: "Web search costs USD 10 per 1,000 searches plus tokens. Fetching a page has no fee; its text counts as input tokens, at most 8,000 per page. Only links the tools actually retrieved are kept.", webNeedsKey: "Active only with an API key; without one the agents run in replay mode.", mockData: "Evidence set", fourTitle: "The four most likely situations", fourNote: "Selected from nine candidate situations by the current signals.",
+      summaryTitle: "Current situation", allSegments: "All segments", pickSegTitle: "Pick one segment", pickSegText: "The scenario chart and the recommended move are made for one segment at a time. Signals from all segments are on the Signals page.", pickSegChart: "Choose a segment to see the four most likely situations.", pickSegRec: "Choose a segment to see the recommended move.", moreDetail: "More detail", fullSituation: "Current situation, full text", topSignals: "Strongest signals", dataSetNote: "About this data set", histTitle: "Historical data", histSub: "How the weights and the leading situation looked on past dates, using only what had been published by then, next to today.", histAsOf: "As of", histLeader: "Leading situation", histTop: "Strongest signals", histNext: "What happened next", histToday: "Today", histNone: "Not yet known", histLoading: "Loading the historical comparison…", histError: "Could not load the historical comparison", histSignals: "{n} signals", histNoToday: "Today's picture is shown when the current data set is selected.", histSource: "Source", mapTitle: "Signal map", mapSub: "Each dot is a signal: weight against impact.", listsTitle: "Signal lists", listsSub: "Latest changes, strong and weak signals, negative signals and counter-evidence.", formulaTitle: "Value of each formula", formulaUsedNote: "The weight used in the scenarios is the value marked “used”.", formulaUsed: "used", weightUsed: "Weight used", signalsList: "Signals", regionFilter: "Region", segmentFilter: "Segment", domainsRemoved: "Removed from the allowlist because Anthropic's search tool cannot access them: {d}", blockedDomains: "Not accessible to the search tool, so excluded automatically: {d}", scoutTitle: "Automatic signal search", scoutRunning: "Searching the web for new signals…", scoutIdle: "Runs on every update. Last run {a}; next update {b}.", scoutNever: "No run yet.", searchNow: "Search now", scoutSummary: "{acc} added · {rej} rejected · {s} searches · about USD {c} · {d} s", scoutCandidates: "Candidates in the last run", scoutEarlier: "Earlier runs", scoutRules: "Rules a source must pass", added: "added", rejectedWord: "rejected", failedWord: "failed", foundAuto: "found automatically", scoutFoundCount: "{n} signal(s) found automatically so far.", whySignal: "Why it is a signal", scoutSettingsTitle: "Automatic search for new signals", scoutEnabled: "Search for new signals on every update", maxCandidates: "Candidates checked per run", discoverySearches: "Searches in the discovery step", maxAge: "Maximum age of a source (days)", minGrade: "Minimum publisher grade", gradeA: "A only: primary sources", gradeAB: "A or B: primary sources and reputable press", minWeight: "Minimum weight to be added", minLoad: "Minimum effect on a scenario theme", clearFound: "Remove automatically found signals", clearConfirm: "Remove all signals added by the automatic search?", scoutCost: "Estimate: about USD 0.10–0.30 per run for discovery, plus about USD 0.20–0.55 for each candidate that reaches the full check. The update frequency sets how many runs happen a day.", scoutStarted: "Automatic search started", scoutBusy: "A search is already running", scoutDone: "Automatic search finished: {acc} added, {rej} rejected", openSignal: "Open signal", rules: ["The link must be a page the search actually returned, and the page must have been read or cited.", "The publisher must be graded {grade} or better: primary sources A, reputable press B.", "The page must show a publication date no older than {days} days.", "The item must belong to a defined theme and state how it moves relay demand or component supply.", "The quoted sentence must be found in the retrieved page text.", "The link and the headline must be new.", "A primary source must corroborate it, and a counter-evidence search is run against it.", "Its weight after counter-evidence and freshness must be at least {w}, and it must move a scenario theme by at least {load}.", "If nothing passes every rule, nothing is added."], webVerification: "Web verification", corroborated: "Corroborated", notCorroborated: "Not corroborated", primarySource: "Primary source", searchesRun: "Searches run", retrievedPages: "Pages retrieved", queries: "Queries", webVerified: "verified on the web", linkRemoved: "link removed: not among retrieved pages", counterSearch: "Counter-evidence search", foundNothing: "nothing contradicting found", webSearch: "Web search", webEnabled: "Agents may search and read the web", maxSearches: "Searches per agent call", maxFetches: "Page fetches per agent call", allowedDomains: "Allowed domains (one per line)", primaryDomains: "Primary-source domains, graded A (one per line)", webPricing: "Web search costs USD 10 per 1,000 searches plus tokens. Fetching a page has no fee; its text counts as input tokens, at most 8,000 per page. Only links the tools actually retrieved are kept.", webNeedsKey: "Active only with an API key; without one the agents run in replay mode.", mockData: "Evidence set", fourTitle: "The four most likely situations", fourNote: "Selected from nine candidate situations by the current signals.",
       mostLikely: "Most likely", rankOf: "Rank {n} of 4", sinceYesterday: "since yesterday", noPrev: "no previous day", projection: "Projection", history: "History",
       d7: "7 days", d30: "30 days", d90: "90 days", all: "All", demandIdx: "Demand index", supplyIdx: "Deliverable supply index",
       idxLabel: "Index, 100 = today", probLabel: "Probability on that day (%)", openScenario: "Open scenario", detailsTitle: "Selected situation", whatHappens: "What happens",
@@ -54,17 +51,17 @@
       every: "Updated every {n} min · last {a} · next {b}.", pathNote: "Red: demand index with its uncertainty band; gray: deliverable supply index. Illustrative scenario path, not a forecast.",
       histNote: "Red: selected situation; gray: the other three.", newItem: "New item", importDemo: "Import demonstration item", importPasted: "Import pasted item",
       importSub: "New data → signal detection → source and counter-evidence review → scenario update → recommended move → next action.", nextStep: "Signals to watch", brief: "Situation brief", steps: "Processing steps",
-      recMove: "Recommended move", confidence: "Confidence", conf_low: "low confidence", conf_medium: "medium confidence", conf_high: "high confidence", noRegret: "No-regret", contingent: "Contingent",
+      recMove: "Recommended move", confidence: "Confidence", conf_low: "low confidence", conf_medium: "medium confidence", conf_high: "high confidence", noRegret: "Do in any case", contingent: "Only if the trigger happens",
       area_procurement: "Procurement", area_manufacturing: "Manufacturing", area_capacity: "Capacity", area_supply_reliability: "Supply reliability", triggerWord: "Trigger", ifWrong: "If wrong and horizon", horizonWord: "Horizon", costIfWrong: "Cost if wrong",
-      nextAction: "Next action", ownerWord: "Owner", dueWord: "Due", revisitOn: "Revisit on", hedgeTitle: "If the runner-up wins", genByCode: "Composed by code from templates and the current scenarios.", horizonLabel: "Time horizon", h12: "1 y", h24: "2 y", h36: "3 y", leaderAtH: "Leader at this horizon", leaderSens: "Horizon leaders are sensitive to an assumed kernel width.", differsHeadline: "differs from the headline", hedgeApplies: "At this horizon read the hedge in the recommended move (\"If the runner-up wins\").", sameAsHeadline: "same as the headline",
+      nextAction: "Next action", ownerWord: "Owner", dueWord: "Due", revisitOn: "Revisit on", hedgeTitle: "If the runner-up wins", genByCode: "Composed by code from templates and the current scenarios.", horizonLabel: "Time horizon", h12: "1 y", h24: "2 y", h36: "3 y", leaderAtH: "Leader at this horizon", leaderSens: "The leader at each horizon depends on an assumed smoothing width.", differsHeadline: "differs from the headline", hedgeApplies: "At this horizon, read the fallback in the recommended move (\"If the runner-up wins\").", sameAsHeadline: "same as the headline",
       weightAtH: "Weight at {h}", noSignalsRegion: "No signals in this region.", changeNew: "NEW", changeFlipped: "flipped", changeFlat: "unchanged", sinceWord: "since {d}", latestChanges: "Latest changes", latestChangesSub: "Largest weight movements since the previous update, and new cards.", noChanges: "No changes since the previous update.",
       negTitle: "Negative signals and counter-evidence", negSub: "Evidence that points away from the leading reading, shown beside the strong and weak lists so the balance is visible.", againstWord: "against", kindSignal: "Signal", kindCounter: "Counter-evidence", moreCE: "More counter-evidence ({n})", negCount: "{a} signals · {b} counter-evidence",
       attribTitle: "Where the discount comes from", attribSub: "Share of the discount from 1.0, by component.", noDiscount: "No discount: the weight is 1.0.", comp_credibility: "Credibility", comp_currency: "Currency", comp_materiality: "Materiality", comp_human: "Human assessment",
       bandTitle: "Weight band across four methods", bandNote: "Headline weight is the product; the other methods show how much the choice of formula matters.", m_product: "Product (headline)", m_minimum: "Minimum", m_geometric: "Geometric mean", m_arithmetic: "Arithmetic mean",
       horizonFitTitle: "Fit to the time horizon", fitWord: "Fit T(h)", credTitle: "Credibility (belief to plausibility)", indepSources: "independent sources", assumptionsTitle: "Assumptions behind this weight", baseWeight: "Now",
-      methodsLabel: "Values by method", cappedNote: "Not yet challenged by counter-evidence: weight capped at 0.6.", worldNote1: "Public signals, October 2026.", worldNote2: "Constructed downturn dataset (DEMODATA)." },
+      methodsLabel: "Values by method", cappedNote: "Not yet challenged by counter-evidence: weight capped at 0.6." },
     fi: { overview: "Yleiskuva", signals: "Signaalit", scenarios: "Skenaariot", settings: "Asetukset", search: "Hae signaaleja, lähteitä ja skenaarioita",
-      summaryTitle: "Nykytilanne", signalsList: "Signaalit", regionFilter: "Alue", segmentFilter: "Segmentti", preview: "Esikatselu", previewToast: "Segmentin suodattimen esikatselu: ei vielä kytketty dataan", domainsRemoved: "Poistettu sallittujen listalta, koska Anthropicin hakutyökalu ei pääse niihin: {d}", blockedDomains: "Hakutyökalu ei pääse näihin, joten ne on suljettu pois automaattisesti: {d}", scoutTitle: "Automaattinen signaalihaku", scoutRunning: "Haetaan uusia signaaleja verkosta…", scoutIdle: "Ajetaan jokaisella päivityksellä. Viimeksi {a}; seuraava päivitys {b}.", scoutNever: "Ei vielä ajoja.", searchNow: "Hae nyt", scoutSummary: "{acc} lisätty · {rej} hylätty · {s} hakua · noin {c} USD · {d} s", scoutCandidates: "Viimeisen ajon ehdokkaat", scoutEarlier: "Aiemmat ajot", scoutRules: "Säännöt, jotka lähteen on läpäistävä", added: "lisätty", rejectedWord: "hylätty", failedWord: "epäonnistui", foundAuto: "löydetty automaattisesti", scoutFoundCount: "{n} signaalia löydetty automaattisesti tähän mennessä.", whySignal: "Miksi tämä on signaali", scoutSettingsTitle: "Uusien signaalien automaattinen haku", scoutEnabled: "Hae uusia signaaleja jokaisella päivityksellä", maxCandidates: "Tarkistettavia ehdokkaita per ajo", discoverySearches: "Hakuja löytövaiheessa", maxAge: "Lähteen enimmäisikä (päivää)", minGrade: "Julkaisijan vähimmäisluokka", gradeA: "Vain A: ensisijaiset lähteet", gradeAB: "A tai B: ensisijaiset lähteet ja luotettava media", minWeight: "Lisättävän signaalin vähimmäispaino", minLoad: "Vähimmäisvaikutus skenaarioteemaan", clearFound: "Poista automaattisesti löydetyt signaalit", clearConfirm: "Poistetaanko kaikki automaattisen haun lisäämät signaalit?", scoutCost: "Arvio: noin 0,10–0,30 USD per ajo löytövaiheelle sekä noin 0,20–0,55 USD jokaisesta ehdokkaasta, joka etenee täyteen tarkistukseen. Päivitystiheys määrää ajojen määrän päivässä.", scoutStarted: "Automaattinen haku käynnistyi", scoutBusy: "Haku on jo käynnissä", scoutDone: "Automaattinen haku valmis: {acc} lisätty, {rej} hylätty", openSignal: "Avaa signaali", rules: ["Linkin on oltava sivu, jonka haku todella palautti, ja sivu on luettu tai lainattu.", "Julkaisijan luokan on oltava {grade} tai parempi: ensisijaiset lähteet A, luotettava media B.", "Sivulla on oltava julkaisupäivä, joka on enintään {days} päivää vanha.", "Tiedon on kuuluttava määriteltyyn teemaan ja kerrottava, miten se vaikuttaa relekysyntään tai komponenttien saatavuuteen.", "Lainatun lauseen on löydyttävä haetun sivun tekstistä.", "Linkin ja otsikon on oltava uusia.", "Ensisijaisen lähteen on vahvistettava tieto, ja sitä vastaan ajetaan vastanäytön haku.", "Painon vastanäytön ja tuoreuden jälkeen on oltava vähintään {w}, ja sen on liikutettava skenaarioteemaa vähintään {load}.", "Jos mikään ei läpäise kaikkia sääntöjä, mitään ei lisätä."], webVerification: "Verkkotarkistus", corroborated: "Vahvistettu", notCorroborated: "Ei vahvistettu", primarySource: "Ensisijainen lähde", searchesRun: "Hakuja", retrievedPages: "Haettuja sivuja", queries: "Haut", webVerified: "tarkistettu verkosta", linkRemoved: "linkki poistettu: ei haettujen sivujen joukossa", counterSearch: "Vastanäytön haku", foundNothing: "kumoavaa ei löytynyt", webSearch: "Verkkohaku", webEnabled: "Agentit saavat hakea ja lukea verkkoa", maxSearches: "Hakuja per agenttikutsu", maxFetches: "Sivunhakuja per agenttikutsu", allowedDomains: "Sallitut verkkotunnukset (yksi per rivi)", primaryDomains: "Ensisijaisten lähteiden verkkotunnukset, luokka A (yksi per rivi)", webPricing: "Verkkohaku maksaa 10 USD per 1 000 hakua sekä tokenit. Sivun haulla ei ole maksua; sen teksti lasketaan syötetokeneiksi, enintään 8 000 per sivu. Vain työkalujen oikeasti hakemat linkit säilytetään.", webNeedsKey: "Toimii vain API-avaimella; ilman sitä agentit toimivat toistotilassa.", mockData: "Aineisto", fourTitle: "Neljä todennäköisintä tilannetta", fourNote: "Valittu yhdeksästä ehdokastilanteesta nykyisten signaalien perusteella.",
+      summaryTitle: "Nykytilanne", allSegments: "Kaikki segmentit", pickSegTitle: "Valitse yksi segmentti", pickSegText: "Skenaariokuvaaja ja suositeltu siirto tehdään yhdelle segmentille kerrallaan. Kaikkien segmenttien signaalit ovat Signaalit-sivulla.", pickSegChart: "Valitse segmentti nähdäksesi neljä todennäköisintä tilannetta.", pickSegRec: "Valitse segmentti nähdäksesi suositellun siirron.", moreDetail: "Lisätietoa", fullSituation: "Nykytilanne, koko teksti", topSignals: "Vahvimmat signaalit", dataSetNote: "Tietoaineistosta", histTitle: "Vanha data", histSub: "Miltä painoarvot ja johtava tilanne näyttivät aiempina päivinä, kun käytössä oli vain siihen mennessä julkaistu tieto, ja miltä ne näyttävät tänään.", histAsOf: "Tilanne", histLeader: "Johtava tilanne", histTop: "Vahvimmat signaalit", histNext: "Mitä tapahtui seuraavaksi", histToday: "Tänään", histNone: "Ei vielä tiedossa", histLoading: "Ladataan vanhan datan vertailua…", histError: "Vanhan datan vertailua ei voitu ladata", histSignals: "{n} signaalia", histNoToday: "Tämän päivän tilanne näkyy, kun nykyinen aineisto on valittuna.", histSource: "Lähde", mapTitle: "Signaalikartta", mapSub: "Jokainen piste on signaali: painoarvo suhteessa vaikutukseen.", listsTitle: "Signaalilistat", listsSub: "Viimeisimmät muutokset, vahvat ja heikot signaalit sekä negatiiviset signaalit ja vastatodisteet.", formulaTitle: "Kunkin kaavan arvo", formulaUsedNote: "Skenaarioissa käytetty painoarvo on arvo, jossa on merkintä “käytössä”.", formulaUsed: "käytössä", weightUsed: "Käytetty painoarvo", signalsList: "Signaalit", regionFilter: "Alue", segmentFilter: "Segmentti", domainsRemoved: "Poistettu sallittujen listalta, koska Anthropicin hakutyökalu ei pääse niihin: {d}", blockedDomains: "Hakutyökalu ei pääse näihin, joten ne on suljettu pois automaattisesti: {d}", scoutTitle: "Automaattinen signaalihaku", scoutRunning: "Haetaan uusia signaaleja verkosta…", scoutIdle: "Ajetaan jokaisella päivityksellä. Viimeksi {a}; seuraava päivitys {b}.", scoutNever: "Ei vielä ajoja.", searchNow: "Hae nyt", scoutSummary: "{acc} lisätty · {rej} hylätty · {s} hakua · noin {c} USD · {d} s", scoutCandidates: "Viimeisen ajon ehdokkaat", scoutEarlier: "Aiemmat ajot", scoutRules: "Säännöt, jotka lähteen on läpäistävä", added: "lisätty", rejectedWord: "hylätty", failedWord: "epäonnistui", foundAuto: "löydetty automaattisesti", scoutFoundCount: "{n} signaalia löydetty automaattisesti tähän mennessä.", whySignal: "Miksi tämä on signaali", scoutSettingsTitle: "Uusien signaalien automaattinen haku", scoutEnabled: "Hae uusia signaaleja jokaisella päivityksellä", maxCandidates: "Tarkistettavia ehdokkaita per ajo", discoverySearches: "Hakuja löytövaiheessa", maxAge: "Lähteen enimmäisikä (päivää)", minGrade: "Julkaisijan vähimmäisluokka", gradeA: "Vain A: ensisijaiset lähteet", gradeAB: "A tai B: ensisijaiset lähteet ja luotettava media", minWeight: "Lisättävän signaalin vähimmäispaino", minLoad: "Vähimmäisvaikutus skenaarioteemaan", clearFound: "Poista automaattisesti löydetyt signaalit", clearConfirm: "Poistetaanko kaikki automaattisen haun lisäämät signaalit?", scoutCost: "Arvio: noin 0,10–0,30 USD per ajo löytövaiheelle sekä noin 0,20–0,55 USD jokaisesta ehdokkaasta, joka etenee täyteen tarkistukseen. Päivitystiheys määrää ajojen määrän päivässä.", scoutStarted: "Automaattinen haku käynnistyi", scoutBusy: "Haku on jo käynnissä", scoutDone: "Automaattinen haku valmis: {acc} lisätty, {rej} hylätty", openSignal: "Avaa signaali", rules: ["Linkin on oltava sivu, jonka haku todella palautti, ja sivu on luettu tai lainattu.", "Julkaisijan luokan on oltava {grade} tai parempi: ensisijaiset lähteet A, luotettava media B.", "Sivulla on oltava julkaisupäivä, joka on enintään {days} päivää vanha.", "Tiedon on kuuluttava määriteltyyn teemaan ja kerrottava, miten se vaikuttaa relekysyntään tai komponenttien saatavuuteen.", "Lainatun lauseen on löydyttävä haetun sivun tekstistä.", "Linkin ja otsikon on oltava uusia.", "Ensisijaisen lähteen on vahvistettava tieto, ja sitä vastaan ajetaan vastanäytön haku.", "Painon vastanäytön ja tuoreuden jälkeen on oltava vähintään {w}, ja sen on liikutettava skenaarioteemaa vähintään {load}.", "Jos mikään ei läpäise kaikkia sääntöjä, mitään ei lisätä."], webVerification: "Verkkotarkistus", corroborated: "Vahvistettu", notCorroborated: "Ei vahvistettu", primarySource: "Ensisijainen lähde", searchesRun: "Hakuja", retrievedPages: "Haettuja sivuja", queries: "Haut", webVerified: "tarkistettu verkosta", linkRemoved: "linkki poistettu: ei haettujen sivujen joukossa", counterSearch: "Vastanäytön haku", foundNothing: "kumoavaa ei löytynyt", webSearch: "Verkkohaku", webEnabled: "Agentit saavat hakea ja lukea verkkoa", maxSearches: "Hakuja per agenttikutsu", maxFetches: "Sivunhakuja per agenttikutsu", allowedDomains: "Sallitut verkkotunnukset (yksi per rivi)", primaryDomains: "Ensisijaisten lähteiden verkkotunnukset, luokka A (yksi per rivi)", webPricing: "Verkkohaku maksaa 10 USD per 1 000 hakua sekä tokenit. Sivun haulla ei ole maksua; sen teksti lasketaan syötetokeneiksi, enintään 8 000 per sivu. Vain työkalujen oikeasti hakemat linkit säilytetään.", webNeedsKey: "Toimii vain API-avaimella; ilman sitä agentit toimivat toistotilassa.", mockData: "Aineisto", fourTitle: "Neljä todennäköisintä tilannetta", fourNote: "Valittu yhdeksästä ehdokastilanteesta nykyisten signaalien perusteella.",
       mostLikely: "Todennäköisin", rankOf: "Sija {n}/4", sinceYesterday: "eilisestä", noPrev: "ei edellistä päivää", projection: "Ennuste", history: "Historia",
       d7: "7 päivää", d30: "30 päivää", d90: "90 päivää", all: "Kaikki", demandIdx: "Kysyntäindeksi", supplyIdx: "Toimituskyvyn indeksi",
       idxLabel: "Indeksi, 100 = tänään", probLabel: "Todennäköisyys kyseisenä päivänä (%)", openScenario: "Avaa skenaario", detailsTitle: "Valittu tilanne", whatHappens: "Mitä tapahtuu",
@@ -89,15 +86,15 @@
       every: "Päivitetään {n} min välein · viimeksi {a} · seuraava {b}.", pathNote: "Punainen: kysyntäindeksi epävarmuusvyöhykkeineen; harmaa: toimituskyvyn indeksi. Havainnollistava skenaariopolku, ei ennuste.",
       histNote: "Punainen: valittu tilanne; harmaa: kolme muuta.", newItem: "Uusi tieto", importDemo: "Tuo esimerkkitieto", importPasted: "Tuo liitetty tieto",
       importSub: "Uusi data → signaalin tunnistus → lähde- ja vastanäyttötarkastus → skenaariopäivitys → suositeltu siirto → seuraava toimenpide.", nextStep: "Seurattavat signaalit", brief: "Tilannekatsaus", steps: "Käsittelyvaiheet",
-      recMove: "Suositeltu siirto", confidence: "Luottamus", conf_low: "heikko luottamus", conf_medium: "kohtalainen luottamus", conf_high: "vahva luottamus", noRegret: "Kannattaa joka tapauksessa", contingent: "Ehdollinen",
+      recMove: "Suositeltu siirto", confidence: "Luottamus", conf_low: "heikko luottamus", conf_medium: "kohtalainen luottamus", conf_high: "vahva luottamus", noRegret: "Tehdään joka tapauksessa", contingent: "Vain jos laukaisija toteutuu",
       area_procurement: "Hankinta", area_manufacturing: "Valmistus", area_capacity: "Kapasiteetti", area_supply_reliability: "Toimitusvarmuus", triggerWord: "Laukaisija", ifWrong: "Jos väärin, ja aikajänne", horizonWord: "Aikajänne", costIfWrong: "Hinta, jos väärin",
-      nextAction: "Seuraava toimi", ownerWord: "Vastuuhenkilö", dueWord: "Määräaika", revisitOn: "Arvioidaan uudelleen", hedgeTitle: "Jos kakkonen voittaa", genByCode: "Koodi muodosti tämän malleista ja nykyisistä skenaarioista.", horizonLabel: "Aikajänne", h12: "1 v", h24: "2 v", h36: "3 v", leaderAtH: "Johtava tällä aikajänteellä", leaderSens: "Aikajänteen johtava skenaario riippuu oletetusta ydinfunktion leveydestä.", differsHeadline: "poikkeaa pääotsikon tilanteesta", hedgeApplies: "Tällä aikajänteellä lue suositellun siirron varasuunnitelma (\"Jos kakkonen voittaa\").", sameAsHeadline: "sama kuin pääotsikossa",
+      nextAction: "Seuraava toimi", ownerWord: "Vastuuhenkilö", dueWord: "Määräaika", revisitOn: "Arvioidaan uudelleen", hedgeTitle: "Jos kakkonen voittaa", genByCode: "Koodi muodosti tämän malleista ja nykyisistä skenaarioista.", horizonLabel: "Aikajänne", h12: "1 v", h24: "2 v", h36: "3 v", leaderAtH: "Johtava tällä aikajänteellä", leaderSens: "Johtava tilanne kullakin aikajänteellä riippuu oletetusta tasoituksen leveydestä.", differsHeadline: "poikkeaa pääotsikon tilanteesta", hedgeApplies: "Tällä aikajänteellä lue suositellun siirron varasuunnitelma (\"Jos kakkonen voittaa\").", sameAsHeadline: "sama kuin pääotsikossa",
       weightAtH: "Paino ({h})", noSignalsRegion: "Ei signaaleja tällä alueella.", changeNew: "UUSI", changeFlipped: "kääntyi", changeFlat: "ennallaan", sinceWord: "{d} alkaen", latestChanges: "Viimeisimmät muutokset", latestChangesSub: "Suurimmat painon muutokset edellisestä päivityksestä sekä uudet kortit.", noChanges: "Ei muutoksia edellisen päivityksen jälkeen.",
       negTitle: "Negatiiviset signaalit ja vastanäyttö", negSub: "Näyttö, joka osoittaa poispäin johtavasta tulkinnasta. Se on vahvojen ja heikkojen listojen vieressä, jotta tasapaino näkyy.", againstWord: "kohdistuu", kindSignal: "Signaali", kindCounter: "Vastanäyttö", moreCE: "Lisää vastanäyttöä ({n})", negCount: "{a} signaalia · {b} vastanäyttöä",
       attribTitle: "Mistä alennus syntyy", attribSub: "Alennuksen osuus luvusta 1,0 osatekijöittäin.", noDiscount: "Ei alennusta: paino on 1,0.", comp_credibility: "Uskottavuus", comp_currency: "Tuoreus", comp_materiality: "Merkittävyys", comp_human: "Ihmisen arvio",
       bandTitle: "Painon vaihteluväli neljällä menetelmällä", bandNote: "Pääpaino on tulo; muut menetelmät näyttävät, kuinka paljon kaavan valinta vaikuttaa.", m_product: "Tulo (pääpaino)", m_minimum: "Minimi", m_geometric: "Geometrinen keskiarvo", m_arithmetic: "Aritmeettinen keskiarvo",
       horizonFitTitle: "Sopivuus aikajänteeseen", fitWord: "Sopivuus T(h)", credTitle: "Uskottavuus (uskomus–todennäköisyys)", indepSources: "riippumatonta lähdettä", assumptionsTitle: "Painon taustaoletukset", baseWeight: "Nyt",
-      methodsLabel: "Arvot menetelmittäin", cappedNote: "Vastanäyttö ei ole vielä tarkastanut tätä: paino on rajattu arvoon 0,6.", worldNote1: "Julkiset signaalit, lokakuu 2026.", worldNote2: "Rakennettu laskusuhdanneaineisto (DEMODATA)." },
+      methodsLabel: "Arvot menetelmittäin", cappedNote: "Vastanäyttö ei ole vielä tarkastanut tätä: paino on rajattu arvoon 0,6." },
   };
   const t = (k, vars) => { let s = (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || k; if (Array.isArray(s)) return s; for (const [a, b] of Object.entries(vars || {})) s = s.replace(`{${a}}`, b); return s; };
   const L = (v) => (v && typeof v === "object" && !Array.isArray(v) ? (v[LANG] || v.en || "") : (v ?? ""));
@@ -109,7 +106,7 @@
     if (attrs) for (const [k, v] of Object.entries(attrs)) {
       if (v === null || v === undefined || v === false) continue;
       if (k === "class") el.setAttribute("class", v);
-      else if (k === "style" && typeof v === "object") Object.assign(el.style, v);
+      else if (k === "style" && typeof v === "object") { for (const [sk, sv] of Object.entries(v)) { if (sk.startsWith("--")) el.style.setProperty(sk, sv); else el.style[sk] = sv; } }
       else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
       else el.setAttribute(k, v);
     }
@@ -178,21 +175,28 @@
   const nText = (n) => (LANG === "fi" ? (n.text_fi || n.text) : n.text);
   function monthLabel(m) { const d = new Date(STATE.meta.today + "T00:00:00"); d.setMonth(d.getMonth() + m); return `${d.toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { month: "short" }).replace(".", "")} ${d.getFullYear()}`; }
 
-  // ---------- filters: region is real (filters signal lists), segment is a preview ----------
+  // ---------- filters: segment (server side, POST /api/segment) and region (filters the lists) ----------
+  const segmentOpts = () => [...STATE.meta.segments.filter((x) => x.has_data).map((x) => ({ id: x.id, label: L(x.label) })), { id: "all", label: t("allSegments") }];
+  async function pickSegment(id) {
+    if (STATE.meta.segment === id) return;
+    try { const d = await api("/api/segment", "POST", { segment: id }); STATE = d.state; SELECTED = null; afterLoad(); route({ keepScroll: true }); }
+    catch (e) { toast(String(e.message || e)); }
+  }
   function filterBar(onRegion) {
-    const dd = (key, labelKey, opts, onPick) => {
-      const label = h("span", { class: "dd-value" }, opts[MOCK[key]]);
+    const dd = (labelKey, opts, cur, onPick) => {
+      const label = h("span", { class: "dd-value" }, opts[cur].label);
       const menu = h("div", { class: "dd-menu", role: "listbox", hidden: "" });
-      const renderMenu = () => menu.replaceChildren(...opts.map((o, i) => h("button", { class: `dd-opt ${MOCK[key] === i ? "on" : ""}`, role: "option", "aria-selected": MOCK[key] === i ? "true" : "false",
-        onclick: (e) => { e.stopPropagation(); MOCK[key] = i; label.textContent = o; renderMenu(); menu.hidden = true; onPick(); } }, o)));
-      renderMenu();
+      menu.append(...opts.map((o, i) => h("button", { class: `dd-opt ${cur === i ? "on" : ""}`, role: "option", "aria-selected": cur === i ? "true" : "false", disabled: o.disabled ? "" : null,
+        onclick: (e) => { e.stopPropagation(); menu.hidden = true; onPick(i); } }, o.label)));
       const btn = h("button", { class: "dd-btn", "aria-haspopup": "listbox", onclick: (e) => { e.stopPropagation(); const wasHidden = menu.hidden; document.querySelectorAll(".dd-menu").forEach((m) => { m.hidden = true; }); menu.hidden = !wasHidden; } },
         h("span", { class: "dd-label" }, `${t(labelKey)}:`), label, h("span", { class: "dd-caret" }, chevIcon()));
       return h("div", { class: "dd" }, btn, menu);
     };
-    // The "Preview" pill belongs to the segment filter only, so it sits right next to it.
-    return h("div", { class: "mock-filters" }, dd("region", "regionFilter", REGION_OPTS[LANG], onRegion),
-      dd("segment", "segmentFilter", SEGMENT_OPTS[LANG], () => toast(t("previewToast"))), pill(t("preview"), "warn"));
+    const segs = segmentOpts().map((o) => ({ ...o, disabled: STATE.meta.world !== 1 && o.id !== "datacenter" }));
+    const segCur = Math.max(0, segs.findIndex((o) => o.id === STATE.meta.segment));
+    const regs = REGION_OPTS[LANG].map((label) => ({ label }));
+    return h("div", { class: "filters" }, dd("segmentFilter", segs, segCur, (i) => pickSegment(segs[i].id)),
+      dd("regionFilter", regs, MOCK.region, (i) => { MOCK.region = i; onRegion(); }));
   }
   const hLabel = (m) => t(`h${m}`);
   const wAt = (s, m) => { const hz = s.computed.horizon; const v = hz && hz[String(m)]; return v == null ? s.computed.weight : v; };
@@ -212,10 +216,10 @@
     else main = h("span", { class: "chg muted" }, t("changeFlat"));
     return h("span", { class: "chg-wrap" }, main, since);
   }
-  const confClass = (c) => (c === "high" ? "ok" : c === "medium" ? "warn" : "");
+  const confClass = (c) => (c === "high" ? "ok" : "");
   // The backend headline starts with "Recommended move (confidence, 'X' at N%): ..."; the pills already show that, so the card leads with the move itself.
   function moveSentence(txt) { const m = /^[^()]*\([^)]*\)\s*:\s*([\s\S]+)$/.exec(txt || ""); const r = m ? m[1] : (txt || ""); return r.charAt(0).toUpperCase() + r.slice(1); }
-  function recommendationCard(R, hedgeOpen) {
+  function recommendationCard(R, hedgeOpen, horizonNote) {
     const norm = (x) => String(x || "").toLowerCase().replace(/[^a-zåäö]+/g, " ").trim();
     // The headline repeats one move in slightly different words; treat a move as the lead when most of its words match.
     const words = (x) => new Set(norm(x).split(" ").filter((w) => w.length > 2));
@@ -228,16 +232,16 @@
       // Compact: area, type and the move itself stay visible; trigger, horizon and cost if wrong sit behind one disclosure.
       const isLead = sameMove(L(m.text), moveSentence(L(R.headline)));
       return h("li", { class: `rec-move ${isLead ? "lead" : ""}` },
-        h("div", { class: "rec-move-head" }, h("span", { class: "rec-area" }, t(`area_${m.area}`)), pill(m.type === "no_regret" ? t("noRegret") : t("contingent"), m.type === "no_regret" ? "ok" : "warn")),
+        h("div", { class: "rec-move-head" }, h("span", { class: "rec-area" }, t(`area_${m.area}`)), pill(m.type === "no_regret" ? t("noRegret") : t("contingent"), m.type === "no_regret" ? "ok" : "")),
         h("div", { class: "rec-move-text" }, L(m.text)),
         disc(`${t("triggerWord")} · ${t("costIfWrong").toLowerCase()}`, h("div", { class: "small" },
           h("div", { class: "rec-trigger" }, h("span", { class: "rec-k" }, `${t("triggerWord")}: `), cites(L(m.trigger)), ...extra.map((id) => [" ", h("a", { class: "cite", href: `#/signal/${id}` }, id)])),
           h("div", { class: "tiny" }, `${t("horizonWord")}: ${m.horizon_months} ${LANG === "fi" ? "kk" : "mo"}`), h("div", null, h("strong", null, `${t("costIfWrong")}: `), L(m.cost_if_wrong)))));
     };
     const na = R.next_action || {};
-    return h("div", { class: "card rec-card" },
+    return h("section", { class: "rec-card" },
       h("div", { class: "section-head" }, h("h2", null, t("recMove")), h("div", { class: "rec-pills" }, pill(t(`conf_${R.confidence}`), confClass(R.confidence)), labelPill(R.label || "ASSUMPTION"))),
-      lead,
+      lead, horizonNote || null,
       leadInList ? null : h("p", { class: "rec-headline", title: L(R.headline) }, moveSentence(L(R.headline))),
       h("ul", { class: "rec-moves" }, ...(R.moves || []).map(move)),
       h("div", { class: "rec-next" }, h("div", { class: "rec-k" }, t("nextAction")), h("div", { class: "small" }, L(na.text)),
@@ -255,11 +259,10 @@
     const mn = Math.min(...v), mx = Math.max(...v), sp = mx - mn || 1;
     const pts = v.map((y, i) => [pad + (i * (w - 2 * pad)) / (v.length - 1), hh - pad - ((y - mn) / sp) * (hh - 2 * pad)]);
     svg.append(h("svg:path", { d: "M" + pts.map((p) => p.join(",")).join(" L"), fill: "none", stroke: color || RED, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
-    const lp = pts[pts.length - 1]; svg.append(h("svg:circle", { cx: lp[0], cy: lp[1], r: 3.5, fill: color || RED, stroke: "#fff", "stroke-width": 2 }));
     return svg;
   }
   function lineChart(dates, series, opts) {
-    const W = 720, H = opts.height || 260, m = { t: 16, r: 56, b: 30, l: 42 };
+    const W = opts.width || 720, H = opts.height || 260, m = { t: 16, r: 56, b: 30, l: 42 };
     const svg = h("svg:svg", { class: "chart", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || "chart" });
     const n = dates.length; const all = series.flatMap((s) => s.values).concat(opts.band ? opts.band.lower.concat(opts.band.upper) : []).filter((v) => typeof v === "number");
     const yMin = opts.yMin ?? Math.min(...all), yMax = opts.yMax ?? Math.max(...all);
@@ -294,31 +297,20 @@
     svg.append(hit);
     return h("div", null, svg, opts.legend === false ? null : h("div", { class: "legend" }, ...series.map((s) => h("span", null, h("span", { class: "key", style: { background: s.color } }), s.name))));
   }
-  function projectionChart(sc, months, height) {
+  function projectionChart(sc, months, height, width) {
     const n = months + 1; const p = sc.path;
     const dates = p.months.slice(0, n).map(monthLabel);
     const series = [{ name: t("supplyIdx"), values: p.supply.slice(0, n), color: GRAY, dash: true }, { name: t("demandIdx"), values: p.demand.slice(0, n), color: RED, emph: true, end: String(Math.round(p.demand[n - 1])) }];
     const lo = Math.min(...p.lower.slice(0, n), ...p.supply.slice(0, n)), hi = Math.max(...p.upper.slice(0, n), ...p.supply.slice(0, n));
-    return lineChart(dates, series, { yMin: Math.floor((lo - 5) / 20) * 20, yMax: Math.floor((lo - 5) / 20) * 20 + Math.ceil((hi + 5 - Math.floor((lo - 5) / 20) * 20) / 40) * 40, fmt: (v) => Math.round(v), yLabel: t("idxLabel"), band: { lower: p.lower.slice(0, n), upper: p.upper.slice(0, n), color: RED }, label: "Scenario path", height });
+    return lineChart(dates, series, { yMin: Math.floor((lo - 5) / 20) * 20, yMax: Math.floor((lo - 5) / 20) * 20 + Math.ceil((hi + 5 - Math.floor((lo - 5) / 20) * 20) / 40) * 40, fmt: (v) => Math.round(v), yLabel: t("idxLabel"), band: { lower: p.lower.slice(0, n), upper: p.upper.slice(0, n), color: RED }, label: "Scenario path", height, width });
   }
-  function historyChart(selId, height) {
+  function historyChart(selId, height, width) {
     const pts = RANGE ? STATE.history.points.slice(-RANGE) : STATE.history.points;
     const dates = pts.map((p) => p.date.slice(5));
     const ids = STATE.scenarios.scenarios.map((s) => s.id);
     const series = ids.filter((id) => id !== selId).map((id) => ({ name: L(scById(id).name), values: pts.map((p) => (p.probs[id] == null ? null : p.probs[id] * 100)), color: GRAY }));
     series.push({ name: L(scById(selId).name), values: pts.map((p) => (p.probs[selId] == null ? null : p.probs[selId] * 100)), color: RED, emph: true, end: pct(scById(selId).probability) });
-    return lineChart(dates, series, { yMin: 0, yMax: 80, fmt: (v) => `${Math.round(v)}%`, yLabel: t("probLabel"), label: "Daily probability", legend: false, height });
-  }
-  function miniChart(sc) {
-    const w = 200, hh = 64, pad = 4; const n = HORIZON + 1; const p = sc.path;
-    const d = p.demand.slice(0, n), up = p.upper.slice(0, n), lo = p.lower.slice(0, n), su = p.supply.slice(0, n);
-    const mn = Math.min(...lo, ...su), mx = Math.max(...up, ...su), sp = mx - mn || 1;
-    const X = (i) => pad + (i * (w - 2 * pad)) / (n - 1), Y = (v) => hh - pad - ((v - mn) / sp) * (hh - 2 * pad);
-    const svg = h("svg:svg", { viewBox: `0 0 ${w} ${hh}`, preserveAspectRatio: "none", "aria-hidden": "true" });
-    svg.append(h("svg:path", { d: "M" + up.map((v, i) => `${X(i)},${Y(v)}`).join(" L") + " L" + lo.map((v, i) => `${X(i)},${Y(v)}`).reverse().join(" L") + " Z", fill: RED, "fill-opacity": 0.1 }));
-    svg.append(h("svg:path", { d: "M" + su.map((v, i) => `${X(i)},${Y(v)}`).join(" L"), fill: "none", stroke: GRAY, "stroke-width": 1.5, "stroke-dasharray": "4 3" }));
-    svg.append(h("svg:path", { d: "M" + d.map((v, i) => `${X(i)},${Y(v)}`).join(" L"), fill: "none", stroke: RED, "stroke-width": 2 }));
-    return svg;
+    return lineChart(dates, series, { yMin: 0, yMax: 80, fmt: (v) => `${Math.round(v)}%`, yLabel: t("probLabel"), label: "Daily probability", legend: false, height, width });
   }
   function diverging(contribs) {
     const max = Math.max(...contribs.map((c) => Math.abs(c.contribution)), 0.0001);
@@ -381,65 +373,106 @@
       h("div", { class: "a-foot" }, t("assistantFoot")));
   }
 
-  // ---------- overview ----------
+  // ---------- historical data panel: GET /api/historical, rendered as received ----------
+  function historicalPanel(open) {
+    const body = h("div", { class: "hist-body" }, h("div", { class: "empty" }, t("histLoading")));
+    const known = (id) => STATE.signals.some((x) => x.id === id);
+    const topList = (arr) => h("ul", { class: "hist-top" }, ...(arr || []).slice(0, 3).map((w) => h("li", null, known(w.id) ? h("a", { class: "link", href: `#/signal/${w.id}` }, w.short) : h("span", null, w.short), " ", h("span", { class: "tnum muted" }, f2(w.weight)))));
+    const leaderCell = (ld, n) => ld ? h("div", null, h("div", { class: "hist-leader" }, L(ld.name)), h("div", { class: "small muted tnum" }, `${pct(ld.probability)}${n != null ? " · " + t("histSignals", { n }) : ""}`)) : "—";
+    function draw(D) {
+      const rows = D.rows || []; const td = D.today;
+      const outcome = (o) => o ? h("div", null, h("div", null, L(o.text)), o.source ? h("div", { class: "tiny" }, `${t("histSource")}: `, o.source.url ? h("a", { class: "link", href: o.source.url, target: "_blank", rel: "noopener" }, o.source.name) : o.source.name, o.source.date ? ` · ${o.source.date}` : "") : null) : h("span", { class: "muted" }, t("histNone"));
+      body.replaceChildren(
+        h("div", { class: "hist-label" }, h("strong", null, L(D.label)), td ? null : h("span", { class: "tiny" }, t("histNoToday"))),
+        h("div", { class: "table-wrap" }, h("table", { class: "hist-table" },
+          h("thead", null, h("tr", null, h("th", null, t("histAsOf")), h("th", null, t("histLeader")), h("th", null, t("histTop")), h("th", null, t("histNext")))),
+          h("tbody", null,
+            ...rows.map((r) => h("tr", null, h("td", { "data-k": t("histAsOf"), class: "tnum nowrap" }, r.as_of), h("td", { "data-k": t("histLeader") }, leaderCell(r.leader, r.n_signals)), h("td", { "data-k": t("histTop") }, topList(r.top_weights)), h("td", { "data-k": t("histNext") }, outcome(r.outcome)))),
+            td ? h("tr", { class: "today" }, h("td", { "data-k": t("histAsOf"), class: "tnum nowrap" }, h("strong", null, t("histToday")), h("div", { class: "tiny" }, td.as_of)), h("td", { "data-k": t("histLeader") }, leaderCell(td.leader)), h("td", { "data-k": t("histTop") }, topList(td.top_weights)), h("td", { "data-k": t("histNext") }, h("span", { class: "muted" }, t("histNone")))) : null))));
+    }
+    if (HIST) draw(HIST);
+    api("/api/historical").then((D) => { HIST = D; draw(D); }).catch((e) => { if (!HIST) body.replaceChildren(h("div", { class: "note warn" }, `${t("histError")}: ${e.message}`)); });
+    return h("details", { class: "panel hist", id: "historical", open: open ? "" : null }, h("summary", null, h("h2", null, t("histTitle")), h("span", { class: "tiny" }, t("histSub"))), body);
+  }
+
+  // ---------- one-segment prompt shown instead of the chart and the recommendation when the view is "all segments" ----------
+  function pickCard(kind) {
+    const segs = STATE.meta.segments.filter((x) => x.has_data);
+    return h("section", { class: "pick-card" }, h("h2", null, t("pickSegTitle")), h("p", { class: "muted" }, t(kind === "rec" ? "pickSegRec" : "pickSegChart")), kind === "chart" ? h("p", { class: "small muted" }, t("pickSegText")) : null,
+      h("div", { class: "pick-btns" }, ...segs.map((x) => h("button", { class: "btn primary", onclick: () => pickSegment(x.id) }, L(x.label)))));
+  }
+
+  // ---------- overview: banner (above), situation, sub-menu, chart + assistant, recommended move, market summary ----------
   function viewOverview() {
-    const S = STATE; const sc = S.scenarios.scenarios;
+    const S = STATE; const sc = S.scenarios.scenarios; const needSeg = !!S.meta.scenario_segment_required;
     if (!SELECTED || !scById(SELECTED)) SELECTED = sc[0].id;
-    const worldBtns = h("div", { class: "world" }, `${t("mockData")}:`, ...S.meta.worlds.map((wd) => h("button", { class: wd.id === S.meta.world ? "on" : "", onclick: async () => { const d = await api("/api/world", "POST", { world: wd.id }); STATE = d.state; CHAT.length = 0; SELECTED = null; LAST_RUN = null; afterLoad(); route(); toast(L(wd.label)); } }, L(wd.label))));
-    const summary = h("div", { class: "card summary-card" }, h("div", { class: "label" }, `${t("summaryTitle")} · ${S.meta.today}`), h("div", { class: "s-text", style: { marginTop: "6px" } }, L(S.summary)),
-      h("div", { class: "s-foot" }, h("span", { class: "tiny" }, L(S.meta.worlds.find((wd) => wd.id === S.meta.world)?.note)), worldBtns));
+    const world = S.meta.worlds.find((wd) => wd.id === S.meta.world);
     const rerender = () => route({ keepScroll: true });
-    // Signal list: filtered by region, ranked by the weight at the chosen horizon.
-    const wl = S.signals.filter((s) => s.computed.weight > 0 && regionOk(s.region)).sort((a, b) => wAt(b, HORIZON) - wAt(a, HORIZON)).slice(0, 12);
-    const left = h("aside", { class: "gf-left" }, h("div", { class: "side-head" }, h("h2", null, t("signalsList")), h("span", { class: "tiny" }, t("weightAtH", { h: hLabel(HORIZON) }))),
-      wl.length ? h("div", { class: "wl" }, ...wl.map((s) => h("a", { href: `#/signal/${s.id}` },
-        h("div", { class: "wl-main" }, h("div", { class: "wl-name" }, h("span", { class: `dir-dot ${s.direction > 0 ? "pos" : s.direction < 0 ? "neg" : ""}`, title: s.direction > 0 ? "▲" : s.direction < 0 ? "▼" : "●" }), sShort(s)),
-          h("div", { class: "wl-sub" }, s.locked ? t("tracked") : L(s.source_class_label)), changeEl(s.change, true)),
-        h("div", { class: "wl-val tnum" }, f2(wAt(s, HORIZON)))))) : h("div", { class: "empty" }, t("noSignalsRegion")),
-      h("a", { class: "link small", href: "#/signals", style: { display: "block", marginTop: "10px" } }, `${t("allSignals")} →`));
-    // Horizon leader line: from scenarios_by_horizon, not computed here.
-    const hz = S.scenarios_by_horizon && S.scenarios_by_horizon[String(HORIZON)];
-    const hLead = hz && hz.scenarios.find((x) => x.id === hz.leader);
-    const leaderLine = hLead ? h("div", { class: "leader-line" }, h("span", { class: "rec-k" }, `${t("leaderAtH")} (${hLabel(HORIZON)}): `), h("strong", null, dot(hLead.id), L(hLead.name)), " ", h("span", { class: "tnum" }, pct(hLead.probability)), " ",
-      pill(hz.leader === sc[0].id ? t("sameAsHeadline") : t("differsHeadline"), hz.leader === sc[0].id ? "" : "warn"), hz.leader !== sc[0].id ? h("span", { class: "small" }, ` ${t("hedgeApplies")} `) : null, h("span", { class: "tiny" }, ` ${t("leaderSens")} `), labelPill("ASSUMPTION")) : null;
-    const controls = h("div", { class: "ctrl-bar" }, h("div", { class: "ctrl-row" }, filterBar(rerender), h("div", { class: "hz" }, h("span", { class: "label" }, t("horizonLabel")), horizonChips(rerender))), leaderLine);
-    const section = h("div", { style: { display: "grid", gap: "12px" } });
+    const worldSwitch = h("div", { class: "seg-switch", role: "group", "aria-label": t("mockData"), title: L(world && world.note) }, ...S.meta.worlds.map((wd) => h("button", { class: `seg-btn ${wd.id === S.meta.world ? "on" : ""}`, "aria-pressed": wd.id === S.meta.world ? "true" : "false",
+      onclick: async () => { if (wd.id === S.meta.world) return; const d = await api("/api/world", "POST", { world: wd.id }); STATE = d.state; CHAT.length = 0; SELECTED = null; LAST_RUN = null; afterLoad(); route(); toast(L(wd.label)); } }, L(wd.label))));
+    const situation = h("section", { class: "situation" }, h("div", { class: "sit-head" }, h("h1", { class: "sit-title" }, t("summaryTitle")), h("span", { class: "tiny tnum" }, S.meta.today), worldSwitch), h("p", { class: "s-text" }, L(S.summary)));
+    const submenu = h("div", { class: "submenu" }, filterBar(rerender), h("div", { class: "hz" }, h("span", { class: "label" }, t("horizonLabel")), horizonChips(rerender)));
+
+    // Chart size follows the viewport so the chart and the assistant both fit on load.
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    const wide = vw > 1100;
+    const rowH = wide ? Math.max(380, Math.min(540, vh - 312)) : 0;
+    const colW = Math.max(480, Math.min(vw, 1400) - 40 - (wide ? 400 + 32 : 0));
+    const chartH = wide ? Math.max(160, rowH - 236) : 260;
+    const chartCol = h("div", { class: "chart-col" });
+    const detailBox = h("div", { class: "detail-box" });
     function renderScenarios() {
       const s = scById(SELECTED); const rank = sc.findIndex((x) => x.id === s.id) + 1;
+      const tabs = h("div", { class: "sc-tabs", role: "group", "aria-label": t("fourTitle") }, ...sc.map((x) => h("button", { class: `sc-tab ${x.id === SELECTED ? "on" : ""}`, "aria-pressed": x.id === SELECTED ? "true" : "false", onclick: () => { SELECTED = x.id; renderScenarios(); } },
+        h("span", { class: "sc-tab-name" }, L(x.name)), h("span", { class: "sc-tab-nums tnum" }, h("strong", null, pct(x.probability)), x.delta_pp == null ? null : h("span", { class: x.delta_pp >= 0 ? "pos" : "neg" }, pp(x.delta_pp))))));
       const toggle = h("div", { class: "chips" },
         h("button", { class: `chip ${MODE === "projection" ? "on" : ""}`, onclick: () => { MODE = "projection"; renderScenarios(); } }, t("projection")),
         h("button", { class: `chip ${MODE === "history" ? "on" : ""}`, onclick: () => { MODE = "history"; renderScenarios(); } }, t("history")));
-      const chips = MODE === "projection"
+      const ctl = MODE === "projection"
         ? h("div", { class: "chart-ctl" }, toggle, h("span", { class: "tiny" }, `${t("horizonLabel")}: ${hLabel(HORIZON)}`))
         : h("div", { class: "chart-ctl" }, toggle, h("div", { class: "chips" }, ...[[7, "d7"], [30, "d30"], [90, "d90"], [0, "all"]].map(([rv, k]) => h("button", { class: `chip ${RANGE === rv ? "on" : ""}`, onclick: () => { RANGE = rv; renderScenarios(); } }, t(k)))));
-      const big = h("div", { class: "card big-chart" },
-        h("div", { class: "head" }, h("div", null, h("div", { class: "label" }, rank === 1 ? t("mostLikely") : t("rankOf", { n: rank })), h("div", { class: "name" }, dot(s.id), L(s.name)), h("div", { class: "hero-row", style: { gap: "14px" } }, h("div", { class: "figure" }, pct(s.probability)), deltaEl(s.delta_pp))), chips),
-        MODE === "projection" ? projectionChart(s, HORIZON, 280) : historyChart(s.id, 280),
-        h("div", { class: "section-head", style: { marginTop: "8px" } }, h("span", { class: "tiny" }, MODE === "projection" ? t("pathNote") : `${t("histNote")} ${L(S.history.note)}`), h("a", { class: "link small arrow", href: `#/scenarios/${s.id}` }, t("openScenario"))));
-      const others = sc.filter((x) => x.id !== SELECTED);
-      const minis = h("div", { class: "small-charts" }, ...others.map((x) => h("div", { class: "mini", role: "button", tabindex: "0", onclick: () => { SELECTED = x.id; renderScenarios(); }, onkeydown: (e) => { if (e.key === "Enter") { SELECTED = x.id; renderScenarios(); } } },
-        h("div", { class: "m-name" }, dot(x.id), L(x.name)), h("div", { class: "m-prob" }, pct(x.probability)), h("div", { class: `m-delta ${x.delta_pp == null ? "muted" : x.delta_pp >= 0 ? "pos" : "neg"}` }, x.delta_pp == null ? "" : pp(x.delta_pp)), miniChart(x))));
-      const used = s.contributions.slice(0, 8).map((c) => { const sig = S.signals.find((q) => q.id === c.signal_id); return { c, sig }; });
-      const detail = h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("detailsTitle")), h("span", { class: "tiny" }, `${L(s.demand)} · ${L(s.supply)}`)),
-        h("p", { style: { marginTop: "8px" } }, L(s.narrative)),
+      chartCol.replaceChildren(
+        h("div", { class: "section-head" }, h("h2", null, t("fourTitle")), h("span", { class: "tiny" }, t("fourNote"))),
+        tabs,
+        h("div", { class: "ch-head" }, h("div", { class: "ch-main" }, h("span", { class: "figure sm tnum" }, pct(s.probability)), h("div", null, h("div", { class: "label" }, rank === 1 ? t("mostLikely") : t("rankOf", { n: rank })), deltaEl(s.delta_pp))), ctl),
+        MODE === "projection" ? projectionChart(s, HORIZON, chartH, colW) : historyChart(s.id, chartH, colW),
+        h("div", { class: "section-head ch-foot" }, h("span", { class: "tiny" }, MODE === "projection" ? t("pathNote") : `${t("histNote")} ${L(S.history.note)}`), h("a", { class: "link small arrow", href: `#/scenarios/${s.id}` }, t("openScenario"))));
+      const used = s.contributions.slice(0, 8).map((c) => ({ c, sig: S.signals.find((q) => q.id === c.signal_id) }));
+      detailBox.replaceChildren(disc(`${t("detailsTitle")}: ${L(s.name)}`, h("div", null, h("div", { class: "tiny", style: { marginBottom: "8px" } }, `${L(s.demand)} · ${L(s.supply)}`), h("p", null, L(s.narrative)),
         disc(t("signalsUsed"), h("ul", { class: "bullets sources" }, ...used.map(({ c, sig }) => h("li", null, h("div", null, h("a", { class: "link", href: `#/signal/${c.signal_id}` }, sig ? sShort(sig) : c.signal_name), h("div", { class: "src-meta" }, sig ? `${sig.source.name}${sig.source.date ? " · " + sig.source.date : ""} · ${t("weight")} ${f2(c.weight)}` : "")), h("div", { class: "src-val" }, sig ? labelPill(sig.data_label) : null, " ", h("strong", { class: c.contribution >= 0 ? "pos" : "neg" }, (c.contribution >= 0 ? "+" : "") + f2(c.contribution)))))), true),
         disc(t("confirmT"), h("ul", { class: "bullets" }, ...s.signposts.map((p) => h("li", null, h("span", { class: "dot" }), h("span", null, L(p.text)), h("a", { class: "cite", href: `#/signal/${p.signal_id}` }, p.signal_id))))),
         disc(t("refuteT"), h("ul", { class: "bullets" }, ...s.falsifiers.map((p) => h("li", null, h("span", { class: "dot" }), h("span", null, L(p.text)), h("a", { class: "cite", href: `#/signal/${p.signal_id}` }, p.signal_id))))),
-        disc(t("implications"), h("dl", { class: "kv" }, h("dt", null, t("demand")), h("dd", null, L(s.abb_interpretation.demand)), h("dt", null, t("delivery")), h("dd", null, L(s.abb_interpretation.delivery)), h("dt", null, t("components")), h("dd", null, L(s.abb_interpretation.components)))));
-      section.replaceChildren(h("div", { class: "section-head" }, h("h2", null, t("fourTitle")), h("span", { class: "tiny" }, `${t("fourNote")} ${t("every", { n: S.scheduler.interval_minutes, a: timeOf(S.scheduler.last_run), b: timeOf(S.scheduler.next_run) })}`)), big, minis, detail);
+        disc(t("implications"), h("dl", { class: "kv" }, h("dt", null, t("demand")), h("dd", null, L(s.abb_interpretation.demand)), h("dt", null, t("delivery")), h("dd", null, L(s.abb_interpretation.delivery)), h("dt", null, t("components")), h("dd", null, L(s.abb_interpretation.components))))), false));
     }
-    renderScenarios();
+    if (needSeg) chartCol.append(pickCard("chart")); else renderScenarios();
+
+    // Horizon leader line: from scenarios_by_horizon, not computed here. It sits with the recommended move because the fallback plan depends on it.
+    const hz = S.scenarios_by_horizon && S.scenarios_by_horizon[String(HORIZON)];
+    const hLead = hz && hz.scenarios.find((x) => x.id === hz.leader);
+    const differs = hz && hz.leader !== sc[0].id;
+    const leaderLine = hLead && !needSeg ? h("div", { class: "leader-line" }, h("span", { class: "rec-k" }, `${t("leaderAtH")} (${hLabel(HORIZON)}): `), h("strong", null, L(hLead.name)), " ", h("span", { class: "tnum" }, pct(hLead.probability)), " ",
+      pill(differs ? t("differsHeadline") : t("sameAsHeadline"), differs ? "warn" : ""), differs ? h("span", { class: "small" }, ` ${t("hedgeApplies")} `) : null, h("span", { class: "tiny" }, ` ${t("leaderSens")} `), labelPill("ASSUMPTION")) : null;
+    const rec = needSeg ? pickCard("rec") : (S.recommendation ? recommendationCard(S.recommendation, !!differs, leaderLine) : null);
+
     const bw = S.bullwhip;
     const item = (title, body, open) => h("details", { class: "summary-item", open: open ? "" : null }, h("summary", null, h("span", null, title), h("span", { class: "chev" }, chevIcon())), h("div", { class: "body" }, body));
-    const market = h("div", { class: "card market-card" }, h("div", { class: "section-head", style: { marginBottom: "6px" } }, h("h2", null, t("marketSummary")), h("span", { class: "tiny" }, `${S.meta.today} · ${timeOf(S.scheduler.last_run)}`)),
-      item(t("brief"), h("div", null, h("p", null, cites(S.brief.text)), h("button", { class: "btn sm", onclick: () => window.irmaAsk && window.irmaAsk((S.meta.suggested_prompts[LANG] || S.meta.suggested_prompts.en)[0]) }, wrenchIcon(), t("explore")))),
+    const wl = S.signals.filter((s) => s.computed.weight > 0 && regionOk(s.region)).sort((a, b) => wAt(b, HORIZON) - wAt(a, HORIZON)).slice(0, 12);
+    const topSignals = h("div", null, wl.length ? h("div", { class: "wl" }, ...wl.map((s) => h("a", { href: `#/signal/${s.id}` },
+      h("div", { class: "wl-main" }, h("div", { class: "wl-name" }, h("span", { class: `dir-dot ${s.direction > 0 ? "pos" : s.direction < 0 ? "neg" : ""}`, title: s.direction > 0 ? "▲" : s.direction < 0 ? "▼" : "●" }), sShort(s)),
+        h("div", { class: "wl-sub" }, `${s.locked ? t("tracked") + " · " : ""}${L(s.source_class_label)} · ${t("weightAtH", { h: hLabel(HORIZON) })}`), changeEl(s.change, true)),
+      h("div", { class: "wl-val tnum" }, f2(wAt(s, HORIZON)))))) : h("div", { class: "empty" }, t("noSignalsRegion")),
+      h("a", { class: "link small arrow", href: "#/signals", style: { display: "inline-block", marginTop: "10px" } }, t("allSignals")));
+    const market = h("section", { class: "market-card" }, h("div", { class: "section-head" }, h("h2", null, t("marketSummary")), h("span", { class: "tiny" }, `${S.meta.today} · ${timeOf(S.scheduler.last_run)} · ${t("every", { n: S.scheduler.interval_minutes, a: timeOf(S.scheduler.last_run), b: timeOf(S.scheduler.next_run) })}`)),
+      item(t("fullSituation"), h("div", null, h("p", null, L(S.summary)), world ? h("p", { class: "tiny" }, `${t("dataSetNote")}: ${L(world.note)}`) : null), true),
+      item(t("brief"), h("div", null, h("p", null, cites(S.brief.text)), h("button", { class: "btn sm", onclick: () => window.irmaAsk && window.irmaAsk((S.meta.suggested_prompts[LANG] || S.meta.suggested_prompts.en)[0]) }, wrenchIcon(), t("explore"))), true),
+      item(t("topSignals"), topSignals),
       item(`${t("demandQuality")}: ${bw.overall.replace(/_/g, " ")}`, h("div", null, h("p", null, bw.summary), h("a", { class: "link small arrow", href: "#/scenarios#quality" }, t("openQuality")))),
       ...S.notifications.slice(0, 4).map((n) => item(nTitle(n), h("div", null, h("p", null, nText(n)), h("div", { class: "tiny" }, `${dateOf(n.time)} ${timeOf(n.time)}`), n.signal_id ? h("a", { class: "link small arrow", href: `#/signal/${n.signal_id}` }, t("signal")) : n.scenario_id ? h("a", { class: "link small arrow", href: `#/scenarios/${n.scenario_id}` }, t("scenario")) : null))),
       h("div", { style: { marginTop: "10px" } }, h("a", { class: "link small", href: "#/notifications" }, `${t("allNotifications")} →`)));
-    const main = h("div", { class: "gf-main" }, section);
-    // Top row 70/30: the current situation (with the horizon controls and market summary) on the left, the recommended move on the right.
-    const topRow = h("div", { class: "top-row" }, h("div", { class: "top-left" }, summary, h("div", { class: "card controls-card" }, controls), market), S.recommendation ? recommendationCard(S.recommendation, !!(hz && hz.leader !== sc[0].id)) : null);
-    return h("div", { style: { display: "grid", gap: "20px" } }, topRow, h("div", { class: "gf" }, left, main, h("aside", { class: "gf-right" }, assistantPanel())));
+
+    return h("div", { class: "overview" }, situation, submenu,
+      h("div", { class: "main-row", style: rowH ? `--row-h:${rowH}px` : null }, chartCol, assistantPanel()),
+      detailBox, rec, market, historicalPanel(S.meta.world !== 1));
   }
 
   // ---------- scenarios page ----------
@@ -544,16 +577,22 @@
         ceMore.length ? disc(t("moreCE", { n: ceMore.length }), h("ul", { class: "bullets neg-list" }, ...ceMore.map(negRow))) : null);
     }
     render();
-    return h("div", { style: { display: "grid", gap: "20px" } },
+    const mapRoot = h("section", { class: "signal-map", id: "signal-map", "aria-label": t("mapTitle") });
+    AFTER_MOUNT.push(() => { if (typeof window.renderSignalMap === "function") window.renderSignalMap(mapRoot, { state: STATE, lang: LANG, t, api, reload }); });
+    const lists = h("details", { class: "panel lists" }, h("summary", null, h("h2", null, t("listsTitle")), h("span", { class: "tiny" }, t("listsSub"))),
+      h("div", { class: "lists-body" },
+        h("div", { class: "ctrl-bar" }, h("div", { class: "ctrl-row" }, filterBar(render), hzBox), h("div", { class: "section-head" }, chips, countEl)),
+        changesBox,
+        h("div", { class: "sig-grid" },
+          h("div", { style: { display: "grid", gap: "24px", alignContent: "start" } },
+            h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("strongSignals")), h("span", { class: "small muted" }, `${t("weight")} (${hLabel(HORIZON)}) ≥ ${S.settings.strong_signal_weight}`)), h("p", { class: "small muted" }, t("strongSub")), strongList),
+            h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("weakSignals")), h("span", { class: "small muted" }, `${t("weight")} (${hLabel(HORIZON)}) < ${S.settings.strong_signal_weight}`)), h("p", { class: "small muted" }, t("weakSub")), weakList)),
+          negBox)));
+    return h("div", { class: "stack-page" },
       h("div", { class: "page-head" }, h("div", null, h("h1", null, t("signals")), h("div", { class: "sub" }, t("signalsSub"))), h("a", { class: "btn primary", href: "#/import" }, t("importData"))),
+      mapRoot,
       scoutPanel(),
-      h("div", { class: "ctrl-bar" }, h("div", { class: "ctrl-row" }, filterBar(render), hzBox), h("div", { class: "section-head" }, chips, countEl)),
-      changesBox,
-      h("div", { class: "sig-grid" },
-        h("div", { style: { display: "grid", gap: "20px", alignContent: "start" } },
-          h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("strongSignals")), h("span", { class: "small muted" }, `${t("weight")} (${hLabel(HORIZON)}) ≥ ${S.settings.strong_signal_weight}`)), h("p", { class: "small muted" }, t("strongSub")), strongList),
-          h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("weakSignals")), h("span", { class: "small muted" }, `${t("weight")} (${hLabel(HORIZON)}) < ${S.settings.strong_signal_weight}`)), h("p", { class: "small muted" }, t("weakSub")), weakList)),
-        negBox));
+      lists);
   }
 
   function webVerificationView(v) {
@@ -568,7 +607,7 @@
   }
 
   // ---------- weight explanation on the signal page: everything here comes from computed.* ----------
-  const ATTR_COLORS = { credibility: "#2a78d6", currency: "#1baf7a", materiality: "#4a3aa7", human: "#e76500" };
+  const ATTR_COLORS = { credibility: "#1f2937", currency: "#6b7280", materiality: "#a3a9b3", human: "#ff000f" };
   function attributionBar(attr) {
     if (!attr || !attr.length) return h("div", { class: "small muted" }, t("noDiscount"));
     return h("div", null,
@@ -578,13 +617,20 @@
   function bandBar(W) {
     const b = W.band; if (!b) return null;
     const pos = (v) => `${Math.max(0, Math.min(1, v)) * 100}%`;
-    const methods = Object.entries(b.methods || {});
     return h("div", null,
       h("div", { class: "band" }, h("span", { class: "band-range", style: { left: pos(b.min), width: `${Math.max(0.01, b.max - b.min) * 100}%` } }), h("span", { class: "band-mark", style: { left: pos(W.weight) }, title: `${t("weight")} ${f2(W.weight)}` })),
       h("div", { class: "band-scale tiny tnum" }, h("span", null, "0"), h("span", null, "1")),
       h("div", { class: "small tnum" }, h("strong", null, `${f2(b.min)}–${f2(b.max)}`), ` · ${t("weight")} ${f2(W.weight)}`),
-      h("div", { class: "tiny" }, t("bandNote")),
-      methods.length ? disc(t("methodsLabel"), h("dl", { class: "kv tnum" }, ...methods.flatMap(([k, v]) => [h("dt", null, t(`m_${k}`)), h("dd", null, f2(v))]))) : null);
+      h("div", { class: "tiny" }, t("bandNote")));
+  }
+  // Each formula's value (computed.band.methods) and the one used (computed.weight). The "used" mark goes to the method whose value equals the weight.
+  function formulaTable(W) {
+    const methods = Object.entries((W.band && W.band.methods) || {}); if (!methods.length) return null;
+    const isUsed = (v) => Math.abs(v - W.weight) < 0.00051;
+    return h("div", { class: "formulas" }, h("h3", { class: "sub-h" }, t("formulaTitle")),
+      h("ul", { class: "formula-rows tnum" }, ...methods.map(([k, v]) => h("li", { class: isUsed(v) ? "used" : "" }, h("span", null, t(`m_${k}`)), h("strong", null, f2(v)), isUsed(v) ? pill(t("formulaUsed"), "accent") : h("span"))),
+        h("li", { class: "weight-used" }, h("span", null, t("weightUsed")), h("strong", null, f2(W.weight)), h("span"))),
+      h("div", { class: "tiny" }, t("formulaUsedNote")));
   }
   function horizonTable(W) {
     if (!W.horizon_fit || !W.horizon) return null;
@@ -628,6 +674,7 @@
     const weightCard = h("div", { class: "card" }, h("div", { class: "label" }, t("weightIn")), h("div", { class: "figure sm tnum" }, f2(s.computed.weight)), h("div", { class: "small muted" }, `${t("reliability")} ${s.reliability} · ${t("freshness")} ${f2(c.freshness)} · ${t("strength")} ${f2(c.strength)}`),
       sCur && sCur.change ? h("div", { style: { marginTop: "8px" } }, changeEl(sCur.change, false)) : null,
       s.computed.band ? h("div", { class: "small muted tnum", style: { marginTop: "6px" } }, `${t("bandTitle")}: ${f2(s.computed.band.min)}–${f2(s.computed.band.max)}`) : null,
+      formulaTable(s.computed) ? h("div", { style: { marginTop: "14px" } }, formulaTable(s.computed)) : null,
       s.computed.horizon ? h("div", { class: "small muted tnum" }, HORIZONS.map((m) => `${hLabel(m)} ${f2(s.computed.horizon[String(m)])}`).join(" · ")) : null,
       s.locked ? h("div", { class: "note ok", style: { marginTop: "10px" } }, t("trackedNote", { n: s.tracking?.checks || 0, t: timeOf(s.tracking?.last_checked) })) : null);
     const source = h("div", { class: "card" }, h("div", { class: "section-head" }, h("h2", null, t("source"))), h("div", { class: "quote" }, s.excerpt),
@@ -780,11 +827,13 @@
     renderBanner();
   }
   async function load() { STATE = await api("/api/state"); afterLoad(); }
+  const reload = async () => { await load(); await route({ keepScroll: true }); };
   function setNav(route) { document.querySelectorAll(".nav a").forEach((a) => a.classList.toggle("active", a.dataset.route === route)); }
   async function route(opts) {
     const keep = opts && opts.keepScroll; const y = window.scrollY;
     const hash = location.hash || "#/"; const [path, anchor] = hash.slice(2).split("#"); const parts = path.split("/").filter(Boolean);
     document.querySelectorAll(".tooltip").forEach((x) => x.remove());
+    AFTER_MOUNT.length = 0;
     let view;
     try {
       if (parts[0] === "scenarios") { setNav("scenarios"); view = viewScenarios(parts[1], anchor); }
@@ -797,6 +846,8 @@
     } catch (e) { view = h("div", { class: "note warn" }, `Could not render this page: ${e.message}`); }
     app.replaceChildren(view);
     if (keep) window.scrollTo(0, y); else if (!anchor) window.scrollTo(0, 0);
+    // Hooks registered while building the view (the signal map) run once the page is in the document.
+    AFTER_MOUNT.splice(0).forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
   }
   window.addEventListener("hashchange", route);
   document.getElementById("search").addEventListener("keydown", (e) => { if (e.key === "Enter") { SEARCH = e.target.value.trim(); if (location.hash.startsWith("#/signals")) route(); else location.hash = "#/signals"; } });

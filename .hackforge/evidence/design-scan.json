@@ -1,0 +1,19 @@
+{
+  "schema_version": "hackforge-design-scan.v1",
+  "generated_at": "2026-11-05T21:19:19+00:00",
+  "available": true,
+  "tool": "/Users/veetinurmikoski/ClaudeCodeUI/dist/mac-arm64/Harness.app/Contents/Resources/app.asar.unpacked/resources/design/impeccable/skills/impeccable/scripts/impeccable",
+  "targets": [
+    "app/frontend/app.js",
+    "app/frontend/styles.css",
+    "app/frontend/index.html"
+  ],
+  "exit": 0,
+  "error": null,
+  "findings": [],
+  "counts": {
+    "total": 0,
+    "by_category": {},
+    "by_rule": {}
+  }
+}

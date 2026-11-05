@@ -49,21 +49,21 @@
       "en": "Gas and LNG project investment decisions keep being taken",
       "fi": "Kaasu- ja LNG-hankkeiden investointipäätöksiä tehdään edelleen"
      },
-     "signal_id": "OG-003"
+     "signal_id": "OG-010"
     },
     {
      "text": {
       "en": "Component lead times for industrial electronics stay long",
       "fi": "Teollisuuselektroniikan komponenttien toimitusajat pysyvät pitkinä"
      },
-     "signal_id": "OG-009"
+     "signal_id": "OG-006"
     },
     {
      "text": {
       "en": "Disrupted Middle East supply keeps buyers securing parts early",
       "fi": "Lähi-idän toimitushäiriö saa ostajat varmistamaan osia ajoissa"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     }
    ],
    "falsifiers": [
@@ -72,14 +72,14 @@
       "en": "Planned gas projects are postponed or cancelled",
       "fi": "Suunniteltuja kaasuhankkeita lykätään tai peruutetaan"
      },
-     "signal_id": "OG-003"
+     "signal_id": "OG-010"
     },
     {
      "text": {
       "en": "Component lead times shorten across several suppliers",
       "fi": "Komponenttien toimitusajat lyhenevät usealla toimittajalla"
      },
-     "signal_id": "OG-009"
+     "signal_id": "OG-006"
     }
    ],
    "abb_interpretation": {
@@ -144,14 +144,14 @@
       "en": "Component lead times for industrial electronics fall",
       "fi": "Teollisuuselektroniikan komponenttien toimitusajat lyhenevät"
      },
-     "signal_id": "OG-009"
+     "signal_id": "OG-006"
     },
     {
      "text": {
       "en": "Gas and LNG project investment decisions continue",
       "fi": "Kaasu- ja LNG-hankkeiden investointipäätökset jatkuvat"
      },
-     "signal_id": "OG-003"
+     "signal_id": "OG-010"
     }
    ],
    "falsifiers": [
@@ -160,14 +160,14 @@
       "en": "Lead times for industrial electronics rise again",
       "fi": "Teollisuuselektroniikan toimitusajat pidentyvät uudelleen"
      },
-     "signal_id": "OG-009"
+     "signal_id": "OG-006"
     },
     {
      "text": {
       "en": "Middle East supply disruption widens",
       "fi": "Lähi-idän toimitushäiriö laajenee"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     }
    ],
    "abb_interpretation": {
@@ -232,21 +232,21 @@
       "en": "Brent price falls well below recent levels",
       "fi": "Brent-hinta laskee selvästi viimeaikaisten tasojen alle"
      },
-     "signal_id": "OG-001"
+     "signal_id": "OG-002"
     },
     {
      "text": {
       "en": "Upstream investment plans are cut or delayed",
       "fi": "Öljyn tuotannon investointisuunnitelmia leikataan tai viivästetään"
      },
-     "signal_id": "OG-002"
+     "signal_id": "OG-001"
     },
     {
      "text": {
       "en": "Norwegian shelf investment estimates are revised down",
       "fi": "Norjan mannerjalustan investointiarvioita korjataan alaspäin"
      },
-     "signal_id": "OG-004"
+     "signal_id": "OG-003"
     }
    ],
    "falsifiers": [
@@ -255,14 +255,14 @@
       "en": "Brent price stays high into next year",
       "fi": "Brent-hinta pysyy korkeana ensi vuoteen"
      },
-     "signal_id": "OG-001"
+     "signal_id": "OG-002"
     },
     {
      "text": {
       "en": "Operators raise their investment plans",
       "fi": "Operaattorit nostavat investointisuunnitelmiaan"
      },
-     "signal_id": "OG-002"
+     "signal_id": "OG-001"
     }
    ],
    "abb_interpretation": {
@@ -327,21 +327,21 @@
       "en": "Offshore and terminal electrification projects are approved",
       "fi": "Offshore- ja terminaalisähköistyshankkeita hyväksytään"
      },
-     "signal_id": "OG-006"
+     "signal_id": "OG-008"
     },
     {
      "text": {
       "en": "Emission rules tighten for oil and gas operations",
       "fi": "Öljy- ja kaasutoiminnan päästösäännöt tiukkenevat"
      },
-     "signal_id": "OG-005"
+     "signal_id": "OG-007"
     },
     {
      "text": {
       "en": "Norwegian shelf investment includes power-system work",
       "fi": "Norjan mannerjalustan investoinneissa on sähköjärjestelmätyötä"
      },
-     "signal_id": "OG-004"
+     "signal_id": "OG-003"
     }
    ],
    "falsifiers": [
@@ -350,14 +350,14 @@
       "en": "Electrification projects are delayed for grid capacity reasons",
       "fi": "Sähköistyshankkeita viivästetään verkkokapasiteetin vuoksi"
      },
-     "signal_id": "OG-006"
+     "signal_id": "OG-008"
     },
     {
      "text": {
       "en": "Emission rules are relaxed or postponed",
       "fi": "Päästösääntöjä lievennetään tai lykätään"
      },
-     "signal_id": "OG-005"
+     "signal_id": "OG-007"
     }
    ],
    "abb_interpretation": {
@@ -422,14 +422,14 @@
       "en": "Norwegian shelf investment stays near its current level",
       "fi": "Norjan mannerjalustan investoinnit pysyvät nykytasolla"
      },
-     "signal_id": "OG-004"
+     "signal_id": "OG-003"
     },
     {
      "text": {
       "en": "Upstream investment plans stay unchanged",
       "fi": "Öljyn tuotannon investointisuunnitelmat pysyvät ennallaan"
      },
-     "signal_id": "OG-002"
+     "signal_id": "OG-001"
     }
    ],
    "falsifiers": [
@@ -438,14 +438,14 @@
       "en": "A sharp move in the oil price changes operators' plans",
       "fi": "Öljyn hinnan jyrkkä liike muuttaa operaattoreiden suunnitelmia"
      },
-     "signal_id": "OG-001"
+     "signal_id": "OG-002"
     },
     {
      "text": {
       "en": "A new supply disruption starts rush orders",
       "fi": "Uusi toimitushäiriö käynnistää kiiretilaukset"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     }
    ],
    "abb_interpretation": {
@@ -510,14 +510,14 @@
       "en": "Clean energy investment keeps outgrowing fossil investment",
       "fi": "Puhtaan energian investoinnit kasvavat edelleen fossiilisia nopeammin"
      },
-     "signal_id": "OG-002"
+     "signal_id": "OG-001"
     },
     {
      "text": {
       "en": "Oil and gas operators announce smaller long-term plans",
       "fi": "Öljy- ja kaasuyhtiöt ilmoittavat aiempaa pienemmistä pitkän aikavälin suunnitelmista"
      },
-     "signal_id": "OG-004"
+     "signal_id": "OG-003"
     }
    ],
    "falsifiers": [
@@ -526,14 +526,14 @@
       "en": "Gas investment keeps rising to new highs",
       "fi": "Kaasuinvestoinnit nousevat edelleen uusiin huippuihin"
      },
-     "signal_id": "OG-003"
+     "signal_id": "OG-010"
     },
     {
      "text": {
       "en": "Emission rules are relaxed or postponed",
       "fi": "Päästösääntöjä lievennetään tai lykätään"
      },
-     "signal_id": "OG-005"
+     "signal_id": "OG-007"
     }
    ],
    "abb_interpretation": {
@@ -598,21 +598,21 @@
       "en": "Brent price stays far above its level before the disruption",
       "fi": "Brent-hinta pysyy selvästi häiriötä edeltänyttä tasoa korkeampana"
      },
-     "signal_id": "OG-001"
+     "signal_id": "OG-002"
     },
     {
      "text": {
       "en": "Distributors and engineering firms order ahead of end demand",
       "fi": "Jakelijat ja suunnittelutoimistot tilaavat ennen loppukysyntää"
      },
-     "signal_id": "OG-010"
+     "signal_id": "OG-005"
     },
     {
      "text": {
       "en": "Middle East exports stay constrained and inventories keep falling",
       "fi": "Lähi-idän viennit pysyvät rajoitettuina ja varastot pienenevät edelleen"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     }
    ],
    "falsifiers": [
@@ -621,14 +621,14 @@
       "en": "Middle East flows recover and the price falls back",
       "fi": "Lähi-idän virrat palautuvat ja hinta laskee takaisin"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     },
     {
      "text": {
       "en": "Orders from intermediaries stop growing faster than end demand",
       "fi": "Välikäsien tilaukset eivät enää kasva loppukysyntää nopeammin"
      },
-     "signal_id": "OG-010"
+     "signal_id": "OG-005"
     }
    ],
    "abb_interpretation": {
@@ -693,14 +693,14 @@
       "en": "Intermediary orders fall below end demand",
       "fi": "Välikäsien tilaukset jäävät loppukysynnän alle"
      },
-     "signal_id": "OG-010"
+     "signal_id": "OG-005"
     },
     {
      "text": {
       "en": "Middle East flows recover and the Brent price falls",
       "fi": "Lähi-idän virrat palautuvat ja Brent-hinta laskee"
      },
-     "signal_id": "OG-007"
+     "signal_id": "OG-009"
     }
    ],
    "falsifiers": [
@@ -709,7 +709,7 @@
       "en": "Lead times for industrial electronics stay long",
       "fi": "Teollisuuselektroniikan toimitusajat pysyvät pitkinä"
      },
-     "signal_id": "OG-009"
+     "signal_id": "OG-006"
     }
    ],
    "abb_interpretation": {

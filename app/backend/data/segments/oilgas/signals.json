@@ -1,0 +1,572 @@
+[
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-001",
+  "name": "IEA World Energy Investment 2026: upstream oil falls for a third year, gas spending at a ten-year high",
+  "short": "IEA upstream capex 2026",
+  "category": "demand",
+  "measures": "end_demand",
+  "region": "GLOBAL",
+  "type": "leading",
+  "lead_months": 18,
+  "lead_months_rationale": "[ASSUMPTION: annual capex budgets turn into sanctioned projects and then into protection-relay orders for platforms, terminals and compressor stations roughly 12-24 months later. Verify with ABB.]",
+  "update_frequency": "annual",
+  "source": {
+   "name": "IEA, World Energy Investment 2026 (reported by IENE)",
+   "url": "https://www.iene.eu/energy-news/natural-gas-spending-to-hit-10-year-high-in-2026-as-oil-investment-falls-iea-says-p8516.html",
+   "access": "Public news report of the IEA release, free",
+   "date": "2026-05-28"
+  },
+  "reliability": "B",
+  "direction": 1,
+  "strength": 0.5,
+  "classification": "mixed",
+  "classification_rationale": "Oil supply investment is falling while gas investment, mostly US LNG, is rising, so the total mixes a cyclical oil leg with a structural gas leg. Relay demand follows the gas and LNG leg more than the oil leg.",
+  "value": {
+   "number": 330,
+   "unit": "USD bn",
+   "label": "global natural gas investment in 2026, up over 10% and a ten-year high; oil supply investment below USD 500 bn"
+  },
+  "excerpt": "Less than $500 billion will be invested in oil supply. [...] Natural gas growth largely from U.S. LNG projects",
+  "counter_evidence": [
+   "OG-CE-001"
+  ],
+  "source_class": "research",
+  "axes": {
+   "demand": 0.7,
+   "supply": 0.0,
+   "policy": 0.0,
+   "price": 0.3,
+   "nordic": 0.0,
+   "bullwhip": 0.0
+  },
+  "short_fi": "IEA: öljyn ja kaasun tuotantoinvestoinnit 2026",
+  "observed_at": "2026-05-28"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-002",
+  "name": "EIA STEO October 2026: Brent at USD 105 in Q4 2026, falling to USD 84 on average in 2027",
+  "short": "EIA Brent outlook 2027",
+  "category": "price",
+  "measures": "end_demand",
+  "region": "GLOBAL",
+  "type": "leading",
+  "lead_months": 9,
+  "lead_months_rationale": "[ASSUMPTION: producer cash flow follows the oil price within quarters and capex plans follow cash flow within one to two years, so the price leads orders by roughly 6-12 months. Verify with ABB.]",
+  "update_frequency": "monthly",
+  "source": {
+   "name": "U.S. Energy Information Administration, Short-Term Energy Outlook, October 2026",
+   "url": "https://www.eia.gov/outlooks/steo/",
+   "access": "Public, free",
+   "date": "2026-10-06"
+  },
+  "reliability": "A",
+  "direction": -1,
+  "strength": 0.6,
+  "classification": "cyclical",
+  "classification_rationale": "A forecast price path driven by a Middle East supply disruption and inventory draws is a cyclical driver of customer cash flow. The measure is read as customer capex capacity, not as an input cost to ABB: the fall from USD 105 to USD 84 lowers it.",
+  "value": {
+   "number": 84,
+   "unit": "USD/b",
+   "label": "forecast Brent spot average for 2027, after USD 105/b expected in 4Q26"
+  },
+  "excerpt": "We now forecast the Brent crude oil spot price will average $105 per barrel (b) in 4Q26 [...] We expect the Brent spot price will fall to an average of $84/b next year.",
+  "counter_evidence": [
+   "OG-CE-002"
+  ],
+  "source_class": "price",
+  "axes": {
+   "demand": 0.3,
+   "supply": 0.3,
+   "policy": 0.0,
+   "price": 0.8,
+   "nordic": 0.0,
+   "bullwhip": 0.2
+  },
+  "short_fi": "EIA: Brent-ennuste 2027",
+  "observed_at": "2026-10-06"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-003",
+  "name": "Statistics Norway: oil and gas investment NOK 275 bn in 2026, NOK 227 bn expected for 2027",
+  "short": "Norway O&G investment survey",
+  "category": "demand",
+  "measures": "end_demand",
+  "region": "NORDICS",
+  "type": "leading",
+  "lead_months": 12,
+  "lead_months_rationale": "[ASSUMPTION: the survey reports operators' own investment plans for the next two years; relay demand for platforms and subsea tie-backs follows project execution within about 6-18 months. Verify with ABB.]",
+  "update_frequency": "quarterly",
+  "source": {
+   "name": "Statistics Norway investment survey (reported by Offshore Energy Digital / Reuters)",
+   "url": "https://www.oedigital.com/news/542082-offshore-norway-2026-investment-outlook-perks-up",
+   "access": "Public news report of the SSB release, free",
+   "date": "2026-08-13"
+  },
+  "reliability": "B",
+  "direction": -1,
+  "strength": 0.5,
+  "classification": "mixed",
+  "classification_rationale": "The 2026 level is revised up, but the 2027 estimate is lower than 2026. A step down from a high level, not a collapse; the base of production drilling on operating fields remains.",
+  "value": {
+   "number": 227,
+   "unit": "NOK bn",
+   "label": "expected 2027 oil and gas investment in Norway (2026: NOK 275 bn; previous 2027 estimate: NOK 207 bn)"
+  },
+  "excerpt": "The Nordic country's biggest business sector now expects to invest 275 billion Norwegian crowns ($28.97 billion) in 2026, up from 266 billion seen in May [...] Next year, investments are expected to decline to 227 billion crowns, above the 207 billion crowns seen previously",
+  "counter_evidence": [
+   "OG-CE-003"
+  ],
+  "source_class": "research",
+  "axes": {
+   "demand": 0.7,
+   "supply": 0.0,
+   "policy": 0.2,
+   "price": 0.0,
+   "nordic": 0.8,
+   "bullwhip": 0.0
+  },
+  "short_fi": "Norja: öljyn ja kaasun investointikysely",
+  "observed_at": "2026-08-13"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-004",
+  "name": "Baker Hughes: US oil and gas rig count at 603, 10% above a year earlier",
+  "short": "US rig count (Baker Hughes)",
+  "category": "demand",
+  "measures": "end_demand",
+  "region": "US",
+  "type": "coincident",
+  "lead_months": 6,
+  "lead_months_rationale": "[ASSUMPTION: the rig count is an early indicator of drilling output; wellsite and midstream electrical orders follow with a lag of roughly 3-9 months. Verify with ABB.]",
+  "update_frequency": "weekly",
+  "source": {
+   "name": "Baker Hughes weekly rig count (reported by BOE Report / Reuters)",
+   "url": "https://boereport.com/2026/10/16/us-energy-firms-left-the-rig-count-unchanged-this-week-baker-hughes-says/",
+   "access": "Public news report, free",
+   "date": "2026-10-16"
+  },
+  "reliability": "B",
+  "direction": 1,
+  "strength": 0.5,
+  "classification": "cyclical",
+  "classification_rationale": "Rig counts react to the oil price within months and reverse with it; this reading is cyclical.",
+  "value": {
+   "number": 603,
+   "unit": "rigs",
+   "label": "US total oil and gas rigs, week to 16 October 2026 (oil 459, gas 133, other 11)"
+  },
+  "excerpt": "The total oil and gas rig count, an early indicator of future output, held steady at 603 in the week to October 16. [...] Baker Hughes said that put the total rig count up 55 rigs, or 10% above this time last year.",
+  "counter_evidence": [
+   "OG-CE-004"
+  ],
+  "source_class": "price",
+  "axes": {
+   "demand": 0.6,
+   "supply": 0.0,
+   "policy": 0.0,
+   "price": 0.3,
+   "nordic": 0.0,
+   "bullwhip": 0.3
+  },
+  "short_fi": "USA: porauslautat (Baker Hughes)",
+  "observed_at": "2026-10-16"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-005",
+  "name": "ABB Q2 2026: oil and gas sentiment solid, orders down on timing",
+  "short": "ABB Q2 oil and gas comment",
+  "category": "demand",
+  "measures": "intermediary",
+  "region": "GLOBAL",
+  "type": "coincident",
+  "lead_months": 3,
+  "lead_months_rationale": "[ASSUMPTION: a supplier's own order commentary reports orders already booked, so it is close to coincident with relay demand. Verify with ABB.]",
+  "update_frequency": "quarterly",
+  "source": {
+   "name": "ABB Q2 2026 results, press release",
+   "url": "https://new.abb.com/news/detail/137496/q2-2026-results",
+   "access": "Public press release / PDF, free",
+   "date": "2026-07-16"
+  },
+  "reliability": "A",
+  "direction": 1,
+  "strength": 0.3,
+  "classification": "cyclical",
+  "classification_rationale": "Order timing between quarters is cyclical. ABB's wording is 'solid' sentiment with orders lower on timing, so the direction is mildly positive and the strength is low.",
+  "value": {
+   "number": -13,
+   "unit": "%",
+   "label": "ABB Automation business area orders in Q2 2026 year on year (-14% comparable); oil and gas sentiment described as solid"
+  },
+  "excerpt": "Sentiment in the oil & gas segment remained solid, although orders declined due to timing impacts.",
+  "counter_evidence": [
+   "OG-CE-005"
+  ],
+  "source_class": "news",
+  "axes": {
+   "demand": 0.6,
+   "supply": 0.1,
+   "policy": 0.0,
+   "price": 0.0,
+   "nordic": 0.0,
+   "bullwhip": 0.3
+  },
+  "short_fi": "ABB Q2: öljy- ja kaasusegmentti",
+  "observed_at": "2026-07-16"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-006",
+  "name": "PwC: high-capacity transformer lead times up to four years (US grid, shared electrical supply chain)",
+  "short": "Transformer lead times",
+  "category": "supply",
+  "measures": "supply_tightness",
+  "region": "US",
+  "type": "coincident",
+  "lead_months": 12,
+  "lead_months_rationale": "[ASSUMPTION: long lead times on shared electrical equipment delay energisation of oil and gas sites and push relay deliveries; the effect is felt within the project schedule, about 6-18 months. Verify with ABB.]",
+  "update_frequency": "event",
+  "source": {
+   "name": "pv magazine USA, U.S. transformer market faces severe supply constraints as lead times extend to four years",
+   "url": "https://pv-magazine-usa.com/2026/05/11/u-s-transformer-market-faces-severe-supply-constraints-as-lead-times-extend-to-four-years/",
+   "access": "Public article, free",
+   "date": "2026-05-11"
+  },
+  "reliability": "B",
+  "direction": 1,
+  "strength": 0.6,
+  "classification": "structural",
+  "classification_rationale": "Capacity of transformer factories changes over years, not quarters. The card concerns the US grid; oil and gas projects compete for the same equipment but the card does not measure oil and gas orders.",
+  "value": {
+   "number": 4,
+   "unit": "years",
+   "label": "longest lead time for high-capacity transformers, according to PwC analysts"
+  },
+  "excerpt": "Long transformer lead times are now dictating power project schedules across the country. [...] Lead times for high capacity units to as long as four years, according to analysts from PwC.",
+  "counter_evidence": [
+   "OG-CE-006"
+  ],
+  "source_class": "news",
+  "axes": {
+   "demand": 0.0,
+   "supply": 0.8,
+   "policy": 0.0,
+   "price": 0.2,
+   "nordic": 0.0,
+   "bullwhip": 0.4
+  },
+  "short_fi": "Muuntajien toimitusajat",
+  "observed_at": "2026-05-11"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-007",
+  "name": "European Parliament backs a three-year delay to EU methane rules for oil and gas imports",
+  "short": "EU methane import rule delay",
+  "category": "policy",
+  "measures": "policy",
+  "region": "EU",
+  "type": "leading",
+  "lead_months": 24,
+  "lead_months_rationale": "[ASSUMPTION: monitoring and abatement obligations create equipment projects about two years before enforcement; a delay moves them out. Verify with ABB.]",
+  "update_frequency": "event",
+  "source": {
+   "name": "Hydrocarbon Processing, European Parliament votes to approve three-year delay on EU methane rules",
+   "url": "https://hydrocarbonprocessing.com/news/2026/10/european-parliament-votes-to-approve-three-year-delay-on-eu-methane-rules/",
+   "access": "Public article, free",
+   "date": "2026-10-22"
+  },
+  "reliability": "B",
+  "direction": -1,
+  "strength": 0.4,
+  "classification": "mixed",
+  "classification_rationale": "A parliamentary position, not yet final law. It lowers the near-term pull on methane monitoring and abatement equipment but does not remove the regulation.",
+  "value": {
+   "number": 3,
+   "unit": "years",
+   "label": "delay approved by Parliament; importers would have until 31 May 2031 to show equivalent monitoring, reporting and verification"
+  },
+  "excerpt": "The European Parliament voted on Thursday to approve a three-year delay to the EU's methane emissions rules for oil and gas imports.",
+  "counter_evidence": [
+   "OG-CE-007"
+  ],
+  "source_class": "policy",
+  "axes": {
+   "demand": 0.2,
+   "supply": 0.0,
+   "policy": 0.8,
+   "price": 0.0,
+   "nordic": 0.2,
+   "bullwhip": 0.0
+  },
+  "short_fi": "EU: metaanisäädösten viivästys",
+  "observed_at": "2026-10-22"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-008",
+  "name": "Equinor scales back Troll West electrification: second electric export compressor dropped",
+  "short": "Equinor Troll electrification",
+  "category": "demand",
+  "measures": "end_demand",
+  "region": "NORDICS",
+  "type": "coincident",
+  "lead_months": 12,
+  "lead_months_rationale": "[ASSUMPTION: platform electrification scope sets the number of power-from-shore switchgear and protection packages; a scope cut shows up in orders within the project schedule. Verify with ABB.]",
+  "update_frequency": "event",
+  "source": {
+   "name": "Pipeline & Gas Journal, Equinor scales back Troll electrification",
+   "url": "https://www.pgjonline.com/news/2026/october/equinor-scales-back-troll-electrification-drops-second-electric-export-compressor-to-protect-gas-output",
+   "access": "Public article, free",
+   "date": "2026-10-22"
+  },
+  "reliability": "B",
+  "direction": -1,
+  "strength": 0.5,
+  "classification": "structural",
+  "classification_rationale": "A project-scope decision by the largest Norwegian operator, driven by gas supply to Europe. It is not a cyclical swing; it shows how far offshore electrification is traded against output.",
+  "value": {
+   "number": 21,
+   "unit": "months",
+   "label": "production shutdown the second compressor would have required"
+  },
+  "excerpt": "TWEL will be completed after commissioning the first electric export compressor on Troll C",
+  "counter_evidence": [
+   "OG-CE-008"
+  ],
+  "source_class": "news",
+  "axes": {
+   "demand": 0.4,
+   "supply": 0.0,
+   "policy": 0.3,
+   "price": 0.0,
+   "nordic": 0.8,
+   "bullwhip": 0.0
+  },
+  "short_fi": "Equinor: Trollin sähköistyksen supistus",
+  "observed_at": "2026-10-22"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-009",
+  "name": "EIA: Middle East shut-in oil production easing, attacks on the Saudi East-West pipeline",
+  "short": "Middle East supply disruption",
+  "category": "supply",
+  "measures": "end_demand",
+  "region": "GLOBAL",
+  "type": "coincident",
+  "lead_months": 6,
+  "lead_months_rationale": "[ASSUMPTION: a regional disruption changes customer investment decisions and shipping risk within about two quarters. Verify with ABB.]",
+  "update_frequency": "monthly",
+  "source": {
+   "name": "U.S. Energy Information Administration, Short-Term Energy Outlook, October 2026",
+   "url": "https://www.eia.gov/outlooks/steo/",
+   "access": "Public, free",
+   "date": "2026-10-06"
+  },
+  "reliability": "A",
+  "direction": -1,
+  "strength": 0.5,
+  "classification": "cyclical",
+  "classification_rationale": "Hostilities and shut-ins are an event-driven disruption, not a trend. Direction is read as the effect on ABB's Middle East customer activity (negative while disrupted); the card does not claim a rebuild order wave.",
+  "value": {
+   "number": 105,
+   "unit": "USD/b",
+   "label": "EIA forecast Brent in 4Q26 during the Middle East disruption; regional shut-in production in September lowest since the onset of hostilities"
+  },
+  "excerpt": "The attacks on the East-West pipeline in Saudi Arabia highlight the potential for continued volatility in physical oil flows and oil prices amid ongoing withdrawals of oil inventories globally.",
+  "counter_evidence": [
+   "OG-CE-009"
+  ],
+  "source_class": "news",
+  "axes": {
+   "demand": 0.5,
+   "supply": 0.5,
+   "policy": 0.0,
+   "price": 0.4,
+   "nordic": 0.0,
+   "bullwhip": 0.0
+  },
+  "short_fi": "EIA: Lähi-idän tuotantohäiriöt",
+  "observed_at": "2026-10-06"
+ },
+ {
+  "market": "oilgas",
+  "segment": "oilgas",
+  "data_label": "SOURCE",
+  "ce_searched": true,
+  "annotations": [],
+  "locked": false,
+  "tracking": {
+   "checks": 0,
+   "last_checked": null
+  },
+  "history": [],
+  "history_label": "NONE",
+  "history_note": "Single published reading; no time series on the card.",
+  "usage_restrictions": "Public; cite the source.",
+  "id": "OG-010",
+  "name": "Wood Mackenzie: 225 Mtpa of LNG under construction after a record year of FIDs in 2025",
+  "short": "LNG capacity under construction",
+  "category": "demand",
+  "measures": "end_demand",
+  "region": "GLOBAL",
+  "type": "leading",
+  "lead_months": 24,
+  "lead_months_rationale": "[ASSUMPTION: liquefaction trains already sanctioned order switchgear and protection in the build phase, roughly 1-3 years before start-up. Verify with ABB.]",
+  "update_frequency": "annual",
+  "source": {
+   "name": "Wood Mackenzie via LNG Industry, Five global gas and LNG themes to look out for in 2026",
+   "url": "https://www.lngindustry.com/special-reports/21012026/wood-mackenzie-five-global-gas-and-lng-themes-to-look-out-for-in-2026",
+   "access": "Public article, free",
+   "date": "2026-01-21"
+  },
+  "reliability": "B",
+  "direction": 1,
+  "strength": 0.6,
+  "classification": "structural",
+  "classification_rationale": "Sanctioned liquefaction projects are multi-year builds with contracts and financing in place; they do not unwind with a quarterly price move. Timing of orders within the build is uncertain.",
+  "value": {
+   "number": 225,
+   "unit": "Mtpa",
+   "label": "LNG supply under construction; 2025 record FIDs: nine projects totalling 72 Mtpa"
+  },
+  "excerpt": "2025 was a record year for final investment decisions, with nine projects totalling 72 million tpy [...] with 225 million tpy of LNG supply currently under construction, the expectation is for lower LNG prices",
+  "counter_evidence": [
+   "OG-CE-010"
+  ],
+  "source_class": "research",
+  "axes": {
+   "demand": 0.6,
+   "supply": 0.3,
+   "policy": 0.0,
+   "price": 0.4,
+   "nordic": 0.0,
+   "bullwhip": 0.2
+  },
+  "short_fi": "LNG-kapasiteetti rakenteilla",
+  "observed_at": "2026-01-21"
+ }
+]

@@ -1,5 +1,5 @@
 {
-  "note": "Inputs for the deterministic bullwhip metrics in the oil and gas segment. Every series is labelled SOURCE, DEMODATA or ASSUMPTION. The engine computes the metric values; nothing here is a result. Same method names and structure as the data-centre file.",
+  "note": "Inputs for the deterministic bullwhip metrics in the oil and gas segment. Every series is labelled SOURCE, DEMODATA or ASSUMPTION. The engine computes the metric values; nothing here is a result. Same method names and structure as the other segment's file.",
   "metrics": [
     {
       "id": "BW-1",
@@ -104,7 +104,7 @@
         "total": null
       },
       "inputs_label": "ASSUMPTION",
-      "inputs_note": "Not connected. Requires ABB SAP sales order change history (VBAP/VBEP schedule line changes), filtered to oil and gas customers.",
+      "inputs_note": "[ASSUMPTION] Not connected, no values given. Requires ABB SAP sales order change history (VBAP/VBEP schedule line changes), filtered to oil and gas customers.",
       "threshold": 0.1,
       "sources": [
         {
@@ -116,7 +116,7 @@
   ],
   "analog_2021_2023": {
     "label": "SOURCE+DEMODATA",
-    "note": "Shared with the data-centre file, because the electronic parts in protection relays went through the same cycle. Indexed shape of the 2021-2023 semiconductor cycle for visual comparison only. Anchors: Broadcom lead time 12.2 weeks (Feb 2020) to 22.2 weeks (Apr 2021); SIA 2022 sales USD 573.5 bn with December 2022 down 4.4% MoM; memory corrected first in 2022 and rebounded first in 2023. Intermediate points are illustrative.",
+    "note": "Shared with the other segment's file, because the electronic parts in protection relays went through the same cycle. Indexed shape of the 2021-2023 semiconductor cycle for visual comparison only. Anchors: Broadcom lead time 12.2 weeks (Feb 2020) to 22.2 weeks (Apr 2021); SIA 2022 sales USD 573.5 bn with December 2022 down 4.4% MoM; memory corrected first in 2022 and rebounded first in 2023. Intermediate points are illustrative.",
     "months": [
       "2020-06",
       "2020-12",

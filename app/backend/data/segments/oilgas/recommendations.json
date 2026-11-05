@@ -273,8 +273,8 @@
       "parts_supply"
      ],
      "text": {
-      "en": "Check which relay families share parts with the data-centre segment. Note where the two segments compete for the same parts.",
-      "fi": "Tarkista, mitkä relesarjat käyttävät samoja osia kuin datakeskussegmentti. Merkitse, missä segmentit kilpailevat samoista osista."
+      "en": "Check which relay families share parts with other ABB segments. Note where the segments compete for the same parts.",
+      "fi": "Tarkista, mitkä relesarjat käyttävät samoja osia kuin muut ABB:n segmentit. Merkitse, missä segmentit kilpailevat samoista osista."
      },
      "trigger": {
       "en": "Applies in every scenario; the signals that show what to check are: {themes}.",
@@ -550,8 +550,8 @@
       "parts_supply"
      ],
      "text": {
-      "en": "Ask suppliers which parts for power-system relay variants have the longest delivery times. Note where they compete with data-centre needs.",
-      "fi": "Kysy toimittajilta, millä sähköjärjestelmän releversioiden osilla on pisimmät toimitusajat. Merkitse, missä ne kilpailevat datakeskusten tarpeiden kanssa."
+      "en": "Ask suppliers which parts for power-system relay variants have the longest delivery times. Note where they compete with the needs of other segments.",
+      "fi": "Kysy toimittajilta, millä sähköjärjestelmän releversioiden osilla on pisimmät toimitusajat. Merkitse, missä ne kilpailevat muiden segmenttien tarpeiden kanssa."
      },
      "trigger": {
       "en": "Activates when these move together: {themes}.",

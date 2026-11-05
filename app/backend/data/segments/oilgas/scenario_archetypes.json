@@ -1,6 +1,6 @@
 {
  "scaling_k": 1.5,
- "scaling_note": "[ASSUMPTION: k = 1.5, the same as the data-centre pool, so that one fresh, unchallenged A-grade signal shifts a candidate's log-odds by at most about 0.75. Axis meaning for oil and gas: demand = project and maintenance spending that needs protection relays; supply = tightness of electronic parts and delivery times (positive = tight); policy = pace of emission rules and electrification (positive = stricter or faster); price = oil and gas price level (positive = higher); nordic = Nordic activity (positive = stronger); bullwhip = ordering ahead of need (positive = more). Profiles, priors and path growth rates are ASSUMPTION set by hand; figures quoted inside notes are marked SOURCE. The four highest-scoring candidates are shown; probabilities are renormalised over them.]",
+ "scaling_note": "[ASSUMPTION: k = 1.5, the same as the other segment's pool, so that one fresh, unchallenged A-grade signal shifts a candidate's log-odds by at most about 0.75. Axis meaning for oil and gas: demand = project and maintenance spending that needs protection relays; supply = tightness of electronic parts and delivery times (positive = tight); policy = pace of emission rules and electrification (positive = stricter or faster); price = oil and gas price level (positive = higher); nordic = Nordic activity (positive = stronger); bullwhip = ordering ahead of need (positive = more). Profiles, priors and path growth rates are ASSUMPTION set by hand; figures quoted inside notes are marked SOURCE. The four highest-scoring candidates are shown; probabilities are renormalised over them.]",
  "archetypes": [
   {
    "id": "og_capex_tight",
@@ -370,8 +370,8 @@
      "fi": "Jos tämä toteutuu, sähköjärjestelmissä käytettävien versioiden toimitusajat pysyvät pitkinä."
     },
     "components": {
-     "en": "If this holds, the same electronic parts are needed by grid and data-centre projects, so competition for them continues.",
-     "fi": "Jos tämä toteutuu, samoja elektroniikkaosia tarvitaan verkko- ja datakeskushankkeissa, joten kilpailu niistä jatkuu."
+     "en": "If this holds, the same electronic parts are needed by grid projects and other industries, so competition for them continues.",
+     "fi": "Jos tämä toteutuu, samoja elektroniikkaosia tarvitaan verkkohankkeissa ja muilla toimialoilla, joten kilpailu niistä jatkuu."
     }
    }
   },
@@ -669,7 +669,7 @@
     "bullwhip": -1.0
    },
    "prior": 0.1,
-   "prior_note": "[ASSUMPTION: moderate prior. After a supply scare, orders placed ahead of need are cancelled or pushed out once flows recover, as in the 2022-2023 semiconductor cycle described in the data-centre files. Timing and size are not given by any source here. The eight priors sum to exactly 1.0.]",
+   "prior_note": "[ASSUMPTION: moderate prior. After a supply scare, orders placed ahead of need are cancelled or pushed out once flows recover, as in the 2022-2023 semiconductor cycle. Timing and size are not given by any source here. The eight priors sum to exactly 1.0.]",
    "path": {
     "demand_yearly": [
      -0.05,

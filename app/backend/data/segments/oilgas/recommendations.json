@@ -183,12 +183,12 @@
  "archetypes": {
   "og_capex_tight": {
    "headline_move": {
-    "en": "ask the key suppliers for a written delivery status on the parts used in oil and gas relays",
+    "en": "ask key suppliers for a written delivery status on oil and gas relay parts",
     "fi": "pyydä keskeisiltä toimittajilta kirjallinen toimitustilanne öljy- ja kaasureleiden osista"
    },
    "if_leading": {
-    "en": "the focus would move to securing parts and to the order of gas and LNG project deliveries.",
-    "fi": "painopiste siirtyisi osien saatavuuden varmistamiseen ja kaasu- ja LNG-hankkeiden toimitusjärjestykseen."
+    "en": "the focus would move to securing parts and sequencing gas and LNG deliveries.",
+    "fi": "painopiste siirtyisi osien varmistamiseen ja kaasu- ja LNG-toimitusten järjestämiseen."
    },
    "next_action": {
     "text": {
@@ -607,8 +607,8 @@
   },
   "og_steady_brownfield": {
    "headline_move": {
-    "en": "keep the current plan and check that replacement and service demand for installed relays is visible in the planning",
-    "fi": "pidä nykyinen suunnitelma ja tarkista, että asennettujen releiden uusinta- ja huoltokysyntä näkyy suunnittelussa"
+    "en": "keep the current plan and check that replacement and service demand is visible in planning",
+    "fi": "pidä nykyinen suunnitelma ja tarkista, että uusinta- ja huoltokysyntä näkyy suunnittelussa"
    },
    "if_leading": {
     "en": "the emphasis would move to replacement cycles and service work.",
@@ -712,8 +712,8 @@
   },
   "og_transition_shift": {
    "headline_move": {
-    "en": "list which relay families sold to oil and gas are also used in grid and industry segments",
-    "fi": "listaa, mitkä öljylle ja kaasulle myydyt relesarjat ovat käytössä myös verkko- ja teollisuussegmenteissä"
+    "en": "list the relay families used in both oil and gas and the grid or industry segments",
+    "fi": "listaa relesarjat, joita käytetään sekä öljy- ja kaasusegmentissä että verkko- tai teollisuussegmenteissä"
    },
    "if_leading": {
     "en": "the emphasis would move to sharing planning across oil and gas, grid and industry segments.",

@@ -95,8 +95,8 @@
         "fi": "testaa ja kelpuuta toinen toimittaja releosille, jotka tarvitsevat muistipiirejä"
       },
       "if_leading": {
-        "en": "the focus would move to securing supply and to sharing scarce relays between internal and external customers.",
-        "fi": "painopiste siirtyisi saatavuuden turvaamiseen ja niukkojen releiden jakamiseen sisäisten ja ulkoisten asiakkaiden kesken."
+        "en": "the focus would move to securing supply and to sharing scarce relays between customers.",
+        "fi": "painopiste siirtyisi saatavuuden turvaamiseen ja niukkojen releiden jakamiseen asiakkaiden kesken."
       },
       "next_action": {
         "text": {
@@ -179,8 +179,8 @@
         "fi": "pidä komponenttisitoumukset joustavina ja selvitä, onko kokoonpano- ja testauskapasiteetti seuraava pullonkaula"
       },
       "if_leading": {
-        "en": "the focus would move from securing supply to flexible commitments and to assembly and test capacity.",
-        "fi": "painopiste siirtyisi saatavuuden turvaamisesta sitoumusten joustavuuteen sekä kokoonpano- ja testauskapasiteettiin."
+        "en": "the focus would move to flexible commitments and to assembly and test capacity.",
+        "fi": "painopiste siirtyisi sitoumusten joustavuuteen sekä kokoonpano- ja testauskapasiteettiin."
       },
       "next_action": {
         "text": {
@@ -259,12 +259,12 @@
     },
     "deferred_tight": {
       "headline_move": {
-        "en": "wait before extending the commitment window, until the Finnish connection rule and the first go-live dates are clear",
-        "fi": "odota sitoumusikkunan pidentämisen kanssa, kunnes Suomen liittymäsääntö ja ensimmäiset käyttöönottopäivät ovat selvillä"
+        "en": "wait before extending the commitment window until the Finnish connection rule is clear",
+        "fi": "odota sitoumusikkunan pidentämisen kanssa, kunnes Suomen liittymäsääntö on selvillä"
       },
       "if_leading": {
-        "en": "the commitment window would follow revised go-live dates, and internal frame orders would be checked for delays first.",
-        "fi": "sitoumusikkuna noudattaisi tarkistettuja käyttöönottopäiviä, ja sisäiset puitetilaukset tarkistettaisiin ensin viivästysten varalta."
+        "en": "the commitment window would follow revised go-live dates. Internal frame orders would be checked first.",
+        "fi": "sitoumusikkuna noudattaisi tarkistettuja käyttöönottopäiviä. Sisäiset puitetilaukset tarkistettaisiin ensin."
       },
       "next_action": {
         "text": {
@@ -511,12 +511,12 @@
     },
     "regulatory_resequencing": {
       "headline_move": {
-        "en": "time the next commitment window to the revised go-live dates once the Finnish connection rule is decided",
-        "fi": "ajoita seuraava sitoumusikkuna tarkistettuihin käyttöönottopäiviin, kun Suomen liittymäsääntö on ratkaistu"
+        "en": "time the next commitment window to the revised go-live dates",
+        "fi": "ajoita seuraava sitoumusikkuna tarkistettuihin käyttöönottopäiviin"
       },
       "if_leading": {
-        "en": "commitments would follow the revised go-live dates, and the product mix would move toward utility relay types.",
-        "fi": "sitoumukset ajoitettaisiin tarkistettujen käyttöönottopäivien mukaan, ja tuotevalikoima siirtyisi verkkoyhtiöiden releversioihin."
+        "en": "commitments would follow the revised go-live dates. The product mix would move toward utility relay types.",
+        "fi": "sitoumukset ajoitettaisiin tarkistettujen käyttöönottopäivien mukaan. Tuotevalikoima siirtyisi verkkoyhtiöiden releversioihin."
       },
       "next_action": {
         "text": {
@@ -683,8 +683,8 @@
         "fi": "siirrä valmistussuunnitelman painopistettä verkkoyhtiöiden releversioihin, jotka kantavat kysyntää datakeskushankkeiden tauon aikana"
       },
       "if_leading": {
-        "en": "the build plan would lean toward utility relay types, and data-centre commitments would be checked for excess risk.",
-        "fi": "valmistussuunnitelma painottuisi verkkoyhtiöiden releversioihin, ja datakeskuskohtaiset sitoumukset tarkistettaisiin ylimääräisen riskin varalta."
+        "en": "the build plan would lean toward utility relay types. Data-centre commitments would be checked for excess risk.",
+        "fi": "valmistussuunnitelma painottuisi verkkoyhtiöiden releversioihin. Datakeskuskohtaiset sitoumukset tarkistettaisiin ylimääräisen riskin varalta."
       },
       "next_action": {
         "text": {
@@ -767,8 +767,8 @@
         "fi": "vertaa puitetilauksia loppuasiakkaiden kulutukseen, ennen kuin sitoumuksia pidennetään"
       },
       "if_leading": {
-        "en": "no commitment would be extended until duplicated demand is separated out, and open commitments would be checked for release.",
-        "fi": "sitoumuksia ei pidennettäisi, ennen kuin päällekkäinen kysyntä on erotettu, ja avoimet sitoumukset tarkistettaisiin vapautettaviksi."
+        "en": "no commitment would be extended until duplicated demand is separated out. Open commitments would be checked for release.",
+        "fi": "sitoumuksia ei pidennettäisi, ennen kuin päällekkäinen kysyntä on erotettu. Avoimet sitoumukset tarkistettaisiin vapautettaviksi."
       },
       "next_action": {
         "text": {

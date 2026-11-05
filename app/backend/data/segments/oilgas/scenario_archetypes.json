@@ -325,7 +325,7 @@
     {
      "text": {
       "en": "Offshore and terminal electrification projects are approved",
-      "fi": "Offshore- ja terminaalisähköistyshankkeita hyväksytään"
+      "fi": "Merellä sijaitsevien kohteiden ja terminaalien sähköistyshankkeita hyväksytään"
      },
      "signal_id": "OG-008"
     },
@@ -626,7 +626,7 @@
     {
      "text": {
       "en": "Orders from intermediaries stop growing faster than end demand",
-      "fi": "Välikäsien tilaukset eivät enää kasva loppukysyntää nopeammin"
+      "fi": "Välittäjien tilaukset eivät enää kasva loppukysyntää nopeammin"
      },
      "signal_id": "OG-005"
     }
@@ -638,7 +638,7 @@
     },
     "delivery": {
      "en": "If this holds, delivery times lengthen for a while and customers press for firm dates.",
-     "fi": "Jos tämä toteutuu, toimitusajat pitenevät joksikin aikaa ja asiakkaat painostavat vahvistettuihin päiviin."
+     "fi": "Jos tämä toteutuu, toimitusajat pitenevät joksikin aikaa ja asiakkaat vaativat vahvistettuja toimituspäiviä."
     },
     "components": {
      "en": "If this holds, the pressure to secure parts early is high, and the exposure is a later correction.",
@@ -650,7 +650,7 @@
    "id": "og_inventory_correction",
    "name": {
     "en": "Rush orders unwind and stock is released",
-    "fi": "Kiiretilaukset purkautuvat ja varastot vapautuvat"
+    "fi": "Kiiretilaukset puretaan ja varastot vapautuvat"
    },
    "demand": {
     "en": "plateaus",
@@ -691,7 +691,7 @@
     {
      "text": {
       "en": "Intermediary orders fall below end demand",
-      "fi": "Välikäsien tilaukset jäävät loppukysynnän alle"
+      "fi": "Välittäjien tilaukset jäävät loppukysynnän alle"
      },
      "signal_id": "OG-005"
     },
@@ -714,8 +714,8 @@
    ],
    "abb_interpretation": {
     "demand": {
-     "en": "If this holds, frame orders are pushed out before public data turns, and apparent demand falls below end use.",
-     "fi": "Jos tämä toteutuu, puitetilauksia siirretään ennen kuin julkinen data kääntyy, ja näennäinen kysyntä jää loppukäytön alle."
+     "en": "If this holds, framework orders are pushed out before public data turns, and apparent demand falls below end use.",
+     "fi": "Jos tämä toteutuu, puitetilauksia siirretään ennen kuin julkiset tiedot kääntyvät, ja näennäinen kysyntä jää loppukäytön alle."
     },
     "delivery": {
      "en": "If this holds, delivery times normalise quickly.",

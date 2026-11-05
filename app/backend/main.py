@@ -100,8 +100,8 @@ SEGMENTS = [
 SEGMENT_FILES = {"datacenter": (), "oilgas": ("signals.json", "evidence.json", "scenario_archetypes.json", "recommendations.json")}
 SEGMENT_SKIP = {"en": "Automatic search runs only for the data-centre segment.", "fi": "Automaattinen haku toimii vain datakeskussegmentille."}
 SUGGESTED_PROMPTS = {
-    "en": ["Summarize key changes in the data-centre segment", "What is the logical next move for procurement", "Tell about the situation of components in our products"],
-    "fi": ["Tiivistä datakeskussegmentin keskeiset muutokset", "Mikä on hankinnan looginen seuraava askel", "Kerro komponenttien tilanteesta tuotteissamme"],
+    "en": ["Summarize the key changes in the selected segment", "What is the next move for procurement", "Describe the component situation for our relays"],
+    "fi": ["Tiivistä valitun segmentin keskeiset muutokset", "Mikä on hankinnan seuraava siirto", "Kuvaa releidemme komponenttitilanne"],
 }
 
 

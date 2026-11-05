@@ -1,0 +1,731 @@
+{
+ "scaling_k": 1.5,
+ "scaling_note": "[ASSUMPTION: k = 1.5, the same as the other segment's pool, so that one fresh, unchallenged A-grade signal shifts a candidate's log-odds by at most about 0.75. Axis meaning for oil and gas: demand = project and maintenance spending that needs protection relays; supply = tightness of electronic parts and delivery times (positive = tight); policy = pace of emission rules and electrification (positive = stricter or faster); price = oil and gas price level (positive = higher); nordic = Nordic activity (positive = stronger); bullwhip = ordering ahead of need (positive = more). Profiles, priors and path growth rates are ASSUMPTION set by hand; figures quoted inside notes are marked SOURCE. The four highest-scoring candidates are shown; probabilities are renormalised over them.]",
+ "archetypes": [
+  {
+   "id": "og_capex_tight",
+   "name": {
+    "en": "Gas and LNG spending rises, components stay scarce",
+    "fi": "Kaasu- ja LNG-investoinnit kasvavat, komponentit pysyvät niukkoina"
+   },
+   "demand": {
+    "en": "accelerates",
+    "fi": "kiihtyy"
+   },
+   "supply": {
+    "en": "tight",
+    "fi": "kireä"
+   },
+   "profile": {
+    "demand": 1.0,
+    "supply": 1.0,
+    "policy": 0.0,
+    "price": 0.5,
+    "nordic": 0.2,
+    "bullwhip": 0.2
+   },
+   "prior": 0.16,
+   "prior_note": "[ASSUMPTION: second-highest prior. IEA (28 May 2026) reports global natural gas investment rising by more than 10% in 2026 to USD 330 bn, a ten-year high [SOURCE]. Protection relays share electronic parts with other industries, which keeps parts tight; the weighing of the two is an ASSUMPTION. Priors across the eight archetypes were set by hand and sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     0.1,
+     0.08,
+     0.06
+    ],
+    "supply_yearly": [
+     0.12,
+     0.1,
+     0.1
+    ],
+    "band": 0.12
+   },
+   "narrative": {
+    "en": "Gas processing, pipeline and LNG projects keep reaching investment decisions, and refineries and terminals add protection and control work. Electronic parts stay allocated across industries, so relay demand rises while delivery times stay long.",
+    "fi": "Kaasun käsittely-, putki- ja LNG-hankkeet etenevät investointipäätöksiin, ja jalostamot ja terminaalit lisäävät suojaus- ja ohjaustöitä. Elektroniikkaosat pysyvät jaettuina eri toimialojen kesken, joten relekysyntä kasvaa ja toimitusajat pysyvät pitkinä."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Gas and LNG project investment decisions keep being taken",
+      "fi": "Kaasu- ja LNG-hankkeiden investointipäätöksiä tehdään edelleen"
+     },
+     "signal_id": "OG-003"
+    },
+    {
+     "text": {
+      "en": "Component lead times for industrial electronics stay long",
+      "fi": "Teollisuuselektroniikan komponenttien toimitusajat pysyvät pitkinä"
+     },
+     "signal_id": "OG-009"
+    },
+    {
+     "text": {
+      "en": "Disrupted Middle East supply keeps buyers securing parts early",
+      "fi": "Lähi-idän toimitushäiriö saa ostajat varmistamaan osia ajoissa"
+     },
+     "signal_id": "OG-007"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Planned gas projects are postponed or cancelled",
+      "fi": "Suunniteltuja kaasuhankkeita lykätään tai peruutetaan"
+     },
+     "signal_id": "OG-003"
+    },
+    {
+     "text": {
+      "en": "Component lead times shorten across several suppliers",
+      "fi": "Komponenttien toimitusajat lyhenevät usealla toimittajalla"
+     },
+     "signal_id": "OG-009"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, relay demand from gas, LNG and refinery projects grows, mostly through the engineering firms and switchgear builders that specify the equipment.",
+     "fi": "Jos tämä toteutuu, kaasu-, LNG- ja jalostamohankkeiden relekysyntä kasvaa, pääosin laitteet määrittelevien suunnittelutoimistojen ja kojeistovalmistajien kautta."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times stay long and project schedules depend on when parts arrive.",
+     "fi": "Jos tämä toteutuu, toimitusajat pysyvät pitkinä ja hankkeiden aikataulut riippuvat osien saapumisesta."
+    },
+    "components": {
+     "en": "If this holds, parts compete with other industries and the exposure is not having them in time.",
+     "fi": "Jos tämä toteutuu, osista kilpailevat muut toimialat ja riski on, ettei osia ole ajoissa."
+    }
+   }
+  },
+  {
+   "id": "og_capex_easing",
+   "name": {
+    "en": "Spending rises, components become easier to get",
+    "fi": "Investoinnit kasvavat, komponentteja saa helpommin"
+   },
+   "demand": {
+    "en": "accelerates",
+    "fi": "kiihtyy"
+   },
+   "supply": {
+    "en": "easing",
+    "fi": "helpottuu"
+   },
+   "profile": {
+    "demand": 1.0,
+    "supply": -1.0,
+    "policy": 0.0,
+    "price": 0.3,
+    "nordic": 0.2,
+    "bullwhip": -0.3
+   },
+   "prior": 0.09,
+   "prior_note": "[ASSUMPTION: lower prior. It needs both continued project spending and new electronics capacity reaching industrial customers, and no source in this pool shows the second part yet. Set by hand; the eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     0.1,
+     0.08,
+     0.07
+    ],
+    "supply_yearly": [
+     0.22,
+     0.25,
+     0.2
+    ],
+    "band": 0.1
+   },
+   "narrative": {
+    "en": "Oil and gas projects keep going ahead while parts become easier to get as capacity is added. Relay deliveries return to a normal pace and the engineering firms can plan with shorter lead times.",
+    "fi": "Öljy- ja kaasuhankkeet etenevät edelleen, ja osia saa helpommin kapasiteetin kasvaessa. Relejen toimitukset palaavat normaaliin tahtiin, ja suunnittelutoimistot voivat suunnitella lyhyemmillä toimitusajoilla."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Component lead times for industrial electronics fall",
+      "fi": "Teollisuuselektroniikan komponenttien toimitusajat lyhenevät"
+     },
+     "signal_id": "OG-009"
+    },
+    {
+     "text": {
+      "en": "Gas and LNG project investment decisions continue",
+      "fi": "Kaasu- ja LNG-hankkeiden investointipäätökset jatkuvat"
+     },
+     "signal_id": "OG-003"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Lead times for industrial electronics rise again",
+      "fi": "Teollisuuselektroniikan toimitusajat pidentyvät uudelleen"
+     },
+     "signal_id": "OG-009"
+    },
+    {
+     "text": {
+      "en": "Middle East supply disruption widens",
+      "fi": "Lähi-idän toimitushäiriö laajenee"
+     },
+     "signal_id": "OG-007"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, relay demand grows with project spending and is easier to serve.",
+     "fi": "Jos tämä toteutuu, relekysyntä kasvaa hankeinvestointien mukana ja sitä on helpompi palvella."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times move back toward normal.",
+     "fi": "Jos tämä toteutuu, toimitusajat palaavat kohti normaalia."
+    },
+    "components": {
+     "en": "If this holds, parts ordered under scarcity may arrive when they are no longer urgent.",
+     "fi": "Jos tämä toteutuu, niukkuudessa tilatut osat voivat saapua, kun niitä ei enää tarvita kiireellä."
+    }
+   }
+  },
+  {
+   "id": "og_price_downturn",
+   "name": {
+    "en": "Oil price falls and projects are deferred",
+    "fi": "Öljyn hinta laskee ja hankkeita lykätään"
+   },
+   "demand": {
+    "en": "falls",
+    "fi": "laskee"
+   },
+   "supply": {
+    "en": "easing",
+    "fi": "helpottuu"
+   },
+   "profile": {
+    "demand": -1.0,
+    "supply": -0.5,
+    "policy": 0.0,
+    "price": -1.0,
+    "nordic": -0.3,
+    "bullwhip": -0.2
+   },
+   "prior": 0.13,
+   "prior_note": "[ASSUMPTION: moderate prior. EIA (October 2026 STEO) expects the Brent spot price to fall to an average of USD 84 per barrel in 2027 from USD 105 in 4Q26 [SOURCE], and IEA expects upstream oil investment to decline for a third year in 2026 [SOURCE]. Whether a lower price leads to deferrals at the pace shown here is an ASSUMPTION. The eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     -0.08,
+     -0.1,
+     0.0
+    ],
+    "supply_yearly": [
+     0.15,
+     0.1,
+     0.05
+    ],
+    "band": 0.14
+   },
+   "narrative": {
+    "en": "The oil price falls back from its disruption peak and operators defer new development and maintenance campaigns. Orders for new projects slip, the order book thins and parts become easier to get.",
+    "fi": "Öljyn hinta laskee häiriöhuipusta, ja operaattorit lykkäävät uusia kehityshankkeita ja huoltokampanjoita. Uusien hankkeiden tilaukset siirtyvät, tilauskanta ohenee ja osia saa helpommin."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Brent price falls well below recent levels",
+      "fi": "Brent-hinta laskee selvästi viimeaikaisten tasojen alle"
+     },
+     "signal_id": "OG-001"
+    },
+    {
+     "text": {
+      "en": "Upstream investment plans are cut or delayed",
+      "fi": "Öljyn tuotannon investointisuunnitelmia leikataan tai viivästetään"
+     },
+     "signal_id": "OG-002"
+    },
+    {
+     "text": {
+      "en": "Norwegian shelf investment estimates are revised down",
+      "fi": "Norjan mannerjalustan investointiarvioita korjataan alaspäin"
+     },
+     "signal_id": "OG-004"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Brent price stays high into next year",
+      "fi": "Brent-hinta pysyy korkeana ensi vuoteen"
+     },
+     "signal_id": "OG-001"
+    },
+    {
+     "text": {
+      "en": "Operators raise their investment plans",
+      "fi": "Operaattorit nostavat investointisuunnitelmiaan"
+     },
+     "signal_id": "OG-002"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, relay demand from new oil projects weakens and orders are pushed out before public figures show it.",
+     "fi": "Jos tämä toteutuu, uusien öljyhankkeiden relekysyntä heikkenee ja tilauksia siirretään ennen kuin julkiset luvut sen näyttävät."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times shorten.",
+     "fi": "Jos tämä toteutuu, toimitusajat lyhenevät."
+    },
+    "components": {
+     "en": "If this holds, parts already committed may exceed what the lower demand needs.",
+     "fi": "Jos tämä toteutuu, jo sitoutuneet osat voivat ylittää matalamman kysynnän tarpeen."
+    }
+   }
+  },
+  {
+   "id": "og_electrification_push",
+   "name": {
+    "en": "Platforms and terminals move to grid power, protection work grows",
+    "fi": "Alustat ja terminaalit siirtyvät verkkosähköön, suojaustyö kasvaa"
+   },
+   "demand": {
+    "en": "shifts to electrification",
+    "fi": "siirtyy sähköistykseen"
+   },
+   "supply": {
+    "en": "tight",
+    "fi": "kireä"
+   },
+   "profile": {
+    "demand": 0.6,
+    "supply": 0.5,
+    "policy": 1.0,
+    "price": 0.0,
+    "nordic": 0.8,
+    "bullwhip": 0.0
+   },
+   "prior": 0.14,
+   "prior_note": "[ASSUMPTION: moderate prior. Norway and the EU push offshore and terminal operations toward electric power, and the Nordic part is where ABB is closest to the customers. No source in this pool gives a share of projects that actually switch; the weight is set by hand. The eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     0.08,
+     0.1,
+     0.1
+    ],
+    "supply_yearly": [
+     0.1,
+     0.1,
+     0.1
+    ],
+    "band": 0.12
+   },
+   "narrative": {
+    "en": "Climate rules and operator targets push platforms, terminals and refineries toward electric power from the grid. This adds substations, cable connections and protection schemes in the Nordics, and moves relay demand from fuel-driven equipment to power systems.",
+    "fi": "Ilmastosäännöt ja operaattoreiden tavoitteet ohjaavat alustoja, terminaaleja ja jalostamoja sähkön käyttöön verkosta. Tämä lisää sähköasemia, kaapeliliityntöjä ja suojausratkaisuja Pohjoismaissa ja siirtää relekysyntää polttoainekäyttöisistä laitteista sähköjärjestelmiin."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Offshore and terminal electrification projects are approved",
+      "fi": "Offshore- ja terminaalisähköistyshankkeita hyväksytään"
+     },
+     "signal_id": "OG-006"
+    },
+    {
+     "text": {
+      "en": "Emission rules tighten for oil and gas operations",
+      "fi": "Öljy- ja kaasutoiminnan päästösäännöt tiukkenevat"
+     },
+     "signal_id": "OG-005"
+    },
+    {
+     "text": {
+      "en": "Norwegian shelf investment includes power-system work",
+      "fi": "Norjan mannerjalustan investoinneissa on sähköjärjestelmätyötä"
+     },
+     "signal_id": "OG-004"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Electrification projects are delayed for grid capacity reasons",
+      "fi": "Sähköistyshankkeita viivästetään verkkokapasiteetin vuoksi"
+     },
+     "signal_id": "OG-006"
+    },
+    {
+     "text": {
+      "en": "Emission rules are relaxed or postponed",
+      "fi": "Päästösääntöjä lievennetään tai lykätään"
+     },
+     "signal_id": "OG-005"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, relay demand grows in Nordic substation and cable projects tied to oil and gas sites, and the product mix moves toward power-system protection.",
+     "fi": "Jos tämä toteutuu, relekysyntä kasvaa öljy- ja kaasukohteisiin liittyvissä Pohjoismaiden sähköasema- ja kaapelihankkeissa ja tuotejakauma siirtyy sähköjärjestelmän suojaukseen."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times stay long for the variants used in power systems.",
+     "fi": "Jos tämä toteutuu, sähköjärjestelmissä käytettävien versioiden toimitusajat pysyvät pitkinä."
+    },
+    "components": {
+     "en": "If this holds, the same electronic parts are needed by grid projects and other industries, so competition for them continues.",
+     "fi": "Jos tämä toteutuu, samoja elektroniikkaosia tarvitaan verkkohankkeissa ja muilla toimialoilla, joten kilpailu niistä jatkuu."
+    }
+   }
+  },
+  {
+   "id": "og_steady_brownfield",
+   "name": {
+    "en": "Spending stays flat, maintenance and replacement carry demand",
+    "fi": "Investoinnit pysyvät tasaisina, huolto ja uusinta kannattelevat kysyntää"
+   },
+   "demand": {
+    "en": "holds steady",
+    "fi": "pysyy tasaisena"
+   },
+   "supply": {
+    "en": "normal",
+    "fi": "normaali"
+   },
+   "profile": {
+    "demand": 0.1,
+    "supply": 0.0,
+    "policy": 0.2,
+    "price": 0.0,
+    "nordic": 0.2,
+    "bullwhip": 0.0
+   },
+   "prior": 0.15,
+   "prior_note": "[ASSUMPTION: baseline prior. Existing platforms, pipelines and refineries need relay replacement and upgrades whatever new projects do; the size of that base is not in any source here. Set by hand; the eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     0.02,
+     0.02,
+     0.02
+    ],
+    "supply_yearly": [
+     0.1,
+     0.08,
+     0.06
+    ],
+    "band": 0.08
+   },
+   "narrative": {
+    "en": "New project spending is flat. Demand comes from keeping existing platforms, pipelines and refineries running, upgrading old protection relays and meeting safety requirements. Orders are steady and parts arrive at a normal pace.",
+    "fi": "Uusien hankkeiden investoinnit ovat tasaisia. Kysyntä tulee olemassa olevien alustojen, putkistojen ja jalostamoiden käytön jatkamisesta, vanhojen suojareleiden uusimisesta ja turvallisuusvaatimusten täyttämisestä. Tilaukset ovat tasaisia ja osat saapuvat normaalilla tahdilla."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Norwegian shelf investment stays near its current level",
+      "fi": "Norjan mannerjalustan investoinnit pysyvät nykytasolla"
+     },
+     "signal_id": "OG-004"
+    },
+    {
+     "text": {
+      "en": "Upstream investment plans stay unchanged",
+      "fi": "Öljyn tuotannon investointisuunnitelmat pysyvät ennallaan"
+     },
+     "signal_id": "OG-002"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "A sharp move in the oil price changes operators' plans",
+      "fi": "Öljyn hinnan jyrkkä liike muuttaa operaattoreiden suunnitelmia"
+     },
+     "signal_id": "OG-001"
+    },
+    {
+     "text": {
+      "en": "A new supply disruption starts rush orders",
+      "fi": "Uusi toimitushäiriö käynnistää kiiretilaukset"
+     },
+     "signal_id": "OG-007"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, relay demand follows replacement cycles and is easy to read from past orders.",
+     "fi": "Jos tämä toteutuu, relekysyntä seuraa uusintasyklejä ja on helppo lukea aiemmista tilauksista."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times stay normal.",
+     "fi": "Jos tämä toteutuu, toimitusajat pysyvät normaaleina."
+    },
+    "components": {
+     "en": "If this holds, component needs match history and there is no special exposure.",
+     "fi": "Jos tämä toteutuu, komponenttitarpeet vastaavat aiempaa eikä erityistä riskiä ole."
+    }
+   }
+  },
+  {
+   "id": "og_transition_shift",
+   "name": {
+    "en": "Investment moves from oil and gas to power grids and clean fuels",
+    "fi": "Investoinnit siirtyvät öljystä ja kaasusta sähköverkkoihin ja puhtaisiin polttoaineisiin"
+   },
+   "demand": {
+    "en": "declines in oil and gas",
+    "fi": "laskee öljyssä ja kaasussa"
+   },
+   "supply": {
+    "en": "easing",
+    "fi": "helpottuu"
+   },
+   "profile": {
+    "demand": -0.6,
+    "supply": -0.3,
+    "policy": 0.8,
+    "price": -0.2,
+    "nordic": 0.0,
+    "bullwhip": -0.2
+   },
+   "prior": 0.08,
+   "prior_note": "[ASSUMPTION: lower prior over the next three years. IEA (May 2026) expects about USD 2.2 trillion to go to grids, storage, low-emission fuels, nuclear, renewables, efficiency and electrification in 2026 against about USD 1.2 trillion to oil, natural gas and coal [SOURCE], but the near-term price and supply shocks make a fast shift less likely. The weighing is an ASSUMPTION. The eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     -0.03,
+     -0.06,
+     -0.08
+    ],
+    "supply_yearly": [
+     0.12,
+     0.1,
+     0.08
+    ],
+    "band": 0.12
+   },
+   "narrative": {
+    "en": "Capital moves from new oil and gas capacity toward grids and low-emission fuels. Oil and gas relay demand falls to maintenance and replacement, while the same relay families see growth in other segments.",
+    "fi": "Pääoma siirtyy uudesta öljy- ja kaasukapasiteetista verkkoihin ja vähäpäästöisiin polttoaineisiin. Öljyn ja kaasun relekysyntä supistuu huoltoon ja uusintaan, kun samat relesarjat kasvavat muissa segmenteissä."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Clean energy investment keeps outgrowing fossil investment",
+      "fi": "Puhtaan energian investoinnit kasvavat edelleen fossiilisia nopeammin"
+     },
+     "signal_id": "OG-002"
+    },
+    {
+     "text": {
+      "en": "Oil and gas operators announce smaller long-term plans",
+      "fi": "Öljy- ja kaasuyhtiöt ilmoittavat aiempaa pienemmistä pitkän aikavälin suunnitelmista"
+     },
+     "signal_id": "OG-004"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Gas investment keeps rising to new highs",
+      "fi": "Kaasuinvestoinnit nousevat edelleen uusiin huippuihin"
+     },
+     "signal_id": "OG-003"
+    },
+    {
+     "text": {
+      "en": "Emission rules are relaxed or postponed",
+      "fi": "Päästösääntöjä lievennetään tai lykätään"
+     },
+     "signal_id": "OG-005"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, oil and gas relay demand shrinks to maintenance and replacement, and the same product lines grow in grid and industry segments.",
+     "fi": "Jos tämä toteutuu, öljyn ja kaasun relekysyntä supistuu huoltoon ja uusintaan, ja samat tuotelinjat kasvavat verkko- ja teollisuussegmenteissä."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times in this segment normalise.",
+     "fi": "Jos tämä toteutuu, toimitusajat tässä segmentissä normalisoituvat."
+    },
+    "components": {
+     "en": "If this holds, parts held for oil and gas variants may need to be used in other segments.",
+     "fi": "Jos tämä toteutuu, öljy- ja kaasuversioihin varatut osat voidaan joutua käyttämään muissa segmenteissä."
+    }
+   }
+  },
+  {
+   "id": "og_shock_rush",
+   "name": {
+    "en": "Supply shock sets off rush ordering",
+    "fi": "Toimitushäiriö käynnistää kiiretilaukset"
+   },
+   "demand": {
+    "en": "spikes, then fades",
+    "fi": "nousee ja tasaantuu"
+   },
+   "supply": {
+    "en": "tight",
+    "fi": "kireä"
+   },
+   "profile": {
+    "demand": 0.3,
+    "supply": 0.8,
+    "policy": 0.0,
+    "price": 1.0,
+    "nordic": 0.0,
+    "bullwhip": 1.0
+   },
+   "prior": 0.15,
+   "prior_note": "[ASSUMPTION: high prior because it matches today's market. EIA (October 2026 STEO) reports the Brent spot price averaging USD 114 per barrel in September, USD 23 higher than in August, with a daily peak of USD 131 on 15 September after attacks on Saudi oil infrastructure [SOURCE]. How far such a shock turns into rush orders for relays is an ASSUMPTION. The eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     0.15,
+     0.02,
+     -0.05
+    ],
+    "supply_yearly": [
+     0.03,
+     0.06,
+     0.12
+    ],
+    "band": 0.16
+   },
+   "narrative": {
+    "en": "Disruption to Middle East oil flows pushes prices up and makes buyers secure parts and equipment early. Apparent demand jumps, delivery times lengthen, and part of the order surge is buying ahead of need that is later cancelled.",
+    "fi": "Lähi-idän öljyvirtojen häiriö nostaa hintoja ja saa ostajat varmistamaan osia ja laitteita etukäteen. Näennäinen kysyntä hyppää, toimitusajat pitenevät ja osa tilausryntäyksestä on tarpeen edelle ostamista, joka myöhemmin peruuntuu."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Brent price stays far above its level before the disruption",
+      "fi": "Brent-hinta pysyy selvästi häiriötä edeltänyttä tasoa korkeampana"
+     },
+     "signal_id": "OG-001"
+    },
+    {
+     "text": {
+      "en": "Distributors and engineering firms order ahead of end demand",
+      "fi": "Jakelijat ja suunnittelutoimistot tilaavat ennen loppukysyntää"
+     },
+     "signal_id": "OG-010"
+    },
+    {
+     "text": {
+      "en": "Middle East exports stay constrained and inventories keep falling",
+      "fi": "Lähi-idän viennit pysyvät rajoitettuina ja varastot pienenevät edelleen"
+     },
+     "signal_id": "OG-007"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Middle East flows recover and the price falls back",
+      "fi": "Lähi-idän virrat palautuvat ja hinta laskee takaisin"
+     },
+     "signal_id": "OG-007"
+    },
+    {
+     "text": {
+      "en": "Orders from intermediaries stop growing faster than end demand",
+      "fi": "Välikäsien tilaukset eivät enää kasva loppukysyntää nopeammin"
+     },
+     "signal_id": "OG-010"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, order intake rises faster than real end use and the rise is partly duplicate or precautionary orders.",
+     "fi": "Jos tämä toteutuu, tilauskertymä kasvaa todellista loppukäyttöä nopeammin ja kasvusta osa on päällekkäisiä tai varmuudeksi tehtyjä tilauksia."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times lengthen for a while and customers press for firm dates.",
+     "fi": "Jos tämä toteutuu, toimitusajat pitenevät joksikin aikaa ja asiakkaat painostavat vahvistettuihin päiviin."
+    },
+    "components": {
+     "en": "If this holds, the pressure to secure parts early is high, and the exposure is a later correction.",
+     "fi": "Jos tämä toteutuu, paine varmistaa osia ajoissa on suuri, ja riski on myöhempi korjausliike."
+    }
+   }
+  },
+  {
+   "id": "og_inventory_correction",
+   "name": {
+    "en": "Rush orders unwind and stock is released",
+    "fi": "Kiiretilaukset purkautuvat ja varastot vapautuvat"
+   },
+   "demand": {
+    "en": "plateaus",
+    "fi": "tasaantuu"
+   },
+   "supply": {
+    "en": "surplus",
+    "fi": "ylitarjonta"
+   },
+   "profile": {
+    "demand": -0.5,
+    "supply": -0.8,
+    "policy": 0.0,
+    "price": -0.4,
+    "nordic": 0.0,
+    "bullwhip": -1.0
+   },
+   "prior": 0.1,
+   "prior_note": "[ASSUMPTION: moderate prior. After a supply scare, orders placed ahead of need are cancelled or pushed out once flows recover, as in the 2022-2023 semiconductor cycle. Timing and size are not given by any source here. The eight priors sum to exactly 1.0.]",
+   "path": {
+    "demand_yearly": [
+     -0.05,
+     -0.08,
+     0.04
+    ],
+    "supply_yearly": [
+     0.25,
+     0.15,
+     0.05
+    ],
+    "band": 0.12
+   },
+   "narrative": {
+    "en": "Once oil flows recover, buyers cancel or push out orders placed in the rush. Distributors and engineering firms work down stock, apparent demand falls below real end use for several quarters, and deliveries become short again.",
+    "fi": "Kun öljyvirrat palautuvat, ostajat peruvat tai siirtävät kiireessä tehtyjä tilauksia. Jakelijat ja suunnittelutoimistot purkavat varastoja, näennäinen kysyntä jää todellisen loppukäytön alle useaksi neljännekseksi ja toimitukset lyhenevät jälleen."
+   },
+   "signposts": [
+    {
+     "text": {
+      "en": "Intermediary orders fall below end demand",
+      "fi": "Välikäsien tilaukset jäävät loppukysynnän alle"
+     },
+     "signal_id": "OG-010"
+    },
+    {
+     "text": {
+      "en": "Middle East flows recover and the Brent price falls",
+      "fi": "Lähi-idän virrat palautuvat ja Brent-hinta laskee"
+     },
+     "signal_id": "OG-007"
+    }
+   ],
+   "falsifiers": [
+    {
+     "text": {
+      "en": "Lead times for industrial electronics stay long",
+      "fi": "Teollisuuselektroniikan toimitusajat pysyvät pitkinä"
+     },
+     "signal_id": "OG-009"
+    }
+   ],
+   "abb_interpretation": {
+    "demand": {
+     "en": "If this holds, frame orders are pushed out before public data turns, and apparent demand falls below end use.",
+     "fi": "Jos tämä toteutuu, puitetilauksia siirretään ennen kuin julkinen data kääntyy, ja näennäinen kysyntä jää loppukäytön alle."
+    },
+    "delivery": {
+     "en": "If this holds, delivery times normalise quickly.",
+     "fi": "Jos tämä toteutuu, toimitusajat normalisoituvat nopeasti."
+    },
+    "components": {
+     "en": "If this holds, parts ordered at the peak arrive into a surplus, and the exposure is stock value.",
+     "fi": "Jos tämä toteutuu, huipulla tilatut osat saapuvat ylitarjontaan, ja riski on varaston arvo."
+    }
+   }
+  }
+ ]
+}

@@ -1057,7 +1057,7 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
         rec_ids = list(dict.fromkeys((move or {}).get("trigger_signals", [])))[:4]
         if fi:
             text = ((f"Suositeltu siirto hankinnalle (luottamus {({'low': 'matala', 'medium': 'kohtalainen', 'high': 'korkea'}).get(rec['confidence'], rec['confidence'])}, '{_t(rec['scenario_name'], 'fi')}' {rec['probability']:.0%}): {_t(move['text'], 'fi')} "
-                     f"Laukaisija: {_t(move['trigger'], 'fi')} Hinta, jos väärin: {_t(move['cost_if_wrong'], 'fi')} "
+                     f"Ehto: {_t(move['trigger'], 'fi')} Hinta, jos arvio on väärä: {_t(move['cost_if_wrong'], 'fi')} "
                      f"Seuraava toimi: {_t(rec['next_action']['text'], 'fi')} ({_t(rec['next_action']['owner'], 'fi')}, {rec['next_action']['due']}). "
                      f"{_t(rec['hedge'], 'fi')} ") if rec and move else "") + (
                     "Irma ei suosittele tilausmääriä tai ajoitusta; ne riippuvat sopimuksista, allokaatiosopimuksista ja kassatilanteesta, jotka eivät ole datassa, joten päätös on suunnittelijan. "
@@ -1078,10 +1078,10 @@ def _compose(intent: str, sc: dict[str, Any], w: dict[str, Any], lang: str) -> t
         metrics = "; ".join(f"{m['name']} = {m['value'] if m['value'] is not None else '—'} ({m['status'].replace('_', ' ')})" for m in bw["metrics"])
         if fi:
             text = (f"Releiden komponenttien saatavuus on johtavassa skenaariossa '{_t(lead['supply'], 'fi')}'. Näyttö: {ev}. Kysynnän laadun tarkistus: {bw['summary']} Mittarit: {metrics}. "
-                    "Sisäinen osatason näkymä (toimittajavahvistukset, allokaatiokirjeet) ei ole vielä kytketty; katso paikkamerkkikortti [SIG-017].")
+                    "Sisäinen osatason näkymä (toimittajavahvistukset, allokaatiokirjeet) ei ole vielä kytketty." + ("" if STORE.segment == "oilgas" else " Katso paikkamerkkikortti [SIG-017]."))
         else:
             text = (f"Component supply for the relays is read as '{_t(lead['supply'])}' in the leading scenario. Evidence: {ev}. Demand quality check: {bw['summary']} Metrics: {metrics}. "
-                    "The internal part-level view (supplier confirmations, allocation letters) is not connected yet; see the placeholder card [SIG-017].")
+                    "The internal part-level view (supplier confirmations, allocation letters) is not connected yet." + ("" if STORE.segment == "oilgas" else " See the placeholder card [SIG-017]."))
         return text, cite([s["id"] for s in supply])
     return "", []
 

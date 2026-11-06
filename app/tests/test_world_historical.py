@@ -50,3 +50,15 @@ def test_oilgas_segment_has_its_own_pool():
         assert all(s["id"].startswith("OG-") for s in st["signals"])
     finally:
         client.post("/api/segment", json={"segment": "datacenter"})
+
+
+def test_oilgas_next_step_names_no_data_centre_topics():
+    try:
+        st = client.post("/api/segment", json={"segment": "oilgas"}).json()["state"]
+        ns = str(st["brief"]["next_step"])
+        for word in ("TrendForce", "Fingrid", "data centres", "SIG-017", "DRAM"):
+            assert word not in ns, word
+        ask = client.post("/api/ask", json={"question": "Tell about the situation of components in our products", "lang": "en"}).json()
+        assert "SIG-017" not in str(ask)
+    finally:
+        client.post("/api/segment", json={"segment": "datacenter"})

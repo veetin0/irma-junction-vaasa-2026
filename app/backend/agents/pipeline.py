@@ -692,6 +692,17 @@ def _next_analysis_step(ctx: Context) -> dict[str, Any]:
             "why": "largest contribution to the current picture" + (", freshness below 0.5" if (w.get("components", {}).get("freshness") or 1) < 0.5 else ""),
         })
     reeval = ctx.today + timedelta(days=28)
+    if ctx.signals and all(s.get("market") == "oilgas" for s in ctx.signals):
+        return {
+            "watch": watch,
+            "reevaluate_on": reeval.isoformat(),
+            "reevaluate_reason": "[ASSUMPTION: monthly cadence; the next EIA monthly outlook and the next quarterly results of the large operators fall inside this window]",
+            "review_with": ["S&OP owner (demand review)", "Component procurement lead", "Segment manager, oil and gas"],
+            "open_questions": [
+                "Which signals does the planner dispute? Disputes halve the weight and are logged.",
+                "Does ABB's own order intake for the segment agree with the public investment signals once connected?",
+            ],
+        }
     return {
         "watch": watch,
         "reevaluate_on": reeval.isoformat(),

@@ -121,4 +121,4 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 
 **Why not do this in Excel?** Excel can hold the weights. It cannot read dozens of sources, quote the supporting sentence, search for the counter-case on every strong card, and keep an audit trail of who disputed what. The arithmetic is kept simple enough for Excel so that the planner can check it.
 
-**Is there anything in the app that does not add up?** Known items: in the oil and gas segment the one-sentence review above the chart still opens with data-centre wording, and the suggested assistant prompts name the data-centre segment. The segments that used to be preview entries are removed, not simulated. The region filter is real.
+**Is there anything in the app that does not add up?** Known items: the five oil and gas cards dated after the demo clock count as fully fresh, and the historical Today column is empty for oil and gas. The segments that used to be preview entries are removed, not simulated. The region filter is real.

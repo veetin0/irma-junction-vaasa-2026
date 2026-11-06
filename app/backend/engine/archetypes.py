@@ -95,6 +95,17 @@ def plain_summary(selected: dict[str, Any], signals: list[dict[str, Any]], weigh
     watch = [c for c in lead["contributions"][:3]]
     names = [by_id[c["signal_id"]].get("short_fi" if lang == "fi" else "short", c["signal_name"]) for c in watch if c["signal_id"] in by_id][:2]
     d, s = sc["demand"], sc["supply"]
+    og = bool(signals) and all(x.get("market") == "oilgas" for x in signals)
+    if og:
+        if lang == "fi":
+            dt = "kasvaa edelleen" if d > 0.12 else ("laskee" if d < -0.12 else "pysyy tasaisena")
+            return (f"Öljyn ja kaasun sähkölaitteiden kysyntä {dt}. "
+                    f"Todennäköisin kehitys seuraavien 1–3 vuoden aikana: {lead['name']['fi']} ({lead['probability']:.0%}). "
+                    + (f"Tärkeimmät seurattavat asiat juuri nyt: {' ja '.join(names)}." if names else ""))
+        dt = "is still growing" if d > 0.12 else ("is falling" if d < -0.12 else "is flat")
+        return (f"Demand for power equipment in oil and gas {dt}. "
+                f"The most likely path for the next 1–3 years: {lead['name']['en']} ({lead['probability']:.0%}). "
+                + (f"The main things to watch right now: {' and '.join(names)}." if names else ""))
     if lang == "fi":
         demand_txt = "kasvaa edelleen" if d > 0.12 else ("laskee" if d < -0.12 else "pysyy tasaisena")
         supply_txt = "on edelleen vaikea saada" if s > 0.05 else ("on helpompi saada kuin aiemmin" if s < -0.05 else "saa kohtalaisesti")

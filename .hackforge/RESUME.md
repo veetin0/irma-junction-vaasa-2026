@@ -1,6 +1,6 @@
 # HackForge resume pack (auto-generated — read this instead of the whole history)
 
-_Updated 2026-11-05T10:56:58+00:00_
+_Updated 2026-11-06T08:58:59+00:00_
 
 ## Goal and decision
 
@@ -26,6 +26,7 @@ The recommendation step is the single largest gap (fails R7/R10 and caps J1 at 6
 
 # State
 - Phase: build M4–M6 (directive 11) in progress. M4.1 merged on main (c869321). Rate limit hit 2026-11-05 ~12:50, resets 13:50; the 4 data/engine builders (M4.2a oil and gas cards, M4.2b oil and gas scenarios, M4.3a chip-cycle data, M4.3b historical engine) wrote nothing and must be relaunched, then M4.4 wiring, M5, M6
+M4 done and merged (gate green, 216 tests, MILESTONE 4). Next: M5 (M5.1 UI, M5.2 map, M5.3 reco wording), then M6.
 - Profile: standard (auto: 10 h, team of 1, existing entry being improved) · Models: research sonnet / architect opus / judge opus / build sonnet / craft sonnet / verify sonnet
 - Deadline: none set · Time budget 10 h
 - Current milestone / wave: —
@@ -33,7 +34,7 @@ The recommendation step is the single largest gap (fails R7/R10 and caps J1 at 6
 - Next: user review; optional items in LOOP.md
 - Best metric vs baseline: tests 33/33 · Latest mock score: 8.1 (7.2 before build)
 - Escalations / de-escalations: kickoff scaled down. There is an existing entry and concrete directives, so the improvement options are designed inline instead of by 3 architect agents.; builder A on opus (hardest math)
-- Risks & open questions: recommendation directive vs the no-recommendation guardrail (see DIRECTIVES note); 2026-10-07 ~23:00 all 3 M1 builders hit the
+- Risks & open questions: recommendat
 
 ## Team directives
 

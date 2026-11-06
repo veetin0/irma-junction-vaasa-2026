@@ -10,7 +10,7 @@ Time budget: 10 h · Deadline: none · Team: 1 · Profile: standard · Stack: Fa
 | M3 | Docs and pitch sync: SOLUTION.md, README, explainer html match the app; DEMO.md | J2 J4 J5 D1–D5 | gate.sh doc-consistency checks | 2 h | ✅ |
 | M4 | Data and engine: impact field, segments (Data centres, Oil and gas), oil-and-gas data, Historical data with as-of snapshots | R7 R10 J1 J3 J5, 01-team E/F/G | gate.sh (M4 contract checks) | 3 h | ⏳ |
 | M5 | Frontend: overview order, Recommended move wording, signal market map, segment filter, historical panel, clean minimal UI | J6 J1, 01-team A B D E | gate.sh + `node --check` + 1440x900 and 1280x720 screenshots | 3 h | ⏳ |
-| M6 | Language (FI/EN simplification, I18N key parity), docs, tests, gate to MILESTONE 6, Vercel-mode check | J2 J4 J5 D1–D5, 01-team C H | gate.sh + Vercel-mode check | 2 h | ⏳ |
+| M6 | Language (FI/EN simplification, I18N key parity), docs, tests, gate to MILESTONE 6, Vercel-mode check | J2 J4 J5 D1–D5, 01-team C H | gate.sh + Vercel-mode check | 2 h | ✅ |
 | — | Reserve: verify, screenshots FI/EN, mock judge | | | 1 h | |
 
 ## Tasks per milestone
@@ -28,7 +28,7 @@ Time budget: 10 h · Deadline: none · Team: 1 · Profile: standard · Stack: Fa
 | M5 | frontend | M5.1: app.js/index.html/styles.css: overview order, segment filter, historical panel, minimal UI | C12 | builder / sonnet | hf/m5-ui | ⏳ |
 | M5 | frontend | M5.2: frontend/map.js + map.css: signal market map, detail panel, table view | C12 | builder / sonnet | hf/m5-map | ⏳ |
 | M5 | backend | M5.3: recommendation templates in plain EN/FI (recommendations.json, both segments) | C13 | builder / sonnet | hf/m5-reco | ⏳ |
-| M6 | full-stack | M6.1: FI/EN text pass, I18N parity check, docs, tests, gate | C14 | builder / sonnet | hf/m6-docs | ⏳ |
+| M6 | full-stack | M6.1: FI/EN text pass, I18N parity check, docs, tests, gate | C14 | builder / sonnet | hf/m6-docs | ✅ |
 
 ## Non-code deliverables
 | Asset | Raises | Spec | Tool | Status |

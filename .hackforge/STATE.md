@@ -3,7 +3,7 @@
 M4 done and merged (gate green, 216 tests, MILESTONE 4). Next: M5 (M5.1 UI, M5.2 map, M5.3 reco wording), then M6.
 - Profile: standard (auto: 10 h, team of 1, existing entry being improved) · Models: research sonnet / architect opus / judge opus / build sonnet / craft sonnet / verify sonnet
 - Deadline: none set · Time budget 10 h
-- Current milestone / wave: —
+- Current milestone / wave: M4, M5, M6 done and merged on main (01-team.md); gate green at MILESTONE 6, 246 tests, Vercel-mode check passed. Not pushed.
 - Done: init, inventory, directives, brief, RULES.md, baseline judge 7.2, weighting research, OPTIONS, DECISION (pending)
 - Next: user review; optional items in LOOP.md
 - Best metric vs baseline: tests 33/33 · Latest mock score: 8.1 (7.2 before build)
@@ -16,4 +16,6 @@ M4 done and merged (gate green, 216 tests, MILESTONE 4). Next: M5 (M5.1 UI, M5.2
   - /api/run has no recommendation step.
   - /api/method weight_formula is stale.
   - CE short_fi is English.
-- Questions for the user: add a LICENSE (which one)? The verifier flagged that none exists. docs/VOICEOVER.md describes the old 6:33 video from the original folder; keep it, update it or drop it?
+- Decisions (user delegated, 2026-11-06): no LICENSE file. The product formula stays the weight used (docs say so; ensemble values shown). docs/VOICEOVER.md kept with a note at the top that the recorded video predates the new app.
+- Known limits: chip-cycle dataset has counter-evidence for 9 of 18 cards; five oil and gas cards are dated after the demo clock; historical Today column empty for oil and gas; pitch screenshots other than demo-7-oilgas are pre-M5; capture_screenshots.py stale; Finnish not checked by a native speaker; Approve/Reject save paths not clicked end to end; narrow-screen layout unchecked.
+- Checked 2026-11-06: overview at 1280x720 in EN and FI (chart and assistant both inside the viewport), signal map in FI; evidence in .hackforge/evidence/final_*.png.

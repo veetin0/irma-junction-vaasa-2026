@@ -1,5 +1,7 @@
 # Irma demo video: voiceover script
 
+Note: this script describes an earlier recording of the app. The overview has since been reordered, the segment menu now has data centres and oil and gas, and the stress-test block at 5:45 describes a data set that no longer exists. The blocks at 0:21, 0:48 and 5:45 below are rewritten for the current app and need a new recording; the others still match the recording.
+
 Video length 6:33. The screen recording runs 0:21 to 6:18, then black to the end.
 Read time is about 6 minutes at a calm pace. Timecodes are where each block should start.
 
@@ -15,7 +17,7 @@ This is Irma. Every hour, Irma reads public signals and rebuilds its picture of 
 
 **0:48 · Region, segment and signals**
 
-The region and segment selectors show where Irma is heading. In this prototype, we focus on Nordic data centres. On the left are the signals that drive the picture, each weighted between zero and one. The heaviest today is Google's thirteen-billion-euro data-centre programme in Finland, at zero point five nine.
+The segment and region selectors sit under the summary. Irma has two segments with data, data centres and oil and gas. We start with Nordic data centres. On the left are the signals that drive the picture, each weighted between zero and one. The heaviest today is Google's thirteen-billion-euro data-centre programme in Finland, at zero point five nine.
 
 **1:12 · The four most likely situations**
 
@@ -53,9 +55,9 @@ Irma also tracks research institutions, such as the Uptime Institute and the IEA
 
 In Settings, the planner decides how often Irma updates, here every sixty minutes. They also set what counts as a large change, which signals trigger an alert, and which websites the agents may search. Every threshold is visible, and every one can be changed. And Irma works in both English and Finnish.
 
-**5:45 · Stress test: world situation 2**
+**5:45 · Oil and gas, and the past**
 
-Finally, a stress test. We switch to a constructed downturn, built from demo data. Hyperscalers cut spending, the copper price falls, and components get easier to find. Irma's picture changes completely. The leader is now "double orders unwind, stock is released", at thirty-six percent, almost tied with "investment slows down", at thirty-five. Same formulas, different evidence.
+Finally, two checks. Switch the segment to oil and gas. It has its own ten sourced cards and its own four situations, the leader at thirty percent with three close behind, so the recommended move says low confidence. Same formulas, different evidence. Then the Historical data panel: the same code replayed on the two thousand twenty-one to twenty-three chip cycle, using only what had been published at each date, with what happened next beside it. It is labelled an illustrative comparison, not validation and not a forecast.
 
 **6:18 · Close (over black)**
 

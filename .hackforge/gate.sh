@@ -3,7 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/../app"
 echo "== tests"; DEMO_TODAY=2026-10-03 python3 -m pytest tests -q
-echo "== frontend syntax"; node --check frontend/app.js
+echo "== frontend syntax"; node --check frontend/app.js; node --check frontend/map.js
+echo "== i18n"; node tests/i18n_parity.js
 echo "== contracts"
 DEMO_TODAY=2026-10-03 AGENT_MODE=replay python3 - <<'PY'
 import sys, json; sys.path.insert(0, "backend")
@@ -52,6 +53,29 @@ if M >= 4:
     arch = json.load(open(d + "segments/oilgas/scenario_archetypes.json"))["archetypes"]
     assert abs(sum(a["prior"] for a in arch) - 1.0) < 1e-9, "oil and gas priors"
     hist = json.load(open(d + "historical/chipcycle.json")); assert historical.validate(hist) == [], "historical dataset"
+if M >= 6:
+    import re
+    meta = st["meta"]
+    assert [x["id"] for x in meta["segments"]] == ["datacenter", "oilgas"] and all(x["has_data"] for x in meta["segments"]), "C9 segments"
+    assert c.post("/api/segment", json={"segment": "nope"}).status_code == 400
+    for seg in ("datacenter", "oilgas", "all"):
+        ss = c.post("/api/segment", json={"segment": seg}).json()["state"]
+        assert ss["signals"] and ss["meta"]["segment"] == seg and ss["meta"]["scenario_segment_required"] == (seg == "all")
+        for s in ss["signals"]:
+            assert -100 <= s["impact"]["impact"] <= 100 and s["impact"]["label"] == "ASSUMPTION", ("C8 impact", s["id"])
+            assert set(s["computed"]["horizon"]) == {"12", "24", "36"}, ("horizon", s["id"])
+            assert s["data_label"] in {"SOURCE", "DEMODATA", "ASSUMPTION"}, ("label", s["id"])
+        if seg == "oilgas":
+            assert all(s["market"] == "oilgas" and s["id"].startswith("OG-") for s in ss["signals"]), "C10 oil and gas cards"
+            assert ss["recommendation"]["scenario_id"].startswith("og_"), "C10 own recommendation"
+            assert not re.search(r"data[- ]?cent|datakesk", json.dumps([ss["scenarios"], ss["recommendation"]], ensure_ascii=False), re.I), "data-centre text in oil and gas"
+    c.post("/api/segment", json={"segment": "datacenter"})
+    hist = c.get("/api/historical").json()
+    assert len(hist["rows"]) == 5 and hist["label"]["en"] == "illustrative comparison, not validation and not a forecast", "C11 historical"
+    assert [w["label"]["en"] for w in meta["worlds"] if w["id"] == 2] == ["Historical data"]
+    assert not re.search(r"data[- ]?cent", " ".join(main.SUGGESTED_PROMPTS["en"]), re.I), "suggested prompts name a segment"
+    c.post("/api/reset")
 print("contracts OK (milestone", M, ")")
 PY
+echo "== vercel mode (VERCEL=1, no API key, every endpoint)"; DEMO_TODAY=2026-10-03 python3 -m pytest tests/test_vercel_endpoints.py -q
 echo "GATE GREEN"

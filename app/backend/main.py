@@ -1189,6 +1189,10 @@ def method() -> dict[str, Any]:
 if FRONTEND.exists():
     app.mount("/static", StaticFiles(directory=str(FRONTEND)), name="static")
 
+    @app.get("/favicon.ico", include_in_schema=False)
+    def favicon() -> FileResponse:
+        return FileResponse(str(FRONTEND / "irma-logo.webp"), media_type="image/webp")
+
     @app.get("/")
     def index() -> FileResponse:
         return FileResponse(str(FRONTEND / "index.html"))

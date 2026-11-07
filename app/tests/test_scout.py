@@ -180,7 +180,7 @@ def test_saved_signals_reload_and_are_not_added_twice(store):
 def test_scout_is_skipped_without_a_key_or_in_the_mock_world(store):
     store.llm = LLMClient()
     assert store.start_scout("scheduled") == "skipped:no_key"
-    assert store.scout_public()["skip"]["en"].startswith("No API key")
+    assert store.scout_public()["skip"]["en"].startswith("Demo mode")
     store.llm = tw.live_client(ScoutFake([]))
     store.reset(2)
     assert store.start_scout("scheduled") == "skipped:world"

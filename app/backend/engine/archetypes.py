@@ -102,10 +102,12 @@ def plain_summary(selected: dict[str, Any], signals: list[dict[str, Any]], weigh
             dt = "kasvaa edelleen" if d > 0.12 else ("laskee" if d < -0.12 else "pysyy tasaisena")
             return (f"Öljyn ja kaasun sähkölaitteiden kysyntä {dt}. "
                     f"Todennäköisin kehitys seuraavien 1–3 vuoden aikana: {lead['name']['fi']} ({lead['probability']:.0%}). "
+                    + ("Neljä tilannetta ovat lähes yhtä todennäköisiä, joten johtavaan tilanteeseen ei kannata nojata vahvasti. " if lead["probability"] < 0.30 else "")
                     + (f"Tärkeimmät seurattavat asiat juuri nyt: {' ja '.join(names)}." if names else ""))
         dt = "is still growing" if d > 0.12 else ("is falling" if d < -0.12 else "is flat")
         return (f"Demand for power equipment in oil and gas {dt}. "
                 f"The most likely path for the next 1–3 years: {lead['name']['en']} ({lead['probability']:.0%}). "
+                + ("The four situations are close in likelihood, so the leading one is not a strong call. " if lead["probability"] < 0.30 else "")
                 + (f"The main things to watch right now: {' and '.join(names)}." if names else ""))
     if lang == "fi":
         demand_txt = "kasvaa edelleen" if d > 0.12 else ("laskee" if d < -0.12 else "pysyy tasaisena")

@@ -68,7 +68,7 @@ REASONS: dict[str, dict[str, str]] = {
 }
 SKIP_REASONS: dict[str, dict[str, str]] = {
     "world": {"en": "Automatic search runs only in the current world situation.", "fi": "Automaattinen haku toimii vain nykyisessä maailmantilanteessa."},
-    "no_key": {"en": "No API key: automatic search is off and nothing is added.", "fi": "Ei API-avainta: automaattinen haku ei ole käytössä eikä mitään lisätä."},
+    "no_key": {"en": "Demo mode: automatic search runs only with a live API key. The signals shown are replayed, and nothing is added.", "fi": "Demotila: automaattinen haku toimii vain live-API-avaimella. Näytetyt signaalit on toistettu, eikä mitään lisätä."},
     "web_off": {"en": "Web search is switched off in Settings.", "fi": "Verkkohaku on kytketty pois Asetuksista."},
     "scout_off": {"en": "Automatic search for new signals is switched off in Settings.", "fi": "Uusien signaalien automaattinen haku on kytketty pois Asetuksista."},
 }

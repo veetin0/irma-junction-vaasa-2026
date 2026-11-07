@@ -766,6 +766,8 @@ def build_brief(ctx: Context) -> str:
     against = [c for c in lead["contributions"] if c["contribution"] < 0][:2]
     if against:
         parts.append("Evidence against it: " + "; ".join(f"[{c['signal_id']}] {c['signal_name']} ({c['contribution']:+.2f})" for c in against) + ".")
+    if not against:
+        parts.append("No signal in this view counts against the leading scenario; the runner-up scenarios are listed for comparison.")
     parts.append("The planner decides what this means for orders; the system shows the evidence and the alternatives.")
     return " ".join(parts)
 

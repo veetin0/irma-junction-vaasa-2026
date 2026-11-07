@@ -49,7 +49,7 @@ Every number below was read from the running app (`DEMO_TODAY=2026-10-03`, repla
 3. Change **Time horizon** to **1 year**. The dots move and the note says the weights are recomputed. SIG-003 becomes **Weight 45**. Two dots now sit in **Critical risks**: Micron's memory shortage through 2028 (SIG-018, impact −80) and the Finnish connection-priority proposal (SIG-014, impact −43). Say: "In a year, tight memory is the threat. In three years its weight fades, because a price card speaks about the next year, not about 2028." Return to **3 years**.
 4. Click the dot for DRAM contract prices (SIG-007): impact **−85** although its direction is "rising". Say: "Rising memory prices are unfavourable for delivery. The sign rule reads direction times what the card measures."
 5. In the detail panel, open **How the weight is calculated**. Point at the four formulas: product, minimum, geometric mean, arithmetic mean, with the product marked **used**. Say: "Four ways to combine the same four factors. The product is the one we use; the others show how much the choice matters. The average is one of four, it is not the headline."
-6. Point at the **AI recommendation** box and the buttons **Approve**, **Edit**, **Reject**. Say: "The text comes from the templates, worded as an analysis step, no quantities. The buttons log a confirm, a comment or a dispute with a name and a reason."
+6. Point at the **Suggested follow-up** box and the buttons **Approve**, **Edit**, **Reject**. Say: "The text comes from the templates, worded as an analysis step, no quantities. The buttons log a confirm, a comment or a dispute with a name and a reason."
 
 ### 4:30–5:45 The full chain on new data (AI logic, prototype 10%)
 

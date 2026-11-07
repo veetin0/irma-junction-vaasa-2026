@@ -95,6 +95,7 @@ def plain_summary(selected: dict[str, Any], signals: list[dict[str, Any]], weigh
     watch = [c for c in lead["contributions"][:3]]
     names = [by_id[c["signal_id"]].get("short_fi" if lang == "fi" else "short", c["signal_name"]) for c in watch if c["signal_id"] in by_id][:2]
     d, s = sc["demand"], sc["supply"]
+    lp = (lead.get("profile") or {}).get("supply")
     og = bool(signals) and all(x.get("market") == "oilgas" for x in signals)
     if og:
         if lang == "fi":
@@ -109,11 +110,19 @@ def plain_summary(selected: dict[str, Any], signals: list[dict[str, Any]], weigh
     if lang == "fi":
         demand_txt = "kasvaa edelleen" if d > 0.12 else ("laskee" if d < -0.12 else "pysyy tasaisena")
         supply_txt = "on edelleen vaikea saada" if s > 0.05 else ("on helpompi saada kuin aiemmin" if s < -0.05 else "saa kohtalaisesti")
+        if lp is not None and lp > 0.05 and s < -0.05:
+            supply_txt += ", vaikka johtava tilanne olettaa niiden pysyvän niukkoina"
+        elif lp is not None and lp < -0.05 and s > 0.05:
+            supply_txt += ", vaikka johtava tilanne olettaa niiden helpottuvan"
         return (f"Datakeskusten sähkölaitteiden kysyntä Pohjoismaissa {demand_txt}. Piirejä ja muisteja {supply_txt}. "
                 f"Todennäköisin kehitys seuraavien 1–3 vuoden aikana: {lead['name']['fi']} ({lead['probability']:.0%}). "
                 + (f"Tärkeimmät seurattavat asiat juuri nyt: {' ja '.join(names)}." if names else ""))
     demand_txt = "is still growing" if d > 0.12 else ("is falling" if d < -0.12 else "is flat")
     supply_txt = "are still hard to get" if s > 0.05 else ("are easier to get than before" if s < -0.05 else "are moderately available")
+    if lp is not None and lp > 0.05 and s < -0.05:
+        supply_txt += ", although the leading situation assumes they stay scarce"
+    elif lp is not None and lp < -0.05 and s > 0.05:
+        supply_txt += ", although the leading situation assumes they ease"
     return (f"Demand for power equipment from data centres in the Nordics {demand_txt}. Chips and memory {supply_txt}. "
             f"The most likely path for the next 1–3 years: {lead['name']['en']} ({lead['probability']:.0%}). "
             + (f"The main things to watch right now: {' and '.join(names)}." if names else ""))

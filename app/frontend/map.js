@@ -9,7 +9,7 @@
     en: {
       map_title: "Signal market map", map_segment: "Segment", map_region: "Region", map_class: "Signal type", map_horizon: "Time horizon",
       map_all_segments: "All segments", map_all_regions: "All regions", map_all_classes: "All types", map_years: "{n} years", map_year: "1 year",
-      map_note: "Changing the time horizon recomputes the weight of every signal, so the dots move.", map_selected_horizon: "Selected horizon: {n}.",
+      map_note: "Changing the time horizon recomputes the weight of every signal, so the dots move. Short-lived price and lead-time signals count less at longer horizons; the Overview scenarios use the weight pooled across horizons.", map_selected_horizon: "Selected horizon: {n}.",
       map_view_chart: "Chart", map_view_table: "Table", map_view: "View", map_scale: "Weight scale", map_scale_fit: "Fit to data", map_scale_full: "0 to 100",
       map_count: "{n} signals", map_none: "No signal matches these filters.", map_none_hint: "Widen the region or signal type.",
       map_q_crit: "Critical risks", map_q_strat: "Strategic opportunities", map_q_watch: "Risks to monitor", map_q_small: "Small opportunities",
@@ -39,7 +39,7 @@
     fi: {
       map_title: "Signaalien markkinakartta", map_segment: "Segmentti", map_region: "Alue", map_class: "Signaalityyppi", map_horizon: "Aikajänne",
       map_all_segments: "Kaikki segmentit", map_all_regions: "Kaikki alueet", map_all_classes: "Kaikki tyypit", map_years: "{n} vuotta", map_year: "1 vuosi",
-      map_note: "Aikajänteen muuttaminen laskee kaikkien signaalien painoarvon uudelleen, ja pisteet siirtyvät.", map_selected_horizon: "Valittu aikajänne: {n}.",
+      map_note: "Aikajänteen muuttaminen laskee kaikkien signaalien painoarvon uudelleen, ja pisteet siirtyvät. Lyhytikäiset hinta- ja toimitusaikasignaalit painavat vähemmän pitkillä aikajänteillä; Yleiskuvan skenaariot käyttävät kaikkien aikajänteiden yhteispainoa.", map_selected_horizon: "Valittu aikajänne: {n}.",
       map_view_chart: "Kaavio", map_view_table: "Taulukko", map_view: "Näkymä", map_scale: "Painoarvon asteikko", map_scale_fit: "Sovita aineistoon", map_scale_full: "0–100",
       map_count: "{n} signaalia", map_none: "Mikään signaali ei vastaa valittuja rajauksia.", map_none_hint: "Laajenna aluetta tai signaalityyppiä.",
       map_q_crit: "Kriittiset riskit", map_q_strat: "Strategiset mahdollisuudet", map_q_watch: "Seurattavat riskit", map_q_small: "Pienet mahdollisuudet",

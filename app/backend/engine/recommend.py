@@ -80,12 +80,21 @@ def match_theme(theme: dict[str, Any], signals: list[dict[str, Any]], weights: d
     return []
 
 
-def _trigger_text(move: dict[str, Any], themes: dict[str, Any], by_theme: dict[str, list[str]], lang: str) -> str:
+def _trigger_text(move: dict[str, Any], themes: dict[str, Any], by_theme: dict[str, list[str]], lang: str,
+                  by_id: dict[str, dict[str, Any]] | None = None) -> str:
+    """Theme label plus each cited signal as "ID short name", read from the card so the id and its name cannot disagree."""
+    by_id = by_id or {}
+
+    def cite(sid: str) -> str:
+        s = by_id.get(sid) or {}
+        nm = s.get("short_fi" if lang == "fi" else "short") or s.get("short") or ""
+        return f"{sid} {nm}".strip()
+
     parts = []
     for key in move["themes"]:
         label = themes[key]["label"][lang]
         ids = by_theme.get(key, [])
-        parts.append(f"{label} [{', '.join(ids)}]" if ids else label)
+        parts.append(f"{label} [{'; '.join(cite(i) for i in ids)}]" if ids else label)
     return move["trigger"][lang].replace("{themes}", "; ".join(parts))
 
 
@@ -112,6 +121,7 @@ def build_recommendation(
     lead_name = _name(lead)
 
     by_theme: dict[str, list[str]] = {}
+    by_id = {x["id"]: x for x in signals}
     moves = []
     for m in tpl["moves"]:
         for key in m["themes"]:
@@ -125,7 +135,7 @@ def build_recommendation(
         moves.append({
             "area": m["area"], "type": m["type"],
             "text": dict(m["text"]),
-            "trigger": {lang: _trigger_text(m, themes, by_theme, lang) for lang in ("en", "fi")},
+            "trigger": {lang: _trigger_text(m, themes, by_theme, lang, by_id) for lang in ("en", "fi")},
             "trigger_signals": trigger_ids[:MAX_TRIGGER_SIGNALS],
             "cost_if_wrong": dict(m["cost_if_wrong"]),
             "horizon_months": int(m["horizon_months"]),

@@ -62,3 +62,18 @@ def test_oilgas_next_step_names_no_data_centre_topics():
         assert "SIG-017" not in str(ask)
     finally:
         client.post("/api/segment", json={"segment": "datacenter"})
+
+
+def test_historical_brief_support_lists_only_positive_contributions():
+    """Support and 'evidence against' must not list the same card (ABB first-look finding 5)."""
+    import re
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    c = TestClient(app)
+    c.post("/api/world", json={"world": 2})
+    text = c.get("/api/state").json()["brief"]["text"]
+    sup = re.search(r"Strongest support[^:]*: (.*?)\. (?:Evidence against|The planner)", text)
+    ag = re.search(r"Evidence against it: (.*?)\. The planner", text)
+    if sup and ag:
+        assert not set(re.findall(r"HS-\d+", sup.group(1))) & set(re.findall(r"HS-\d+", ag.group(1)))
+    c.post("/api/world", json={"world": 1})

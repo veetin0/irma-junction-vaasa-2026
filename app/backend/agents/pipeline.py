@@ -760,7 +760,7 @@ def build_brief(ctx: Context) -> str:
                      f"its weight is {ctx.weights.get(sig['id'], {}).get('weight', 0):.2f} after counter-evidence and freshness.")
     if ctx.bullwhip:
         parts.append(f"Demand quality: {ctx.bullwhip['summary']}")
-    top_for = lead["contributions"][:3]
+    top_for = [c for c in lead["contributions"] if c["contribution"] > 0][:3]
     if top_for:
         parts.append("Strongest support for the leading scenario: " + "; ".join(f"[{c['signal_id']}] {c['signal_name']} ({c['contribution']:+.2f})" for c in top_for) + ".")
     against = [c for c in lead["contributions"] if c["contribution"] < 0][:2]

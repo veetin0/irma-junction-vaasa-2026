@@ -37,7 +37,7 @@
       "fallback_axis": "supply"
     },
     "supply_unwind": {
-      "label": { "en": "distributor stock mood and the gap between memory spot and contract prices", "fi": "jakelijoiden varastotunnelma sekä muistin spot- ja sopimushintojen ero" },
+      "label": { "en": "distributor stock mood and the gap between memory spot and contract prices", "fi": "jakelijoiden varastonäkymä sekä muistin spot- ja sopimushintojen ero" },
       "select": { "category": ["bullwhip"] },
       "fallback_axis": "bullwhip"
     },
@@ -92,7 +92,7 @@
     "expansion_tight": {
       "headline_move": {
         "en": "test and approve a second supplier for relay boards that depend on memory chips",
-        "fi": "testaa ja kelpuuta toinen toimittaja releosille, jotka tarvitsevat muistipiirejä"
+        "fi": "testaa ja kelpuuta toinen toimittaja relekorteille, jotka tarvitsevat muistipiirejä"
       },
       "if_leading": {
         "en": "the focus would move to securing supply and to sharing scarce relays between customers.",
@@ -112,7 +112,7 @@
           "themes": ["memory_supply", "supply_unwind"],
           "text": {
             "en": "Test and approve a second supplier for relay boards that depend on memory chips. Then the next commitment window can be extended if supply stays tight.",
-            "fi": "Testaa ja kelpuuta toinen toimittaja releosille, jotka tarvitsevat muistipiirejä. Silloin seuraavaa sitoumusikkunaa voidaan pidentää, jos saatavuus pysyy niukkana."
+            "fi": "Testaa ja kelpuuta toinen toimittaja relekorteille, jotka tarvitsevat muistipiirejä. Silloin seuraavaa sitoumusikkunaa voidaan pidentää, jos saatavuus pysyy niukkana."
           },
           "trigger": {
             "en": "Holds while these keep showing tight supply: {themes}. Review it again if they turn.",
@@ -396,7 +396,7 @@
           "themes": ["supply_unwind", "price"],
           "text": {
             "en": "Check the gap between memory spot and contract prices, distributor stock mood and metal prices at every review. They tend to turn before the order book does.",
-            "fi": "Tarkista jokaisessa katselmuksessa muistin spot- ja sopimushintojen ero, jakelijoiden varastotunnelma ja metallien hinnat. Ne kääntyvät yleensä ennen tilauskantaa."
+            "fi": "Tarkista jokaisessa katselmuksessa muistin spot- ja sopimushintojen ero, jakelijoiden varastonäkymä ja metallien hinnat. Ne kääntyvät yleensä ennen tilauskantaa."
           },
           "trigger": {
             "en": "Applies in every scenario. Signals to watch: {themes}.",
@@ -832,7 +832,7 @@
           "themes": ["supply_unwind", "memory_supply"],
           "text": {
             "en": "Check the gap between memory spot and contract prices, distributor stock mood and lead times at every review. They show when the correction is ending.",
-            "fi": "Tarkista jokaisessa katselmuksessa muistin spot- ja sopimushintojen ero, jakelijoiden varastotunnelma ja toimitusajat. Ne osoittavat, milloin korjaus on päättymässä."
+            "fi": "Tarkista jokaisessa katselmuksessa muistin spot- ja sopimushintojen ero, jakelijoiden varastonäkymä ja toimitusajat. Ne osoittavat, milloin korjaus on päättymässä."
           },
           "trigger": {
             "en": "Applies in every scenario. Signals to watch: {themes}.",

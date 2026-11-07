@@ -47,7 +47,7 @@ def _move_text(r: dict) -> list[str]:
     out = []
     for m in r["moves"]:
         for key in ("text", "trigger", "cost_if_wrong"):
-            out += [re.sub(r"\[(?:SIG|HS|OG)-[0-9, A-Z-]*\]", "", v) for v in m[key].values()]
+            out += [re.sub(r"\[(?:SIG|HS|OG)-[^\]]*\]", "", v) for v in m[key].values()]
     out += list(r["next_action"]["text"].values()) + list(r["next_action"]["owner"].values()) + list(r["disclaimer"].values())
     return out
 
@@ -364,3 +364,17 @@ def test_assistant_routes_recommendation_questions_to_the_move():
     c.post("/api/reset")
     for q, lang in (("What do you recommend?", "en"), ("What should ABB do next?", "en"), ("Mitä suosittelet?", "fi")):
         assert c.post("/api/ask", json={"question": q, "lang": lang}).json()["intent"] == "procurement", q
+
+
+def test_trigger_text_names_each_cited_signal():
+    """Every cited id is followed by that card's own short name, so id and description cannot disagree."""
+    import json
+    from pathlib import Path
+    sigs = json.loads((Path(__file__).resolve().parents[1] / "backend/data/worlds/1/signals.json").read_text())
+    sigs = sigs if isinstance(sigs, list) else sigs["signals"]
+    by_id = {s["id"]: s for s in sigs}
+    from backend.engine.recommend import _trigger_text
+    move = {"themes": ["t"], "trigger": {"en": "If {themes}", "fi": "Jos {themes}"}}
+    themes = {"t": {"label": {"en": "memory", "fi": "muisti"}}}
+    out = _trigger_text(move, themes, {"t": ["SIG-018", "SIG-008"]}, "en", by_id)
+    assert "SIG-018 " + by_id["SIG-018"]["short"] in out and "SIG-008 " + by_id["SIG-008"]["short"] in out

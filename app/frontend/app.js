@@ -113,11 +113,12 @@
     for (const c of children.flat()) { if (c === null || c === undefined || c === false) continue; el.append(c instanceof Node ? c : document.createTextNode(String(c))); }
     return el;
   }
-  const pct = (x) => (x == null ? "—" : `${Math.round(x * 100)}%`);
-  const pp = (x) => (x == null ? "" : `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)} pp`);
-  const pct1 = (x) => (x == null ? "—" : `${(x * 100).toFixed(1)}%`);
-  const pp2 = (x) => (x == null ? "" : Math.abs(x) < 0.005 ? "±0.00 pp" : `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(2)} pp`);
-  const f2 = (x) => (x == null ? "—" : Number(x).toFixed(2));
+  const pct = (x) => (x == null ? "—" : `${Math.round(x * 100)}${LANG === "fi" ? "\u00a0%" : "%"}`);
+  const dec = (x, n) => { const v = Number(x).toFixed(n); return LANG === "fi" ? v.replace(".", ",") : v; };
+  const pp = (x) => (x == null ? "" : `${x >= 0 ? "+" : "−"}${dec(Math.abs(x), 1)} pp`);
+  const pct1 = (x) => (x == null ? "—" : `${dec(x * 100, 1)}${LANG === "fi" ? "\u00a0%" : "%"}`);
+  const pp2 = (x) => (x == null ? "" : Math.abs(x) < 0.005 ? (LANG === "fi" ? "±0,00 pp" : "±0.00 pp") : `${x >= 0 ? "+" : "−"}${dec(Math.abs(x), 2)} pp`);
+  const f2 = (x) => (x == null ? "—" : dec(x, 2));
   const num = (x, unit) => (x == null ? "—" : Number(x).toLocaleString(LANG === "fi" ? "fi-FI" : "en-GB", { maximumFractionDigits: 1, useGrouping: !(/year|vuosi/i.test(unit || "") || (Number.isInteger(Number(x)) && x >= 1900 && x <= 2100)) }));
   const timeOf = (iso) => (iso ? iso.slice(11, 16) : "—");
   const dateOf = (iso) => (iso ? iso.slice(0, 10) : "—");
@@ -205,7 +206,7 @@
   function horizonChips(onPick) {
     return h("div", { class: "chips", role: "group", "aria-label": t("horizonLabel") }, ...HORIZONS.map((m) => h("button", { class: `chip ${HORIZON === m ? "on" : ""}`, "aria-pressed": HORIZON === m ? "true" : "false", onclick: () => { HORIZON = m; onPick(); } }, hLabel(m))));
   }
-  const signed2 = (x) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toFixed(2)}`;
+  const signed2 = (x) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${dec(Math.abs(x), 2)}`;
   // Latest change of a signal's weight (state.signals[i].change). "Unchanged" is kept quiet in compact lists.
   function changeEl(ch, compact) {
     if (!ch) return null;
@@ -472,7 +473,7 @@
       h("a", { class: "link small arrow", href: "#/signals", style: { display: "inline-block", marginTop: "10px" } }, t("allSignals")));
     const market = h("section", { class: "market-card" }, h("div", { class: "section-head" }, h("h2", null, t("marketSummary")), h("span", { class: "tiny" }, `${S.meta.today} · ${timeOf(S.scheduler.last_run)} · ${t("every", { n: S.scheduler.interval_minutes, a: timeOf(S.scheduler.last_run), b: timeOf(S.scheduler.next_run) })}`)),
       item(t("fullSituation"), h("div", null, h("p", null, L(S.summary)), world ? h("p", { class: "tiny" }, `${t("dataSetNote")}: ${L(world.note)}`) : null), true),
-      item(t("brief"), h("div", null, LANG === "fi" ? h("p", { class: "tiny" }, t("briefEn")) : null, h("p", null, cites(S.brief.text)), h("button", { class: "btn sm", onclick: () => window.irmaAsk && window.irmaAsk((S.meta.suggested_prompts[LANG] || S.meta.suggested_prompts.en)[0]) }, wrenchIcon(), t("explore"))), true),
+      item(t("brief"), h("div", null, LANG === "fi" && !S.brief.text_fi ? h("p", { class: "tiny" }, t("briefEn")) : null, h("p", null, cites(LANG === "fi" && S.brief.text_fi ? S.brief.text_fi : S.brief.text)), h("button", { class: "btn sm", onclick: () => window.irmaAsk && window.irmaAsk((S.meta.suggested_prompts[LANG] || S.meta.suggested_prompts.en)[0]) }, wrenchIcon(), t("explore"))), true),
       item(t("topSignals"), topSignals),
       item(`${t("demandQuality")}: ${ovLabel(bw.overall)}`, h("div", null, h("p", null, bw.summary), h("a", { class: "link small arrow", href: "#/scenarios#quality" }, t("openQuality")))),
       ...S.notifications.slice(0, 4).map((n) => item(nTitle(n), h("div", null, h("p", null, nText(n)), h("div", { class: "tiny" }, `${dateOf(n.time)} ${timeOf(n.time)}`), n.signal_id ? h("a", { class: "link small arrow", href: `#/signal/${n.signal_id}` }, t("signal")) : n.scenario_id ? h("a", { class: "link small arrow", href: `#/scenarios/${n.scenario_id}` }, t("scenario")) : null))),
@@ -523,7 +524,7 @@
         h("div", { class: "b-calc" }, [c.source_name, c.date, c.grade ? `${t("reliability")} ${c.grade}` : null, c.theme ? c.theme.replace(/_/g, " ") : null].filter(Boolean).join(" · ")),
         h("div", { class: "tiny" }, L(c.reason)), c.signal_id ? h("a", { class: "link small", href: `#/signal/${c.signal_id}` }, `${t("openSignal")} →`) : null),
       h("div", { class: "b-right" }, decision(c)));
-    const summaryLine = (r) => r.status === "failed" ? `${t("failedWord")}: ${r.error || ""}` : t("scoutSummary", { acc: r.accepted, rej: r.rejected, s: r.searches, c: (r.est_cost_usd ?? 0).toFixed(2), d: r.duration_s ?? "—" });
+    const summaryLine = (r) => r.status === "failed" ? `${t("failedWord")}: ${r.error || ""}` : t("scoutSummary", { acc: r.accepted, rej: r.rejected, s: r.searches, c: dec(r.est_cost_usd ?? 0, 2), d: r.duration_s ?? "—" });
     const rules = t("rules").map((x) => x.replace("{grade}", cfg.min_grade || "B").replace("{days}", cfg.max_age_days ?? 30).replace("{w}", cfg.min_weight ?? 0.15).replace("{load}", cfg.min_axis_load ?? 0.3));
     return h("div", { class: "card" },
       h("div", { class: "section-head" }, h("h2", null, t("scoutTitle")), h("div", { class: "row", style: { display: "flex", gap: "8px", alignItems: "center" } }, sc.found ? h("span", { class: "tiny" }, t("scoutFoundCount", { n: sc.found })) : null, btn)),

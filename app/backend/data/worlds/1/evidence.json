@@ -82,7 +82,7 @@
     "against": "SIG-003",
     "claim": "The EUR 13 bn is scheduled for 2027-2028 and includes energy infrastructure, not only data halls. Relay demand follows substation design and procurement, which lags site announcement by 12-24 months, and the share of spend reaching MV protection equipment is small. [ASSUMPTION: timing lag; verify with ABB how far ahead of energisation relays are ordered.]",
     "source": {
-      "name": "Google / Fortum announcement coverage",
+      "name": "The Global Economics, 2026-09-11 (same article as the card; used here for the schedule detail)",
       "url": "https://theglobaleconomics.com/2026/09/11/europes-data-centre/",
       "date": "2026-09-11"
     },

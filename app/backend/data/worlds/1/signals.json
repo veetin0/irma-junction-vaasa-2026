@@ -168,7 +168,7 @@
     "lead_months_rationale": "[ASSUMPTION: spend is scheduled for 2027-2028; substation protection equipment is ordered in the design/procurement phase roughly 12-18 months before energisation.]",
     "update_frequency": "event",
     "source": {
-      "name": "Google announcement, reported by The Global Economics / Computer Weekly",
+      "name": "Google announcement of 2026-09-09, as reported by The Global Economics on 2026-09-11",
       "url": "https://theglobaleconomics.com/2026/09/11/europes-data-centre/",
       "access": "Public press coverage of company announcement",
       "date": "2026-09-09"

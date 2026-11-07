@@ -77,3 +77,19 @@ def test_historical_brief_support_lists_only_positive_contributions():
     if sup and ag:
         assert not set(re.findall(r"HS-\d+", sup.group(1))) & set(re.findall(r"HS-\d+", ag.group(1)))
     c.post("/api/world", json={"world": 1})
+
+
+def test_brief_has_finnish_twin_with_same_signal_ids():
+    import re
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    b = TestClient(app).get("/api/state").json()["brief"]
+    assert b["text_fi"] and "entropy" not in b["text"]
+    assert set(re.findall(r"SIG-\d+", b["text"])) == set(re.findall(r"SIG-\d+", b["text_fi"]))
+
+
+def test_ask_answers_in_the_language_of_the_question():
+    from fastapi.testclient import TestClient
+    from backend.main import app
+    a = TestClient(app).post("/api/ask", json={"question": "Mikä on nykyinen tilanne?", "lang": "en"}).json()["answer"]
+    assert "the" not in a.lower().split()[:6] or any(ch in a for ch in "äö")

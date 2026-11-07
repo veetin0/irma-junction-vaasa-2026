@@ -33,7 +33,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from agents.llm import LLMClient, load_replay, recommendation_filter
-from agents.pipeline import Context, Pipeline, _next_analysis_step, _t, build_brief, next_id
+from agents.pipeline import Context, Pipeline, _next_analysis_step, _t, build_brief, build_brief_fi, next_id
 from agents.scout import SKIP_REASONS, build_prompt, known_urls, post_gate, pre_gate, reason as scout_reason, scout_settings
 from engine.archetypes import axis_scores, plain_summary, select_scenarios
 from engine.bullwhip import compute_bullwhip
@@ -426,7 +426,7 @@ class Store:
         if self.brief is None:
             ctx = self._context(); ctx.weights, ctx.after = w, sc
             ctx.bullwhip = compute_bullwhip(self.bullwhip_config)
-            self.brief = {"text": build_brief(ctx), "next_step": _next_analysis_step(ctx), "generated_on": today().isoformat(), "mode": "code"}
+            self.brief = {"text": build_brief(ctx), "text_fi": build_brief_fi(ctx), "next_step": _next_analysis_step(ctx), "generated_on": today().isoformat(), "mode": "code"}
         prev = self.previous_day()
         for s in sc["scenarios"]:
             p0 = prev["probs"].get(s["id"]) if prev else None
@@ -1109,6 +1109,8 @@ def ask(body: AskBody) -> dict[str, Any]:
     if not q:
         raise HTTPException(400, "question is required")
     lang = "fi" if (body.lang or "en").lower().startswith("fi") else "en"
+    if lang == "en" and re.search(r"[äö]|\b(mikä|mitä|miten|miksi|kuinka|onko|ovat|tämä|signaali\w*|skenaario\w*)\b", q.lower()):
+        lang = "fi"  # answer in the language the question was asked in
     w = STORE.weights()
     sc = STORE.scenarios(w)
     prev = STORE.previous_day()

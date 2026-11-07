@@ -743,6 +743,34 @@ class ExplainerAgent:
         return TraceStep(self.name, "ok", mode, "Situation brief and signals to watch produced; guardrail applied.", ctx.brief, notes=notes)
 
 
+def build_brief_fi(ctx: Context) -> str:
+    """Finnish twin of build_brief: same numbers, Finnish template text."""
+    assert ctx.after is not None
+    sc = sorted(ctx.after["scenarios"], key=lambda s: -s["probability"])
+    lead, second = sc[0], sc[1]
+    names = {x["id"]: x.get("short_fi") or x.get("short") for x in ctx.signals}
+    nm = lambda c: names.get(c["signal_id"]) or c["signal_name"]
+    dc = lambda x, sign="": f"{x:{sign}.2f}".replace(".", ",")
+    pc = lambda x: f"{x:.0%}".replace("%", "\u00a0%")
+    parts = [f"Tilanne {ctx.today.isoformat()}. Todennäköisin kuva on ”{lead['name']['fi']}” ({pc(lead['probability'])}), "
+             f"seuraavana ”{second['name']['fi']}” ({pc(second['probability'])}). Todennäköisyydet jakautuvat neljän valitun skenaarion kesken, "
+             "joten mitään niistä ei voi pitää varmana."]
+    if ctx.new_signal:
+        sig = ctx.new_signal
+        parts.append(f"Viimeisin syöte [{sig['id']}] ({sig.get('short_fi') or sig.get('short')}) on luokiteltu: {sig.get('classification')}, luotettavuus {sig.get('reliability')}; "
+                     f"sen painoarvo on {dc(ctx.weights.get(sig['id'], {}).get('weight', 0))} vastatodisteiden ja tuoreuden huomioimisen jälkeen.")
+    top_for = [c for c in lead["contributions"] if c["contribution"] > 0][:3]
+    if top_for:
+        parts.append("Vahvimmat johtavaa skenaariota tukevat signaalit: " + "; ".join(f"[{c['signal_id']}] {nm(c)} ({dc(c['contribution'], '+')})" for c in top_for) + ".")
+    against = [c for c in lead["contributions"] if c["contribution"] < 0][:2]
+    if against:
+        parts.append("Sitä vastaan: " + "; ".join(f"[{c['signal_id']}] {nm(c)} ({dc(c['contribution'], '+')})" for c in against) + ".")
+    else:
+        parts.append("Mikään tämän näkymän signaali ei puhu johtavaa skenaariota vastaan; muut skenaariot on listattu vertailuksi.")
+    parts.append("Suunnittelija päättää, mitä tämä tarkoittaa tilauksille; järjestelmä näyttää todisteet ja vaihtoehdot.")
+    return " ".join(parts)
+
+
 def build_brief(ctx: Context) -> str:
     """Template brief composed from computed numbers only (used when no LLM output exists)."""
     assert ctx.after is not None
@@ -752,7 +780,7 @@ def build_brief(ctx: Context) -> str:
     sig = ctx.new_signal
     parts = [
         f"Situation as of {ctx.today.isoformat()}. The most likely picture is '{_t(lead['name'])}' at {lead['probability']:.0%}, "
-        f"followed by '{_t(second['name'])}' at {second['probability']:.0%}; spread across the four selected scenarios (entropy {ctx.after['entropy']:.2f}) "
+        f"followed by '{_t(second['name'])}' at {second['probability']:.0%}; spread across the four selected scenarios "
         "means no scenario can be treated as settled.",
     ]
     if sig:

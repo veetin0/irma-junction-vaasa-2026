@@ -34,8 +34,8 @@
       "path": { "demand_yearly": [0.35, 0.30, 0.25], "supply_yearly": [0.25, 0.32, 0.30], "band": 0.10 },
       "narrative": { "en": "Data-centre investment keeps growing while 2027 memory and microcontroller capacity, long-term supply agreements and distributor destocking relieve the component constraint. Lead times fall toward 20 weeks within a year while end demand still increases.", "fi": "Datakeskusinvestoinnit jatkavat kasvuaan, kun vuoden 2027 muisti- ja mikro-ohjainkapasiteetti, pitkät toimitussopimukset ja jakelijoiden varastojen purku helpottavat komponenttipulaa. Toimitusajat lyhenevät kohti 20 viikkoa vuoden sisällä kysynnän yhä kasvaessa." },
       "signposts": [
-        { "text": { "en": "DRAM price increments below +5% a quarter while capex still rises", "fi": "Muistin hinnannousu alle 5 % neljänneksessä investointien yhä kasvaessa" }, "signal_id": "SIG-007" },
-        { "text": { "en": "Industrial microcontroller lead times fall below 40 weeks", "fi": "Teollisuuden mikro-ohjainten toimitusajat alle 40 viikkoa" }, "signal_id": "SIG-008" }
+        { "text": { "en": "DRAM price increments below +5% a quarter while capex still rises (ASSUMPTION threshold)", "fi": "Muistin hinnannousu alle 5 % neljänneksessä investointien yhä kasvaessa (OLETUSraja)" }, "signal_id": "SIG-007" },
+        { "text": { "en": "Industrial microcontroller lead times fall below 40 weeks (ASSUMPTION threshold)", "fi": "Teollisuuden mikro-ohjainten toimitusajat alle 40 viikkoa (OLETUSraja)" }, "signal_id": "SIG-008" }
       ],
       "falsifiers": [
         { "text": { "en": "Memory makers move more capacity to AI servers", "fi": "Muistivalmistajat siirtävät lisää kapasiteettia tekoälypalvelimiin" }, "signal_id": "SIG-007" },
@@ -57,7 +57,7 @@
       "narrative": { "en": "Grid connection limits, permitting and transformer lead times push energisation dates out by one to two years. Orders placed early or in several places are cancelled or rescheduled, so observed demand drops although the structural trend continues. Component supply stays constrained because AI servers keep absorbing capacity.", "fi": "Verkkoliitäntöjen rajoitteet, luvitus ja muuntajien toimitusajat siirtävät käyttöönottoja yhdestä kahteen vuotta. Aikaisin tai useaan paikkaan tehdyt tilaukset perutaan tai siirretään, joten havaittu kysyntä laskee vaikka rakenteellinen trendi jatkuu. Komponenttien saatavuus pysyy kireänä, koska tekoälypalvelimet sitovat kapasiteettia." },
       "signposts": [
         { "text": { "en": "Finnish connection priority rule adopted, data centres re-sequenced", "fi": "Suomen liittymien etusijasääntö hyväksytään, ja datakeskusten sija jonossa muuttuu" }, "signal_id": "SIG-014" },
-        { "text": { "en": "US delayed or cancelled share confirmed above 40% by a primary source", "fi": "Yhdysvaltain viivästyneiden hankkeiden osuus yli 40 % ensisijaisen lähteen mukaan" }, "signal_id": "SIG-005" }
+        { "text": { "en": "US delayed or cancelled share confirmed above 40% by a primary source (ASSUMPTION threshold)", "fi": "Yhdysvaltain viivästyneiden hankkeiden osuus yli 40 % ensisijaisen lähteen mukaan (OLETUSraja)" }, "signal_id": "SIG-005" }
       ],
       "falsifiers": [
         { "text": { "en": "Fingrid signed agreements convert to energisation on schedule", "fi": "Fingridin sopimukset muuttuvat käyttöönotoiksi aikataulussa" }, "signal_id": "SIG-001" },
@@ -190,7 +190,7 @@
         { "text": { "en": "Distributor sentiment index falls below neutral", "fi": "Jakelijoiden luottamusindeksi laskee neutraalin alle" }, "signal_id": "SIG-009" }
       ],
       "falsifiers": [
-        { "text": { "en": "Lead times stay above 40 weeks", "fi": "Toimitusajat pysyvät yli 40 viikossa" }, "signal_id": "SIG-008" }
+        { "text": { "en": "Lead times stay above 40 weeks (ASSUMPTION threshold)", "fi": "Toimitusajat pysyvät yli 40 viikossa (OLETUSraja)" }, "signal_id": "SIG-008" }
       ],
       "abb_interpretation": {
         "demand": { "en": "If this holds, framework orders are pushed out before public data turns; apparent demand stays below end use.", "fi": "Jos tämä toteutuu, puitetilauksia siirretään ennen kuin julkiset tiedot kääntyvät; näennäinen kysyntä jää loppukäytön alle." },
